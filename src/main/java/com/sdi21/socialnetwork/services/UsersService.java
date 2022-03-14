@@ -14,11 +14,14 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
-
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
         usersRepository.findAll().forEach(users::add);
         return users;
+    }
+
+    public List<User> getUsersWithRole(String role) {
+        return usersRepository.findAllByRole(role);
     }
 
     public User getUser(Long id) {
@@ -27,6 +30,10 @@ public class UsersService {
 
     public User getUserByUsername(String username){
         return usersRepository.findByUsername(username);
+    }
+
+    public void addUser(User user) {
+        usersRepository.save(user);
     }
 
     public void deleteUser(Long id) {
