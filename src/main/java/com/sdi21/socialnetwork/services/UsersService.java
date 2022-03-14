@@ -5,6 +5,7 @@ import com.sdi21.socialnetwork.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,13 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+
+    @PostConstruct
+    public void init(){
+        usersRepository.save(new User("Default"));
+
+    }
 
 
     public List<User> getUsers() {
@@ -31,5 +39,9 @@ public class UsersService {
 
     public void deleteUser(Long id) {
         usersRepository.deleteById(id);
+    }
+
+    public User getDefaultUser() {
+        return usersRepository.findByUsername("Default");
     }
 }
