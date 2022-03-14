@@ -3,6 +3,8 @@ package com.sdi21.socialnetwork.services;
 import com.sdi21.socialnetwork.entities.User;
 import com.sdi21.socialnetwork.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,8 +22,8 @@ public class UsersService {
         return users;
     }
 
-    public List<User> getUsersWithRole(String role) {
-        return usersRepository.findAllByRole(role);
+    public Page<User> getUsersWithRole(Pageable pageable, String role) {
+        return usersRepository.findAllByRole(pageable, role);
     }
 
     public User getUser(Long id) {

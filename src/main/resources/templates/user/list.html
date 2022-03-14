@@ -27,6 +27,7 @@
             </tr>
             </tbody>
         </table>
+        <footer th:replace="fragments/pagination"/>
     </div>
     <div th:if="${#lists.isEmpty(userList)}"> No users </div>
 </div>

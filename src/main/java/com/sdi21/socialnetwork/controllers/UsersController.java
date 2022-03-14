@@ -23,9 +23,11 @@ public class UsersController {
     private UsersService usersService;
 
     @RequestMapping("/user/list")
-    public String getList(Model model) {
-        List<User> users = usersService.getUsersWithRole("ROLE_USER");
-        model.addAttribute("userList", users);
+    public String getList(Model model, Pageable pageable) {
+        //List<User> users = usersService.getUsersWithRole("ROLE_USER");
+        Page<User> users = usersService.getUsersWithRole(pageable, "ROLE_USER");
+        model.addAttribute("userList", users.getContent());
+        model.addAttribute("page", users);
         return "user/list";
     }
 
