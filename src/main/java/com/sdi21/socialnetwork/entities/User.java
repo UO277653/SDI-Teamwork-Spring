@@ -14,8 +14,17 @@ public class User {
     @Column(unique = true)
     private String username;
 
+
+
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
 
 
+    public User(String username){
+        this.username = username;
+    }
+
+    public User() {
+
+    }
 }

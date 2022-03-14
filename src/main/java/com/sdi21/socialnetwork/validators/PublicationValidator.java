@@ -18,5 +18,16 @@ public class PublicationValidator implements Validator {
     public void validate(Object target, Errors errors) {
 
         Publication publication = (Publication) target;
+
+        if(publication.getText() == null || publication.getText().isBlank()){
+            errors.rejectValue("text","Error.createPublication.text.invalid");
+
+        }
+
+        if(publication.getTitle() == null || publication.getTitle().isBlank()){
+            errors.rejectValue("text","Error.createPublication.title.invalid");
+
+        }
+
     }
 }
