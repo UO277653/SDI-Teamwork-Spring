@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,12 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @PostConstruct
+    public void init(){
+        usersRepository.save(new User("Default"));
+
+    }
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
@@ -40,5 +47,9 @@ public class UsersService {
 
     public void deleteUser(Long id) {
         usersRepository.deleteById(id);
+    }
+
+    public User getDefaultUser() {
+        return usersRepository.findByUsername("Default");
     }
 }

@@ -1,6 +1,7 @@
 package com.sdi21.socialnetwork.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -24,6 +25,10 @@ public class User {
     private String role;
 
     public User() {}
+  
+    public User(String username){
+        this.username = username;
+    }
 
     public User(String username, String name, String surname) {
         this.username = username;
@@ -69,6 +74,9 @@ public class User {
                 "username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                '}';
+                '}'; 
     }
+
+    @OneToMany(mappedBy = "op")
+    private List<Publication> publications;
 }
