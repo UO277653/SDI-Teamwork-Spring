@@ -52,4 +52,9 @@ public class UsersService {
     public User getDefaultUser() {
         return usersRepository.findByUsername("Default");
     }
+
+    public Page<User> searchUsersByUsernameNameAndSurnameWithRole(
+            Pageable pageable, String searchText, String role) {
+        return usersRepository.searchByUsernameNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+    }
 }
