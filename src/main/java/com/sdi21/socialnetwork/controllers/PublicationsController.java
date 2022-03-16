@@ -60,6 +60,15 @@ public class PublicationsController {
         return "home";
     }
 
+    //List publication------
+    @GetMapping("/publication/listown")
+    public String getList(){
+        return "publication/listown";
+    }
+
+
+
+
 
 
 
