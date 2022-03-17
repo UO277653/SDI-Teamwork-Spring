@@ -13,4 +13,6 @@ public interface UsersRepository extends CrudRepository<User,Long> {
     //List<User> findAllByRole(String role);
     @Query("SELECT u FROM User u WHERE u.role = ?1 ORDER BY u.username ASC")
     Page<User> findAllByRole(Pageable pageable, String role);
+
+    Page<User> findAll(Pageable pageable);
 }

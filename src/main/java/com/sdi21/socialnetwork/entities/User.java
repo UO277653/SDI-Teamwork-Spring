@@ -13,15 +13,11 @@ public class User {
 
     @Column(unique = true)
     private String username;
-
     private String password;
-
     @Transient
     private String passwordConfirm;
-
     private String name;
     private String surname;
-
     private String role;
 
     public User() {}
@@ -35,6 +31,9 @@ public class User {
         this.name = name;
         this.surname = surname;
     }
+
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
     public String getRole() {
         return role;
