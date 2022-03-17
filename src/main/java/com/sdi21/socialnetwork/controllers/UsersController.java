@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +51,14 @@ public class UsersController {
         user.setRole(rolesService.getRoles()[0]); //user role
         usersService.addUser(user);
         securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
-        return "redirect:home";
+        return "redirect:/home";
+    }
+
+    @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+    public String home(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return "home";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

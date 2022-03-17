@@ -5,6 +5,7 @@ import com.sdi21.socialnetwork.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +17,9 @@ public class UsersService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostConstruct
     public void init(){
@@ -38,6 +42,7 @@ public class UsersService {
     }
 
     public void addUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
 

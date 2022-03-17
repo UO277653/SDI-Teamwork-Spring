@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return authenticationManager();
+        return super.authenticationManagerBean();
     }
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -26,18 +26,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/login/**").permitAll()
+            .csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/css/**", "/script/**", "/", "/signup", "/login/**").permitAll()
                 //.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
+            .and()
+            .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/home")
-                .and()
-                .logout()
+            .and()
+            .logout()
                 .permitAll();
     }
 

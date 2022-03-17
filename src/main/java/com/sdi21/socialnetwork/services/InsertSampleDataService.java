@@ -29,6 +29,7 @@ public class InsertSampleDataService {
         generateUsers(15);
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setRole(rolesService.getRoles()[1]);
+        admin.setPassword("admin");
         usersService.addUser(admin);
     }
 
@@ -39,6 +40,8 @@ public class InsertSampleDataService {
             String username = String.format("user%02d@email.com", i + 1);
             User user = new User(username, name, surname);
             user.setRole(rolesService.getRoles()[0]); // ROLE_USER
+            user.setPassword("123456");
+            user.setPasswordConfirm("123456");
             //System.out.println(user);
             usersService.addUser(user);
         }
