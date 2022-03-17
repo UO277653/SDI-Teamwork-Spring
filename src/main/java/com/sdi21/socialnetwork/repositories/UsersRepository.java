@@ -6,13 +6,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
 public interface UsersRepository extends CrudRepository<User,Long> {
-    User findByUsername(String username);
+
+    User findByEmail(String email);
+
     //List<User> findAllByRole(String role);
-    @Query("SELECT u FROM User u WHERE u.role = ?1 ORDER BY u.username ASC")
+    @Query("SELECT u FROM User u WHERE u.role = ?1 ORDER BY u.email ASC")
     Page<User> findAllByRole(Pageable pageable, String role);
 
     Page<User> findAll(Pageable pageable);
+  
+    @Query("SELECT u FROM User u WHERE (LOWER(u.email) LIKE LOWER(?1) OR LOWER(u.name) LIKE LOWER(?1))" +
+            " OR LOWER(u.surname) LIKE LOWER(?1) AND u.role = ?2")
+
+    Page<User> searchByUsernameNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
+
+    User findByEmail(String email); //1. registrarse como usuario
+
+    Page<User> searchByEmailNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
 }

@@ -1,5 +1,6 @@
 package com.sdi21.socialnetwork.services;
 
+import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +25,39 @@ public class InsertSampleDataService {
     @Autowired
     private RolesService rolesService;
 
+    @Autowired
+    private PublicationsService publicationsService;
+
     @PostConstruct
     public void init() {
-        generateUsers(15);
+
+
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setRole(rolesService.getRoles()[1]);
+        admin.setPassword("admin");
         usersService.addUser(admin);
+        User defaultUser = new User("Default","Default", "Default");
+        usersService.addUser(defaultUser);
+
+        Publication publication = new Publication("Default publication", "Default text");
+        publication.setOp(defaultUser);
+        publicationsService.addPublication(publication);
+
+        Publication publication2 = new Publication("Default publication 2", "Default text 2");
+        publication2.setOp(defaultUser);
+        publicationsService.addPublication(publication2);
+
     }
 
     private void generateUsers(int numberOfUsers) {
         for(int i = 0; i < numberOfUsers; i++) {
             String name = NAMES[new Random().nextInt(NAMES.length)];
             String surname = SURNAMES[new Random().nextInt(SURNAMES.length)];
-            String username = String.format("user%02d@email.com", i + 1);
-            User user = new User(username, name, surname);
+            String email = String.format("user%02d@email.com", i + 1);
+            User user = new User(email, name, surname);
             user.setRole(rolesService.getRoles()[0]); // ROLE_USER
+            user.setPassword("123456");
+            user.setPasswordConfirm("123456");
             //System.out.println(user);
             usersService.addUser(user);
         }
