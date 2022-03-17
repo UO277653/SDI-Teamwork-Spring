@@ -27,6 +27,10 @@ public class UsersService {
     }
 
 
+
+    public Page<User> getUsers(Pageable pageable) {
+        return usersRepository.findAll(pageable);
+  
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
         usersRepository.findAll().forEach(users::add);
@@ -48,6 +52,12 @@ public class UsersService {
 
     public void deleteUser(Long id) {
         usersRepository.deleteById(id);
+    }
+
+    // Ej 5
+    public void deleteUsers(List<Long> ids){
+        usersRepository.deleteAllById(ids);
+
     }
 
     public User getDefaultUser() {
