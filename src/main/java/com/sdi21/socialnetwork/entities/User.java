@@ -24,6 +24,9 @@ public class User {
 
     private String role;
 
+    @OneToMany(mappedBy = "op")
+    private List<Publication> publications;
+
     public User() {}
   
     public User(String email){
@@ -68,6 +71,10 @@ public class User {
         this.surname = surname;
     }
 
+    public List<Publication> getPublications() {
+        return publications;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -77,6 +84,5 @@ public class User {
                 '}'; 
     }
 
-    @OneToMany(mappedBy = "op")
-    private List<Publication> publications;
+
 }
