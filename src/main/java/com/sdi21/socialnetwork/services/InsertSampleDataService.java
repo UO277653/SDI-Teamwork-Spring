@@ -36,8 +36,8 @@ public class InsertSampleDataService {
         for(int i = 0; i < numberOfUsers; i++) {
             String name = NAMES[new Random().nextInt(NAMES.length)];
             String surname = SURNAMES[new Random().nextInt(SURNAMES.length)];
-            String username = String.format("user%02d@email.com", i + 1);
-            User user = new User(username, name, surname);
+            String email = String.format("user%02d@email.com", i + 1);
+            User user = new User(email, name, surname);
             user.setRole(rolesService.getRoles()[0]); // ROLE_USER
             //System.out.println(user);
             usersService.addUser(user);
