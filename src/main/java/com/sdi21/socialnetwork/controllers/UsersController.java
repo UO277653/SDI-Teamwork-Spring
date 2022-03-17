@@ -1,6 +1,8 @@
 package com.sdi21.socialnetwork.controllers;
 
+import com.google.j2objc.annotations.AutoreleasePool;
 import com.sdi21.socialnetwork.entities.User;
+import com.sdi21.socialnetwork.services.FriendsService;
 import com.sdi21.socialnetwork.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,9 @@ public class UsersController {
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private FriendsService friendsService;
 
     @RequestMapping("/user/list")
     public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText) {

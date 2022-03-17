@@ -12,7 +12,7 @@ public class User {
     private long id;
 
     @Column(unique = true)
-    private String username;
+    private String email;
 
     private String password;
 
@@ -26,12 +26,12 @@ public class User {
 
     public User() {}
   
-    public User(String username){
-        this.username = username;
+    public User(String email){
+        this.email = email;
     }
 
-    public User(String username, String name, String surname) {
-        this.username = username;
+    public User(String email, String name, String surname) {
+        this.email = email;
         this.name = name;
         this.surname = surname;
     }
@@ -44,12 +44,12 @@ public class User {
         this.role = role;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -71,7 +71,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}'; 
@@ -79,4 +79,14 @@ public class User {
 
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
+
+    //@ManyToMany(mappedBy = "friends")
+    //private List<User> friends;
+
+    @OneToMany(mappedBy = "receiver")
+    private List<FriendRequest> requests;
+
+    //public List<User> getFriends() {
+    //    return friends;
+    //}
 }
