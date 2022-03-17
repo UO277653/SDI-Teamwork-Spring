@@ -62,7 +62,12 @@ public class PublicationsController {
 
     //List publication------
     @GetMapping("/publication/listown")
-    public String getList(){
+    public String getList(Model model){
+        //This will change when we can log in as an user
+        //Parameter to add Principal principal
+        User user = usersService.getDefaultUser();
+        model.addAttribute("publicationsList", user.getPublications());
+
         return "publication/listown";
     }
 

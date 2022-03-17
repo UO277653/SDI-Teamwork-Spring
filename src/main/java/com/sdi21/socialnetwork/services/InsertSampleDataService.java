@@ -1,5 +1,6 @@
 package com.sdi21.socialnetwork.services;
 
+import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,22 @@ public class InsertSampleDataService {
     @Autowired
     private RolesService rolesService;
 
+    @Autowired
+    private PublicationsService publicationsService;
+
     @PostConstruct
     public void init() {
-        generateUsers(15);
+
+
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setRole(rolesService.getRoles()[1]);
         usersService.addUser(admin);
+        User defaultUser = new User("Default","Default", "Default");
+        usersService.addUser(defaultUser);
+        Publication publication = new Publication("Default publication", "Default text");
+        publication.setOp(defaultUser);
+        publicationsService.addPublication(publication);
+
     }
 
     private void generateUsers(int numberOfUsers) {

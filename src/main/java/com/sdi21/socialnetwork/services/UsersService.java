@@ -17,11 +17,7 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
-    @PostConstruct
-    public void init(){
-        usersRepository.save(new User("Default"));
 
-    }
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
@@ -38,7 +34,7 @@ public class UsersService {
     }
 
     public User getUserByUsername(String username){
-        return usersRepository.findByUsername(username);
+        return usersRepository.findByEmail(username);
     }
 
     public void addUser(User user) {
@@ -50,11 +46,15 @@ public class UsersService {
     }
 
     public User getDefaultUser() {
-        return usersRepository.findByUsername("Default");
+        return usersRepository.findByEmail("Default");
     }
 
     public Page<User> searchUsersByUsernameNameAndSurnameWithRole(
             Pageable pageable, String searchText, String role) {
         return usersRepository.searchByUsernameNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+    }
+
+    public void deleteAll(){
+        usersRepository.deleteAll();
     }
 }
