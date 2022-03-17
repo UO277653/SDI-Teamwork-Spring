@@ -37,8 +37,8 @@ public class UsersService {
         return usersRepository.findById(id).get();
     }
 
-    public User getUserByUsername(String username){
-        return usersRepository.findByUsername(username);
+    public User getUserByEmail(String email){
+        return usersRepository.findByEmail(email);
     }
 
     public void addUser(User user) {
@@ -50,11 +50,11 @@ public class UsersService {
     }
 
     public User getDefaultUser() {
-        return usersRepository.findByUsername("Default");
+        return usersRepository.findByEmail("Default");
     }
 
-    public Page<User> searchUsersByUsernameNameAndSurnameWithRole(
+    public Page<User> searchUsersByEmailNameAndSurnameWithRole(
             Pageable pageable, String searchText, String role) {
-        return usersRepository.searchByUsernameNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+        return usersRepository.searchByEmailNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
     }
 }
