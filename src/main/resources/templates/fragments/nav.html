@@ -12,16 +12,6 @@
                 <a class="nav-link" href="/home">Home<span class="sr-only">(current)</span></a>
             </li>
 
-            <!-- Admin -->
-            <li sec:authorize="hasRole('ROLE_ADMIN')" id= "admin-menu" class="nav-item dropdown" >
-                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Admin
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/admin/list">Listado de usuarios</a>
-                </div>
-            </li>
-
             <!--<li id= "marks-menu" class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"> Gestión de notas
