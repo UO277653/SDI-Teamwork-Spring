@@ -75,6 +75,14 @@ public class User {
         return passwordConfirm;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     @Override
     public String toString() {
         return "User{" +
