@@ -37,9 +37,14 @@ public class InsertSampleDataService {
         usersService.addUser(admin);
         User defaultUser = new User("Default","Default", "Default");
         usersService.addUser(defaultUser);
+
         Publication publication = new Publication("Default publication", "Default text");
         publication.setOp(defaultUser);
         publicationsService.addPublication(publication);
+
+        Publication publication2 = new Publication("Default publication 2", "Default text 2");
+        publication2.setOp(defaultUser);
+        publicationsService.addPublication(publication2);
 
     }
 

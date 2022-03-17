@@ -6,16 +6,17 @@ import com.sdi21.socialnetwork.services.PublicationsService;
 import com.sdi21.socialnetwork.services.UsersService;
 import com.sdi21.socialnetwork.validators.PublicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.LinkedList;
 
 @Controller
 public class PublicationsController {
@@ -62,13 +63,30 @@ public class PublicationsController {
 
     //List publication------
     @GetMapping("/publication/listown")
-    public String getList(Model model){
+    public String getList(Model model, Pageable pageable){
         //This will change when we can log in as an user
         //Parameter to add Principal principal
         User user = usersService.getDefaultUser();
-        model.addAttribute("publicationsList", user.getPublications());
+
+        Page<Publication> publications = publicationsService.getPublicationsByEmail(pageable, user.getEmail());
+                // new PageImpl<>(user.getPublications());
+
+
+        model.addAttribute("publicationsList", publications.getContent());
+        model.addAttribute("page",publications );
 
         return "publication/listown";
+    }
+
+    @GetMapping("/publication/list/{id}")
+    public String getList(Model model, @PathVariable Long id){
+
+        User user = usersService.getUser(id);
+        Page<Publication> publications = new PageImpl<>(user.getPublications());
+
+        model.addAttribute("publicationsList", publications.getContent());
+        model.addAttribute("page",publications );
+        return "publication/list";
     }
 
 
