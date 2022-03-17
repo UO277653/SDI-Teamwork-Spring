@@ -11,6 +11,9 @@ public class User {
     @GeneratedValue
     private long id;
 
+    @Column(unique = true)
+    private String email;
+
 
     private String name;
     private String surname;
@@ -26,7 +29,14 @@ public class User {
 
 
 
+    @OneToMany(mappedBy = "op")
+    private List<Publication> publications;
+
     public User() {}
+
+    public User(String email){
+        this.email = email;
+    }
 
     public User(String email, String name, String surname) {
         this.email = email;
@@ -43,6 +53,14 @@ public class User {
     }
 
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,6 +76,7 @@ public class User {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
 
     public String getEmail() {
         return email;
@@ -81,6 +100,9 @@ public class User {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+
+    public List<Publication> getPublications() {
+        return publications;
     }
 
     @Override
@@ -92,6 +114,5 @@ public class User {
                 '}'; 
     }
 
-    @OneToMany(mappedBy = "op")
-    private List<Publication> publications;
+
 }

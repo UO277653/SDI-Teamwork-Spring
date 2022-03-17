@@ -24,8 +24,8 @@ public class UsersService {
     @PostConstruct
     public void init(){
         usersRepository.save(new User("sara@uniovi.es", "Sara", "González"));
-
     }
+
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
@@ -54,9 +54,13 @@ public class UsersService {
         return usersRepository.findByEmail("sara@uniovi.es");
     }
 
-    public Page<User> searchUsersByUsernameNameAndSurnameWithRole(
+    public Page<User> searchUsersByEmailNameAndSurnameWithRole(
             Pageable pageable, String searchText, String role) {
-        return usersRepository.searchByUsernameNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+        return usersRepository.searchByEmailNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+    }
+
+    public void deleteAll(){
+        usersRepository.deleteAll();
     }
 
     public User getUserByEmail(String email){
