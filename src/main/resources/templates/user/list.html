@@ -18,7 +18,7 @@
         <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
             <thead>
             <tr>
-                <th scope="col">Username</th>
+                <th scope="col">Email</th>
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
                 <th scope="col"></th>
@@ -28,7 +28,7 @@
             </thead>
             <tbody>
             <tr th:each="user : ${userList}">
-                <td scope="row" th:text="${user.username}"> 1</td>
+                <td scope="row" th:text="${user.email}"> 1</td>
                 <td th:text="${user.name}"> Ejercicio 1</td>
                 <td th:text="${user.surname}">10</td>
             </tr>

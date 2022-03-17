@@ -5,9 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.yaml.snakeyaml.error.Mark;
-
-import java.util.List;
 
 public interface UsersRepository extends CrudRepository<User,Long> {
     User findByEmail(String email);
@@ -17,5 +14,5 @@ public interface UsersRepository extends CrudRepository<User,Long> {
 
     @Query("SELECT u FROM User u WHERE (LOWER(u.email) LIKE LOWER(?1) OR LOWER(u.name) LIKE LOWER(?1))" +
             " OR LOWER(u.surname) LIKE LOWER(?1) AND u.role = ?2")
-    Page<User> searchByUsernameNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
+    Page<User> searchByEmailNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
 }
