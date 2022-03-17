@@ -19,7 +19,7 @@ public class UsersService {
 
     @PostConstruct
     public void init(){
-        usersRepository.save(new User("Default"));
+        usersRepository.save(new User("sara@uniovi.es", "Sara", "González"));
 
     }
 
@@ -37,10 +37,6 @@ public class UsersService {
         return usersRepository.findById(id).get();
     }
 
-    public User getUserByUsername(String username){
-        return usersRepository.findByUsername(username);
-    }
-
     public void addUser(User user) {
         usersRepository.save(user);
     }
@@ -50,11 +46,15 @@ public class UsersService {
     }
 
     public User getDefaultUser() {
-        return usersRepository.findByUsername("Default");
+        return usersRepository.findByEmail("sara@uniovi.es");
     }
 
     public Page<User> searchUsersByUsernameNameAndSurnameWithRole(
             Pageable pageable, String searchText, String role) {
         return usersRepository.searchByUsernameNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+    }
+
+    public User getUserByEmail(String email){
+        return usersRepository.findByEmail(email);
     }
 }

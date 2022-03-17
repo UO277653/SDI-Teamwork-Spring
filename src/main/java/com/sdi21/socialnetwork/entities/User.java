@@ -11,27 +11,25 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @Column(unique = true)
-    private String username;
-
-    private String password;
-
-    @Transient
-    private String passwordConfirm;
 
     private String name;
     private String surname;
-
     private String role;
 
-    public User() {}
-  
-    public User(String username){
-        this.username = username;
-    }
+    @Column (unique = true)
+    private String email; //part 1
 
-    public User(String username, String name, String surname) {
-        this.username = username;
+
+    private String password;
+    @Transient
+    private String passwordConfirm;
+
+
+
+    public User() {}
+
+    public User(String email, String name, String surname) {
+        this.email = email;
         this.name = name;
         this.surname = surname;
     }
@@ -44,13 +42,6 @@ public class User {
         this.role = role;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getName() {
         return name;
@@ -68,10 +59,26 @@ public class User {
         this.surname = surname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}'; 

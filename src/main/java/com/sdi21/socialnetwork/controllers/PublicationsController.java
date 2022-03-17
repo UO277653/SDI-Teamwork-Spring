@@ -46,7 +46,7 @@ public class PublicationsController {
         //Parameter to add Principal principal
         //Uncomment this:
         //  String username = principal.getName();
-        //  User user = usersService.getUserByUsername(username);
+        //  User user = usersService.getUserByEmail(email);
         User user = usersService.getDefaultUser();
         publication.setOp(user);
 
