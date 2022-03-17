@@ -15,41 +15,26 @@
 
     <p>Lista de usuarios:</p>
     <div class="table-responsive">
-        <form action="/user/delete" method="post">
-            <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
-                <thead>
-                <tr>
-                    <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="user : ${userList}">
-
-
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.username}"> 1</td>
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"> Ejercicio 1</td>
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}">10</td>
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}"  ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
-
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.username}"> 1</td>
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"> Ejercicio 1</td>
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}">10</td>
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}"  ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td> <!-- sec:authorize="hasRole('ROLE_ADMIN')" -->
-                </tr>
-                </tbody>
-
-            </table>
-
-            <button  type="submit">Eliminar</button>
-
-            <footer th:replace="fragments/pagination"/>
-
-        </form>
+        <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
+            <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${userList}">
+                <td scope="row" th:text="${user.email}"> 1</td>
+                <td th:text="${user.name}"> Ejercicio 1</td>
+                <td th:text="${user.surname}">10</td>
+            </tr>
+            </tbody>
+        </table>
+        <footer th:replace="fragments/pagination"/>
     </div>
     <div th:if="${#lists.isEmpty(userList)}"> No users </div>
 </div>
