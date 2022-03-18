@@ -13,14 +13,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.error.Mark;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +65,7 @@ public class UsersController {
     public String login(Model model) {
         return "login";
     }
-  
+
     @RequestMapping("/user/list")
     public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText) {
         Page<User> users = usersService.getUsers(pageable);
@@ -90,32 +82,4 @@ public class UsersController {
         return "user/list";
     }
 
-//    @RequestMapping("/admin/list")
-//    public String getListAdmin(Model model) {
-//
-//        List<User> users = usersService.getUsers();
-//        model.addAttribute("userList", users);
-//        List<String> toDeleteUsers = new ArrayList<>();
-//        model.addAttribute("toDeleteUsers", toDeleteUsers);
-//
-//        return "admin/list";
-//    }
-
-    @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
-    public String deleteUser(Model model, @RequestParam Map<String,String> toDeleteUsers, Pageable pageable) {
-
-        List<Long> idsToDelete = new ArrayList<>();
-
-        for (var entry : toDeleteUsers.entrySet()) {
-            idsToDelete.add(Long.valueOf(entry.getValue()));
-        }
-
-        usersService.deleteUsers(idsToDelete);
-
-        Page<User> users = usersService.getUsersWithRole(pageable, "ROLE_USER");
-        model.addAttribute("userList", users.getContent());
-        model.addAttribute("page", users);
-
-        return "user/list";
-    }
 }
