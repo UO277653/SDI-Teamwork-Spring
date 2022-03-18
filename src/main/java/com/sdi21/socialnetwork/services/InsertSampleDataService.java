@@ -37,6 +37,7 @@ public class InsertSampleDataService {
         admin.setPassword("admin");
         usersService.addUser(admin);
         User defaultUser = new User("Default","Default", "Default");
+        defaultUser.setPassword("123456");
         usersService.addUser(defaultUser);
 
         Publication publication = new Publication("Default publication", "Default text");

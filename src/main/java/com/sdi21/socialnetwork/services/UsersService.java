@@ -30,6 +30,7 @@ public class UsersService {
 
     public Page<User> getUsers(Pageable pageable) {
         return usersRepository.findAll(pageable);
+    }
   
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
@@ -64,10 +65,10 @@ public class UsersService {
         return usersRepository.findByEmail("sara@uniovi.es");
     }
 
-    public Page<User> searchUsersByEmailNameAndSurnameWithRole(
-            Pageable pageable, String searchText, String role) {
-        return usersRepository.searchByEmailNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
-    }
+//    public Page<User> searchUsersByEmailNameAndSurnameWithRole(
+//            Pageable pageable, String searchText, String role) {
+//        return usersRepository.searchByEmailNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+//    }
 
     public void deleteAll(){
         usersRepository.deleteAll();
