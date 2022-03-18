@@ -31,6 +31,7 @@ public class UsersService {
     public Page<User> getUsers(Pageable pageable) {
         return usersRepository.findAll(pageable);
     }
+
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
         usersRepository.findAll().forEach(users::add);

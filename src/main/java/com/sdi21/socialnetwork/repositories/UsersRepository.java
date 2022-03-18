@@ -19,5 +19,7 @@ public interface UsersRepository extends CrudRepository<User,Long> {
 
     User findByEmail(String email); //1. registrarse como usuario
 
+    Page<User> findAll(Pageable pageable);
+
     //Page<User> searchByEmailNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
 }

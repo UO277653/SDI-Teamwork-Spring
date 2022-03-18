@@ -48,6 +48,7 @@ public class InsertSampleDataService {
         publication2.setOp(defaultUser);
         publicationsService.addPublication(publication2);
 
+        generateUsers(10);
     }
 
     private void generateUsers(int numberOfUsers) {
