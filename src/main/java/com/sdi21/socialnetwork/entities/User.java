@@ -23,8 +23,6 @@ public class User {
     @Transient
     private String passwordConfirm;
 
-
-
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
 

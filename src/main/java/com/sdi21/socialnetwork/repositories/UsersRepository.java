@@ -8,8 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface UsersRepository extends CrudRepository<User,Long> {
 
-    User findByEmail(String email);
-
     //List<User> findAllByRole(String role);
     @Query("SELECT u FROM User u WHERE u.role = ?1 ORDER BY u.email ASC")
     Page<User> findAllByRole(Pageable pageable, String role);
@@ -21,6 +19,5 @@ public interface UsersRepository extends CrudRepository<User,Long> {
 
     User findByEmail(String email); //1. registrarse como usuario
 
-    Page<User> searchByEmailNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
-
+    //Page<User> searchByEmailNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
 }
