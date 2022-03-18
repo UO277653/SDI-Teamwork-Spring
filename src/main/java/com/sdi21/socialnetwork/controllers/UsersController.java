@@ -68,14 +68,13 @@ public class UsersController {
 
     @RequestMapping("/user/list")
     public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText) {
-        Page<User> users = usersService.getUsers(pageable);
+        Page<User> users;
 
-        //if(searchText != null && !searchText.isEmpty()) {
-        //    users = usersService.searchUsersByEmailNameAndSurnameWithRole(pageable,
-        //            searchText, "ROLE_USER");
-        //} else {
-        //    users = usersService.getUsersWithRole(pageable, "ROLE_USER");
-        //}
+        if(searchText != null && !searchText.isEmpty()) {
+            users = usersService.getUsersByText(pageable, searchText);
+        } else {
+            users = usersService.getUsers(pageable);
+        }
 
         model.addAttribute("userList", users.getContent());
         model.addAttribute("page", users);

@@ -32,6 +32,10 @@ public class UsersService {
         return usersRepository.findAll(pageable);
     }
 
+    public Page<User> getUsersByText(Pageable pageable, String searchText) {
+        return usersRepository.findAll(pageable, '%'+searchText+'%');
+    }
+
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
         usersRepository.findAll().forEach(users::add);
