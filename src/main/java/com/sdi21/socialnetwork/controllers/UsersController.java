@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 public class UsersController {
 
@@ -68,18 +72,36 @@ public class UsersController {
 
     @RequestMapping("/user/list")
     public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText) {
-        Page<User> users = usersService.getUsers(pageable);
+        Page<User> users;
 
-        //if(searchText != null && !searchText.isEmpty()) {
-        //    users = usersService.searchUsersByEmailNameAndSurnameWithRole(pageable,
-        //            searchText, "ROLE_USER");
-        //} else {
-        //    users = usersService.getUsersWithRole(pageable, "ROLE_USER");
-        //}
+        if(searchText != null && !searchText.isEmpty()) {
+            users = usersService.getUsersByText(pageable, searchText);
+        } else {
+            users = usersService.getUsers(pageable);
+        }
 
         model.addAttribute("userList", users.getContent());
         model.addAttribute("page", users);
         return "user/list";
     }
+
+    @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
+    public String deleteUser(Model model, @RequestParam Map<String,String> toDeleteUsers, Pageable pageable) {
+
+        List<Long> idsToDelete = new ArrayList<>();
+
+        for (var entry : toDeleteUsers.entrySet()) {
+            idsToDelete.add(Long.valueOf(entry.getValue()));
+        }
+
+        usersService.deleteUsers(idsToDelete);
+
+        Page<User> users = usersService.getUsersWithRole(pageable, "ROLE_USER");
+        model.addAttribute("userList", users.getContent());
+        model.addAttribute("page", users);
+
+        return getList(model,pageable,"");
+    }
+
 
 }

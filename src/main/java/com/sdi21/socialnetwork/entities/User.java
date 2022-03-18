@@ -23,7 +23,7 @@ public class User {
     @Transient
     private String passwordConfirm;
 
-    @OneToMany(mappedBy = "op")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "op", orphanRemoval = true)
     private List<Publication> publications;
 
     public User() {}
@@ -89,6 +89,14 @@ public class User {
 
     public List<Publication> getPublications() {
         return publications;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

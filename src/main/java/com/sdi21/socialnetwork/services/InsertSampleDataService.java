@@ -37,6 +37,7 @@ public class InsertSampleDataService {
         admin.setPassword("admin");
         usersService.addUser(admin);
         User defaultUser = new User("Default","Default", "Default");
+        defaultUser.setRole(rolesService.getRoles()[0]);
         defaultUser.setPassword("123456");
         usersService.addUser(defaultUser);
 
@@ -48,6 +49,7 @@ public class InsertSampleDataService {
         publication2.setOp(defaultUser);
         publicationsService.addPublication(publication2);
 
+        generateUsers(10);
     }
 
     private void generateUsers(int numberOfUsers) {
