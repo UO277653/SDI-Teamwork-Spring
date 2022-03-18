@@ -75,4 +75,9 @@ public class UsersService {
     public User getUserByEmail(String email){
         return usersRepository.findByEmail(email);
     }
+
+    public void deleteUsers(List<Long> ids){
+        usersRepository.deleteAllById(ids);
+
+    }
 }

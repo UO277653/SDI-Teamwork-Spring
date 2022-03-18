@@ -23,7 +23,7 @@ public class User {
     @Transient
     private String passwordConfirm;
 
-    @OneToMany(mappedBy = "op")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "op", orphanRemoval = true)
     private List<Publication> publications;
 
     public User() {}

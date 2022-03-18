@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 @Controller
 public class UsersController {
 
@@ -80,5 +84,24 @@ public class UsersController {
         model.addAttribute("page", users);
         return "user/list";
     }
+
+    @RequestMapping(value = "/user/delete", method = RequestMethod.POST)
+    public String deleteUser(Model model, @RequestParam Map<String,String> toDeleteUsers, Pageable pageable) {
+
+        List<Long> idsToDelete = new ArrayList<>();
+
+        for (var entry : toDeleteUsers.entrySet()) {
+            idsToDelete.add(Long.valueOf(entry.getValue()));
+        }
+
+        usersService.deleteUsers(idsToDelete);
+
+        Page<User> users = usersService.getUsersWithRole(pageable, "ROLE_USER");
+        model.addAttribute("userList", users.getContent());
+        model.addAttribute("page", users);
+
+        return getList(model,pageable,"");
+    }
+
 
 }
