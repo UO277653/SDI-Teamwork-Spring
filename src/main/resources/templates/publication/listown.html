@@ -6,9 +6,9 @@
 <head th:replace="fragments/head"></head>
 
 <body>
-
+<nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Publicaciones</h2>
+    <h2>Tus publicaciones</h2>
     <p>Lista de usuarios:</p>
     <div class="table-responsive">
         <table class="table table-hover"  id="publicationsTable">
@@ -35,7 +35,7 @@
     <div th:if="${#lists.isEmpty(publicationsList)}"> No publications </div>
     <footer th:replace="fragments/pagination"/>
 </div>
-
+<footer th:replace="fragments/footer"></footer>
 
 
 </body>

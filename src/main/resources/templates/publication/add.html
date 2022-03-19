@@ -4,7 +4,7 @@
 <head th:replace="fragments/head"></head>
 <body>
 <!-- Barra de Navegación superior -->
-
+<nav th:replace="fragments/nav"></nav>
 <div class="container">
     <h2>Agregar publicación</h2>
     <form class="form-horizontal" method="post" action="/publication/add" th:object="${publication}">
@@ -32,5 +32,6 @@
 
     </form>
 </div>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>

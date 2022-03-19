@@ -40,15 +40,15 @@ public class PublicationsController {
     }
 
     @PostMapping(value= "/publication/add")
-    public String addPublication(@ModelAttribute Publication publication, BindingResult result, Model model){
+    public String addPublication(@ModelAttribute Publication publication, BindingResult result, Model model, Principal principal){
         publicationValidator.validate(publication,result);
 
         //This will change when we can log in as an user
         //Parameter to add Principal principal
         //Uncomment this:
-        //  String username = principal.getName();
-        //  User user = usersService.getUserByEmail(email);
-        User user = usersService.getDefaultUser();
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
+
         publication.setOp(user);
 
         if(result.hasErrors()){
@@ -63,10 +63,11 @@ public class PublicationsController {
 
     //List publication------
     @GetMapping("/publication/listown")
-    public String getList(Model model, Pageable pageable){
+    public String getList(Model model, Pageable pageable, Principal principal){
         //This will change when we can log in as an user
         //Parameter to add Principal principal
-        User user = usersService.getDefaultUser();
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
 
         Page<Publication> publications = publicationsService.getPublicationsByEmail(pageable, user.getEmail());
                 // new PageImpl<>(user.getPublications());
