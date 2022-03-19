@@ -38,9 +38,13 @@ public class InsertSampleDataService {
         admin.setPassword("admin");
         usersService.addUser(admin);
 
-
         generateUsers(15);
         generatePublications(10); //10 for each user
+
+        User defaultUser = new User("default@email.com", "Default", "Default");
+        defaultUser.setPassword("123456");
+        defaultUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(defaultUser);
     }
 
     private void generateUsers(int numberOfUsers) {
