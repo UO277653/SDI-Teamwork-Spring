@@ -13,9 +13,9 @@
 
     <form class="form-inline" action="/publication/list">
         <div class="form-group">
-            <input name="searchTextPub" type="text" class="form-control" size="50" placeholder="Search">
+            <input id="searchTextPub" name="searchTextPub" type="text" class="form-control" size="50" placeholder="Search">
         </div>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+        <button id="searchBtn" type="submit" class="btn btn-primary">Buscar</button>
     </form>
 
     <div class="table-responsive">
@@ -26,8 +26,8 @@
                 <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col">Texto</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Email</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Estado</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Recomendaciones</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Recomendar</th>
+                <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col">Recomendaciones</th>
+                <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col">Recomendar</th>
                 <th scope="col">Fecha</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -39,12 +39,18 @@
                 <td scope="row" th:text="${publication.getTitle()}"></td>
                 <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getText()}"></td>
                 <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getOp().getEmail()}"></td>
-                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
-                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
+                <td th:id="${'state'+publication.getId()}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
+                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
                 <td th:text="${publication.getDate()}"></td>
-                <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row"><a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}">Aceptada</a></td>
-                <td th:unless="${publication.getState().equals('Moderada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row"><a th:id="${'moderatePublication' + publication.id}" class="dropdown-item" th:href="${'/publication/moderate/' + publication.id}">Moderada</a></td>
-                <td th:unless="${publication.getState().equals('Censurada')}" sec:authorize="hasRole('ROLE_ADMIN')"scope="row"><a th:id="${'censorPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/censor/' + publication.id}">Censurada</a></td>
+                <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row">
+                    <a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}">Aceptada</a>
+                </td>
+                <td th:unless="${publication.getState().equals('Moderada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row">
+                    <a th:id="${'moderatePublication' + publication.id}" class="dropdown-item" th:href="${'/publication/moderate/' + publication.id}">Moderada</a>
+                </td>
+                <td th:unless="${publication.getState().equals('Censurada')}" sec:authorize="hasRole('ROLE_ADMIN')"scope="row">
+                    <a th:id="${'censorPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/censor/' + publication.id}">Censurada</a>
+                </td>
             </tr>
             </tbody>
         </table>

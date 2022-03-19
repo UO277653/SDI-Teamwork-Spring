@@ -36,10 +36,6 @@ public class PublicationsService {
     }
 
 
-    public List<Publication> getPublicationsByEmail(String email){
-        return usersRepository.findByEmail(email).getPublications();
-    }
-
     public Page<Publication> getPublicationsByEmail(Pageable pageable, String email){
         return publicationsRepository.findByUserEmail(pageable, email);
     }
