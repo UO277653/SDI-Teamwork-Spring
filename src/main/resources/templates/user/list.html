@@ -15,7 +15,7 @@
         <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
 
-    <p>Lista de usuarios:</p>
+    <p th:text="#{label.userList}"></p>
     <div class="table-responsive">
         <form action="/user/delete" method="post">
             <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
