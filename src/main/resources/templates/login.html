@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" th:text="#{label.login}"></button>
             </div>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
