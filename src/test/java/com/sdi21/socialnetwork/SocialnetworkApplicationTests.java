@@ -308,26 +308,47 @@ class SocialnetworkApplicationTests {
 	@Test
 	void PRUEBA24(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "Default", "123456");
-		driver.navigate().to("localhost:8090/publication/add");
-
-		PO_PublicationView.fillAddPublicationForm(driver, "Dancing on the club", "Having fun with the besties, ;) ");
+		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
 
 		driver.navigate().to("localhost:8090/publication/listown");
 		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
-		Assertions.assertTrue(publications == 3);
+		Assertions.assertTrue(publications == 0);
+		driver.navigate().to("localhost:8090/publication/add");
+		PO_PublicationView.fillAddPublicationForm(driver, "Dancing on the club", "Having fun with the besties, ;) ");
+
+		driver.navigate().to("localhost:8090/publication/listown");
+		publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		Assertions.assertTrue(publications == 1);
 
 	}
 
 	@Test
 	void PRUEBA25(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "Default", "123456");
+		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
 		driver.navigate().to("localhost:8090/publication/add");
 
 		PO_PublicationView.fillAddPublicationForm(driver, " ", " ");
 
-		PO_View.getP().getString("Error.createPublication.title.invalid", PO_Properties.getSPANISH());
-		PO_View.getP().getString("Error.createPublication.text.invalid", PO_Properties.getSPANISH());
+		String checkText = PO_PublicationView.getP().getString("Error.createPublication.text.invalid", PO_Properties.getSPANISH())
+				+ "\n"+ PO_PublicationView.getP().getString("Error.createPublication.title.invalid", PO_Properties.getSPANISH());
+
+		List<WebElement> list = driver.findElements(By.id("wrongTextMessage"));
+		String result = list.get(0).getText();
+		Assertions.assertEquals(checkText , result );
+
+	}
+
+	@Test
+	void PRUEBA26(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		driver.navigate().to("localhost:8090/publication/listown");
+		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 1);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 2);
+
+		Assertions.assertTrue( publications == 10);
 	}
 }
