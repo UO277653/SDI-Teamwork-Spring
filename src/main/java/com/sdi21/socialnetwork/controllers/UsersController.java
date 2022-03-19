@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,14 +40,24 @@ public class UsersController {
     @Autowired
     SecurityService securityService;
 
-    //1. Registrarse como usuario
+    /**
+     * 1. Registrarse como usuario
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
         model.addAttribute("user", new User());
         return "signup";
     }
 
-    //1. Registrarse como usuario
+    /**
+     * 1. Registrarse como usuario.
+     *      No es posible el registro de usuarios con perfil de administrador.
+     * @param user
+     * @param result
+     * @return
+     */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signup(@Validated User user, BindingResult result) {
         signUpFormValidator.validate(user, result);
@@ -60,13 +72,34 @@ public class UsersController {
 
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
     public String home(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+        //TODO opciones de usuario
         return "home";
     }
 
+    /**
+     * 2. Inicio de sesión
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
+        return "login";
+    }
+
+
+
+    @RequestMapping("/login_error")
+    public String login(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        String errorMessage = null;
+        if (session != null) {
+            AuthenticationException ex = (AuthenticationException) session
+                    .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+            if (ex != null) {
+                errorMessage = ex.getMessage();
+            }
+        }
+        model.addAttribute("errorMessage", errorMessage);
         return "login";
     }
 
