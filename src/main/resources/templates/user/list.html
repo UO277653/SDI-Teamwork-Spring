@@ -41,7 +41,7 @@
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"> Ejercicio 1</td>
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}">10</td>
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
-                    <td><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" ><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
                 </tr>
                 </tbody>
 

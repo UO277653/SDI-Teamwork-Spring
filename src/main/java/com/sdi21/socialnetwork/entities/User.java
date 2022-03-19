@@ -128,10 +128,6 @@ public class User {
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
 
-    public List<Publication> getPublications() {
-        return publications;
-    }
-
     //@ManyToMany(mappedBy = "friends")
     //private List<User> friends;
 

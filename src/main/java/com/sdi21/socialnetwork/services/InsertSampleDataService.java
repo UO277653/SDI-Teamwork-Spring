@@ -39,12 +39,15 @@ public class InsertSampleDataService {
         usersService.addUser(admin);
 
         generateUsers(15);
-        generatePublications(10); //10 for each user
 
         User defaultUser = new User("default@email.com", "Default", "Default");
         defaultUser.setPassword("123456");
         defaultUser.setRole(rolesService.getRoles()[0]);
         usersService.addUser(defaultUser);
+
+        generatePublications(10); //10 for each user
+
+
     }
 
     private void generateUsers(int numberOfUsers) {
@@ -72,5 +75,11 @@ public class InsertSampleDataService {
                 publicationsService.addPublication(publication);
             }
         }
+
+        // NECESSARY FOR TESTING
+        Publication p = new Publication("Publication censored", "This is censored");
+        p.setState(rolesService.getPublicationStatus()[2]);
+        p.setOp(usersService.getUserByEmail("default@email.com"));
+        publicationsService.addPublication(p);
     }
 }

@@ -81,11 +81,10 @@ public class PublicationsController {
     }
 
     @GetMapping("/publication/list/{id}")
-    public String getList(Model model, @PathVariable Long id){
+    public String getList(Model model, @PathVariable Long id, Pageable pageable){
 
         User user = usersService.getUser(id);
-        Page<Publication> publications = new PageImpl<>(user.getPublications());
-
+        Page<Publication> publications = publicationsService.getPublicationsByEmail(pageable, user.getEmail());
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("user", user);
         model.addAttribute("page",publications );
