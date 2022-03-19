@@ -8,13 +8,13 @@
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Publicaciones del usuario: <div class=“text-center” th:text="${user.email}"></div> </h2>
-    <p> </p>
+    <h2>Publicaciones del usuario</h2>
+    <p></p>
     <div class="table-responsive">
         <table class="table table-hover"  id="publicationsTable">
             <thead>
             <tr>
-                <th scope="col">Título</th>
+                <th scope="col">Titulo</th>
                 <th scope="col">Texto</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Recomendaciones</th>

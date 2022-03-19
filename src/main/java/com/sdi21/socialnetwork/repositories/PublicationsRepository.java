@@ -11,4 +11,6 @@ public interface PublicationsRepository extends CrudRepository<Publication,Long>
 
     @Query("SELECT p FROM Publication p WHERE p.op.email LIKE ?1")
     Page<Publication> findByUserEmail(Pageable pageable, String email);
+
+    Page<Publication> findAll(Pageable pageable);
 }

@@ -17,7 +17,17 @@
                    aria-haspopup="true" aria-expanded="false"> Usuario
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/user/list">Listado de usuarios</a>
+                    <a id="listUsersOption"class="dropdown-item" href="/user/list">Listado de usuarios</a>
+                </div>
+            </li>
+
+            <li id= "publication-menu" class="nav-item dropdown" >
+                <a class="nav-link dropdown-toggle" href="#" id="publicationDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false"> Publicaciones
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a id="listPublicationOption"class="dropdown-item" href="/publication/listown">Publicaciones propias</a>
+                    <a id="addPublication"class="dropdown-item" href="/publication/add">Añadir publicaión</a>
                 </div>
             </li>
 

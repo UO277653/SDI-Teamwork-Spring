@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -36,34 +38,8 @@ public class InsertSampleDataService {
         admin.setPassword("admin");
         usersService.addUser(admin);
 
-        User defaultUser = new User("Default","Default", "Default");
-        defaultUser.setRole(rolesService.getRoles()[0]);
-        defaultUser.setPassword("123456");
-        usersService.addUser(defaultUser);
-
-        User defaultUser2 = new User("Default2","Default2", "Default2");
-        defaultUser2.setRole(rolesService.getRoles()[0]);
-        defaultUser2.setPassword("123456");
-        defaultUser2.setId(5);
-        usersService.addUser(defaultUser2);
-
-        Publication publication = new Publication("Default publication", "Default text");
-        publication.setOp(defaultUser);
-        publicationsService.addPublication(publication);
-
-        Publication publication2 = new Publication("Default publication 2", "Default text 2");
-        publication2.setOp(defaultUser);
-        publicationsService.addPublication(publication2);
-
-        Publication publication3 = new Publication("Default publication 3", "Default text 3");
-        publication.setOp(defaultUser2);
-        publicationsService.addPublication(publication3);
-
-        Publication publication4 = new Publication("Default publication 4", "Default text 4");
-        publication2.setOp(defaultUser2);
-        publicationsService.addPublication(publication4);
-
-        generateUsers(10);
+        generateUsers(15);
+        generatePublications(10); //10 for each user
     }
 
     private void generateUsers(int numberOfUsers) {
@@ -77,6 +53,19 @@ public class InsertSampleDataService {
             user.setPassword(password);
             user.setPasswordConfirm(password);
             usersService.addUser(user);
+        }
+    }
+
+    private void generatePublications(int numberOfPublications) {
+        List<User> users = usersService.findAllUserRole();
+        for (User u : users){
+            for(int i = 1; i <= numberOfPublications; i++){
+                String title = String.format("Publication %d, %s", i, u.getName());
+                String text = String.format("%d. My publication: %s", i, u.getEmail());
+                Publication publication = new Publication(title, text);
+                publication.setOp(u);
+                publicationsService.addPublication(publication);
+            }
         }
     }
 }

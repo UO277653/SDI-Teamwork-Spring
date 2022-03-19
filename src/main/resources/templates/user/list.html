@@ -6,24 +6,24 @@
 
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Usuarios</h2>
+    <h2 th:text="#{label.users}"></h2>
 
     <form class="form-inline" action="/user/list">
         <div class="form-group">
             <input name="searchText" type="text" class="form-control" size="50" placeholder="Search">
         </div>
-        <button type="submit" class="btn btn-primary">Buscar</button>
+        <button type="submit" class="btn btn-primary" th:text="#{label.search}"></button>
     </form>
 
-    <p>Lista de usuarios:</p>
+    <p th:text="#{label.userList}"></p>
     <div class="table-responsive">
         <form action="/user/delete" method="post">
             <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
                 <thead>
                 <tr>
                     <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Surname</th>
+                    <th scope="col" th:text="#{label.name}"></th>
+                    <th scope="col" th:text="#{label.surname}"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
@@ -41,19 +41,19 @@
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"> Ejercicio 1</td>
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}">10</td>
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
-                    <td><a th:href="${'/publication/list/' +  user.id  }">Publicaciones</a></td>
+                    <td><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
                 </tr>
                 </tbody>
 
             </table>
 
-            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteBtn" type="submit">Eliminar</button>
+            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteBtn" type="submit" th:text="#{label.delete}"></button>
 
             <footer th:replace="fragments/pagination"/>
 
         </form>
     </div>
-    <div th:if="${#lists.isEmpty(userList)}"> No users </div>
+    <div th:if="${#lists.isEmpty(userList)}" th:text="#{label.noUsers}">  </div>
 </div>
 <footer th:replace="fragments/footer"></footer>
 </body>
