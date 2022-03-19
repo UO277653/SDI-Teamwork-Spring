@@ -28,15 +28,15 @@ public class FriendRequest {
 
     public FriendRequest (User sender, User receiver, State state) {
         super();
-        this.sender = new User();
-        this.receiver = new User();
+        this.sender = sender;
+        this.receiver = receiver;
         this.state = State.PENDING;
     }
 
     public FriendRequest (User sender, User receiver) {
         super();
-        this.sender = new User();
-        this.receiver = new User();
+        this.sender = sender;
+        this.receiver = receiver;
     }
 
     public User getSender() {

@@ -1,6 +1,7 @@
 package com.sdi21.socialnetwork.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,10 @@ public class User {
     private String role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender", orphanRemoval = true)
-    private Set<FriendRequest> friendRequest;
+    private Set<FriendRequest> friendRequest = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
+    private Set<FriendRequest> friendRequestReceiver = new HashSet<>();
 
     public User() {}
   
@@ -79,6 +83,22 @@ public class User {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}'; 
+    }
+
+    Set<FriendRequest> _getFriendRequest() {
+        return friendRequest;
+    }
+
+    public Set<FriendRequest> getFriendRequest() {
+        return new HashSet<>(friendRequest);
+    }
+
+    Set<FriendRequest> _getFriendRequestReceiver() {
+        return friendRequestReceiver;
+    }
+
+    public Set<FriendRequest> getFriendRequestReceiver() {
+        return new HashSet<>(friendRequestReceiver);
     }
 
     @OneToMany(mappedBy = "op")
