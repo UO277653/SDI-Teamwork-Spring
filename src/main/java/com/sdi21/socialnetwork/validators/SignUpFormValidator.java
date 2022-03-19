@@ -34,7 +34,7 @@ public class SignUpFormValidator implements Validator {
         }
 
 
-        if (user.getName().length() < 5 || user.getName().length() > 24) {
+        if (user.getName().length() < 4 || user.getName().length() > 24) {
             errors.rejectValue("name", "Error.signup.name.length");
         }
 

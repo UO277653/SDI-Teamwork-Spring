@@ -35,10 +35,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/home")
+                .defaultSuccessUrl("/user/list") //2. la redireccion segun admin o user se hace en el servicio
             .and()
             .logout()
-                .permitAll();
+                .permitAll()
+                .logoutSuccessUrl("/login"); //3. redirigir a la página de login
     }
 
     @Bean
