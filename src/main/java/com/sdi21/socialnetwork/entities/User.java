@@ -16,6 +16,22 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     private String password;
 
     @Transient
@@ -68,6 +84,14 @@ public class User {
         this.name = name;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getSurname() {
         return surname;
     }
@@ -103,6 +127,10 @@ public class User {
 
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
+
+    public List<Publication> getPublications() {
+        return publications;
+    }
 
     //@ManyToMany(mappedBy = "friends")
     //private List<User> friends;

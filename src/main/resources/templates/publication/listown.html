@@ -9,15 +9,15 @@
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
     <h2>Tus publicaciones</h2>
-    <p>Lista de usuarios:</p>
+    <p></p>
     <div class="table-responsive">
         <table class="table table-hover"  id="publicationsTable">
             <thead>
             <tr>
-                <th scope="col">Titulo</th>
+                <th scope="col">Título</th>
                 <th scope="col">Texto</th>
                 <th scope="col">Fecha</th>
-                <th scope="col"></th>
+                <th scope="col">Recomendaciones</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -27,6 +27,7 @@
                 <td scope="row" th:text="${publication.getTitle()}"></td>
                 <td th:text="${publication.getText()}"></td>
                 <td th:text="${publication.getDate()}"></td>
+                <td th:text="${publication.getRecommendations()}"></td>
             </tr>
             </tbody>
         </table>
