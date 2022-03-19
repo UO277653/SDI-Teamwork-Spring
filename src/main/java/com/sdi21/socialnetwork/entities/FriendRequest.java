@@ -17,7 +17,7 @@ public class FriendRequest {
     private User receiver;
     private State state;
 
-    private enum State {
+    public enum State {
         ACCEPTED,
         PENDING;
     }

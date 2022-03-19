@@ -2,6 +2,7 @@ package com.sdi21.socialnetwork.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -23,6 +24,9 @@ public class User {
     private String surname;
 
     private String role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender", orphanRemoval = true)
+    private Set<FriendRequest> friendRequest;
 
     public User() {}
   

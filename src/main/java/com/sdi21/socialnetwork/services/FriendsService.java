@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -24,9 +25,11 @@ public class FriendsService {
     @PostConstruct
     public void init() {
         friendsRepository.save(new FriendRequest());
+        //friendsRepository.save(new FriendRequest(new User("a@gmail.com", "N", "S"), new User("b@gmail.com", "N", "S"), FriendRequest.State.PENDING));
     }
 
     public void addFriend(FriendRequest friendRequest) {
-        usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
+        friendsRepository.save(friendRequest);
+        //usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
     }
 }
