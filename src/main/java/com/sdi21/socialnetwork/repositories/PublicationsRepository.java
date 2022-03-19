@@ -13,4 +13,7 @@ public interface PublicationsRepository extends CrudRepository<Publication,Long>
     Page<Publication> findByUserEmail(Pageable pageable, String email);
 
     Page<Publication> findAll(Pageable pageable);
+
+    @Query("SELECT p from Publication p WHERE (LOWER(p.op.email) LIKE LOWER(?1) OR LOWER(p.title) LIKE LOWER(?1)) OR LOWER(p.state) LIKE LOWER(?1)")
+    Page<Publication> findAll(Pageable pageable, String s);
 }

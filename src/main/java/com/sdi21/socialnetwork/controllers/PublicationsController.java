@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.LinkedList;
 
 @Controller
 public class PublicationsController {
@@ -93,10 +92,15 @@ public class PublicationsController {
     }
 
     @GetMapping("/publication/list")
-    public String getListPublications(Model model, Pageable pageable){
+    public String getListPublications(Model model, Pageable pageable, @RequestParam(required = false) String searchTextPub){
 
-        Page<Publication> publications = publicationsService.getPublications(pageable);
+        Page<Publication> publications;
 
+        if(searchTextPub != null && !searchTextPub.isEmpty()) {
+            publications = publicationsService.getPublicationsByText(pageable, searchTextPub);
+        } else {
+            publications = publicationsService.getPublications(pageable);
+        }
 
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("page",publications);
@@ -107,26 +111,24 @@ public class PublicationsController {
     @GetMapping("/publication/accept/{id}")
     public String switchToAccepted(Model model, @PathVariable Long id, Pageable pageable){
 
-        publicationsService.getPublicationById(id).get().setState(rolesService.getPublicationStatus()[0]);
+        publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[0]);
 
-        return getListPublications(model, pageable);
+        return getListPublications(model, pageable, null);
     }
 
     @GetMapping("/publication/moderate/{id}")
     public String switchToModerate(Model model, @PathVariable Long id, Pageable pageable){
 
-        publicationsService.getPublicationById(id).get().setState(rolesService.getPublicationStatus()[1]);
+        publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[1]);
 
-        return getListPublications(model, pageable);
+        return getListPublications(model, pageable, null);
     }
 
     @GetMapping("/publication/censor/{id}")
     public String switchToCensored(Model model, @PathVariable Long id, Pageable pageable){
 
-        publicationsService.getPublicationById(id).get().setState(rolesService.getPublicationStatus()[2]);
+        publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[2]);
 
-        return getListPublications(model, pageable);
+        return getListPublications(model, pageable, null);
     }
-
-
 }

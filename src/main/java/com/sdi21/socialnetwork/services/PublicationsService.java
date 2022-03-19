@@ -1,6 +1,7 @@
 package com.sdi21.socialnetwork.services;
 
 import com.sdi21.socialnetwork.entities.Publication;
+import com.sdi21.socialnetwork.entities.User;
 import com.sdi21.socialnetwork.repositories.PublicationsRepository;
 import com.sdi21.socialnetwork.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,14 @@ public class PublicationsService {
     public Optional<Publication> getPublicationById(Long id){
 
         return publicationsRepository.findById(id);
+    }
+
+    public Page<Publication> getPublicationsByText(Pageable pageable, String searchText) {
+        return publicationsRepository.findAll(pageable, '%'+searchText+'%');
+    }
+
+    public void setPublicationState(Long id, String publicationStatus) {
+
+        usersRepository.setPublicationState(id, publicationStatus);
     }
 }
