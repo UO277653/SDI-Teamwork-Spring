@@ -28,6 +28,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a id="listPublicationOption"class="dropdown-item" href="/publication/listown">Publicaciones propias</a>
                     <a id="addPublication"class="dropdown-item" href="/publication/add">Añadir publicaión</a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" id="listPublications" class="dropdown-item" href="/publication/list">Listado de publicaciones</a>
                 </div>
             </li>
 
