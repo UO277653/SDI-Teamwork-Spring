@@ -339,4 +339,9 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText , result );
 
 	}
+
+	@Test
+	void PRUEBA26(){
+
+	}
 }
