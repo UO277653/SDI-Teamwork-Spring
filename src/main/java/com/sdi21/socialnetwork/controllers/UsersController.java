@@ -87,22 +87,6 @@ public class UsersController {
     }
 
 
-
-    @RequestMapping("/login_error")
-    public String login(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession(false);
-        String errorMessage = null;
-        if (session != null) {
-            AuthenticationException ex = (AuthenticationException) session
-                    .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
-            if (ex != null) {
-                errorMessage = ex.getMessage();
-            }
-        }
-        model.addAttribute("errorMessage", errorMessage);
-        return "login";
-    }
-
     @RequestMapping("/user/list")
     public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText) {
         Page<User> users;

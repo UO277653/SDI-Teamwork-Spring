@@ -31,11 +31,11 @@ public class InsertSampleDataService {
     @PostConstruct
     public void init() {
 
-
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setRole(rolesService.getRoles()[1]);
         admin.setPassword("admin");
         usersService.addUser(admin);
+
         User defaultUser = new User("Default","Default", "Default");
         defaultUser.setRole(rolesService.getRoles()[0]);
         defaultUser.setPassword("123456");
@@ -53,15 +53,15 @@ public class InsertSampleDataService {
     }
 
     private void generateUsers(int numberOfUsers) {
-        for(int i = 0; i < numberOfUsers; i++) {
+        for(int i = 1; i <= numberOfUsers; i++) {
             String name = NAMES[new Random().nextInt(NAMES.length)];
             String surname = SURNAMES[new Random().nextInt(SURNAMES.length)];
-            String email = String.format("user%02d@email.com", i + 1);
+            String email = String.format("user%02d@email.com", i);
             User user = new User(email, name, surname);
             user.setRole(rolesService.getRoles()[0]); // ROLE_USER
-            user.setPassword("123456");
-            user.setPasswordConfirm("123456");
-            //System.out.println(user);
+            String password = String.format("user%02d", i);
+            user.setPassword(password);
+            user.setPasswordConfirm(password);
             usersService.addUser(user);
         }
     }

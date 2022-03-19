@@ -24,7 +24,7 @@ public class SignUpFormValidator implements Validator {
         User user = (User) target;
 
         //Email, name and surname must not be empty
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "Error.signup.email.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "Error.empty");
 

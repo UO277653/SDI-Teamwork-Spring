@@ -33,7 +33,7 @@ public class CustomConfiguration implements WebMvcConfigurer {
         argumentResolvers.add(resolver);
     }
 
-    /*@Bean
+    @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(new Locale("es", "ES"));
@@ -49,5 +49,5 @@ public class CustomConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
-    }*/
+    }
 }
