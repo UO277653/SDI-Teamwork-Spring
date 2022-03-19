@@ -70,39 +70,19 @@ class SocialnetworkApplicationTests {
 
 	/**
 	 * 1. Registro de usuario con datos inválidos:
-	 * 		email vacío
+	 * 		Campos vacíos (email, nombre, apellidos)
 	 */
 	@Test
 	@Order(2)
-	void prueba2_1() {
-		//TODO
+	void prueba2() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		PO_SignUpView.fillForm(driver, "", "Paco", "Perez", "123456", "123456");
-//		id="surname-error"
+		PO_SignUpView.fillForm(driver, "", "", "", "123456", "123456");
 
-		List<WebElement> result = driver.findElements(By.id("surname-error") );
-//		List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.signup.email.empty", PO_Properties.getSPANISH() );
-		String checkText = PO_HomeView.getP().getString("Error.signup.email.empty", PO_Properties.getSPANISH());
+		String checkText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText , result.get(0).getText());
 	}
 
-	/**
-	 * 1. Registro de usuario con datos inválidos:
-	 * 		nombre vacío
-	 */
-	@Test
-	void prueba2_2() {
-		//TODO
-	}
-
-	/**
-	 * 1. Registro de usuario con datos inválidos:
-	 * 		apellidos vacíos
-	 */
-	@Test
-	void prueba2_3() {
-		//TODO
-	}
 
 	/**
 	 * 1. Registro de usuario con datos inválidos
@@ -145,7 +125,7 @@ class SocialnetworkApplicationTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
-		String checkText = "Lista de usuarios:";
+		String checkText = PO_HomeView.getP().getString("label.userList", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -160,7 +140,7 @@ class SocialnetworkApplicationTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
 
-		String checkText = "Lista de usuarios:";
+		String checkText = PO_HomeView.getP().getString("label.userList", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -172,7 +152,12 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(7)
 	public void prueba7(){
-		//TODO
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "", "");
+
+		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
 	/**
@@ -201,7 +186,7 @@ class SocialnetworkApplicationTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
 
-		String checkText = "Lista de usuarios:";
+		String checkText = PO_HomeView.getP().getString("label.userList", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 
@@ -221,7 +206,17 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(10)
 	public void prueba10(){
-		//TODO
+		//Sin estar autenticado el boton no está presente
+		List<WebElement> boton = driver.findElements(By.id("logoutBtn"));
+		Assertions.assertEquals(0, boton.size());
+
+		//Nos identificamos
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		//Ahora el botón si está presente
+		boton = driver.findElements(By.id("logoutBtn"));
+		Assertions.assertEquals(1, boton.size());
 	}
 
 	@Test
@@ -242,7 +237,7 @@ class SocialnetworkApplicationTests {
 		elementos += PO_UserListView.countUsersOnPage(driver, 2);
 
 		// TERMINAR CON ASSERT
-		Assertions.assertEquals(13, elementos);
+		Assertions.assertEquals(15, elementos);
 	}
 
 	@Test
