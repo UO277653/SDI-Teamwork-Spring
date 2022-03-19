@@ -1,5 +1,6 @@
 package com.sdi21.socialnetwork;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
@@ -17,16 +18,22 @@ import java.util.Locale;
 @Configuration
 public class CustomConfiguration implements WebMvcConfigurer {
 
+    @Value("${spring.data.web.pageable.page-parameter}")
+    private int pageParameter;
+
+    @Value("${spring.data.web.pageable.default-page-size}")
+    private int defaultPageSize;
+
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        int page = 0;
-        int size = 5;
+        int page = pageParameter;
+        int size = defaultPageSize;
         PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
         resolver.setFallbackPageable(PageRequest.of(page, size));
         argumentResolvers.add(resolver);
     }
 
-    /*@Bean
+    @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
         localeResolver.setDefaultLocale(new Locale("es", "ES"));
@@ -42,5 +49,5 @@ public class CustomConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
-    }*/
+    }
 }

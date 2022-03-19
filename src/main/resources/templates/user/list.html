@@ -3,6 +3,8 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="fragments/head"/>
 <body>
+
+<nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
     <h2>Usuarios</h2>
 
@@ -15,28 +17,44 @@
 
     <p>Lista de usuarios:</p>
     <div class="table-responsive">
-        <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
-            <thead>
-            <tr>
-                <th scope="col">Email</th>
-                <th scope="col">Name</th>
-                <th scope="col">Surname</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user : ${userList}">
-                <td scope="row" th:text="${user.email}"> 1</td>
-                <td th:text="${user.name}"> Ejercicio 1</td>
-                <td th:text="${user.surname}">10</td>
-            </tr>
-            </tbody>
-        </table>
-        <footer th:replace="fragments/pagination"/>
+        <form action="/user/delete" method="post">
+            <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
+                <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${userList}">
+
+
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row" th:text="${user.email}"> 1</td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.name}"> Ejercicio 1</td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.surname}">10</td>
+
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.email}"> 1</td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"> Ejercicio 1</td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}">10</td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
+                    <td><a th:href="${'/publication/list/' +  user.id  }">Publicaciones</a></td>
+                </tr>
+                </tbody>
+
+            </table>
+
+            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteBtn" type="submit">Eliminar</button>
+
+            <footer th:replace="fragments/pagination"/>
+
+        </form>
     </div>
     <div th:if="${#lists.isEmpty(userList)}"> No users </div>
 </div>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>

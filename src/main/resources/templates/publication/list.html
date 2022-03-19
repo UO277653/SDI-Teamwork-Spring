@@ -1,0 +1,42 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+
+<head th:replace="fragments/head"></head>
+
+<body>
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2>Publicaciones del usuario</h2>
+    <p>Lista de usuarios:</p>
+    <div class="table-responsive">
+        <table class="table table-hover"  id="publicationsTable">
+            <thead>
+            <tr>
+                <th scope="col">Titulo</th>
+                <th scope="col">Texto</th>
+                <th scope="col">Fecha</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="publication : ${publicationsList}">
+                <td scope="row" th:text="${publication.getTitle()}"></td>
+                <td th:text="${publication.getText()}"></td>
+                <td th:text="${publication.getDate()}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div th:if="${#lists.isEmpty(publicationsList)}"> No publications </div>
+    <footer th:replace="fragments/pagination"/>
+</div>
+<footer th:replace="fragments/footer"></footer>
+
+
+</body>
+</html>
