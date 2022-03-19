@@ -314,7 +314,6 @@ class SocialnetworkApplicationTests {
 		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
 		Assertions.assertTrue(publications == 0);
 		driver.navigate().to("localhost:8090/publication/add");
-
 		PO_PublicationView.fillAddPublicationForm(driver, "Dancing on the club", "Having fun with the besties, ;) ");
 
 		driver.navigate().to("localhost:8090/publication/listown");
@@ -342,6 +341,14 @@ class SocialnetworkApplicationTests {
 
 	@Test
 	void PRUEBA26(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
 
+		driver.navigate().to("localhost:8090/publication/listown");
+		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 1);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 2);
+
+		Assertions.assertTrue( publications == 10);
 	}
 }
