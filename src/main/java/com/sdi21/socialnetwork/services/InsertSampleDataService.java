@@ -38,7 +38,6 @@ public class InsertSampleDataService {
         admin.setPassword("admin");
         usersService.addUser(admin);
 
-
         generateUsers(15);
         generatePublications(10); //10 for each user
     }

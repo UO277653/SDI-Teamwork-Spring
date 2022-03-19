@@ -11,14 +11,40 @@
     <h2 sec:authorize="!hasRole('ROLE_ADMIN')">Publicaciones del usuario</h2>
     <h2 sec:authorize="hasRole('ROLE_ADMIN')">Publicaciones del sistema</h2>
     <div class="table-responsive">
-
-        <table th:replace="fragments/publicationsTable"></table>
-
-       
+        <table class="table table-hover"  id="publicationsTable">
+            <thead>
+            <tr>
+                <th scope="col">Título</th>
+                <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col">Texto</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Email</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Estado</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Recomendaciones</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Recomendar</th>
+                <th scope="col">Fecha</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="publication : ${publicationsList}">
+                <td scope="row" th:text="${publication.getTitle()}"></td>
+                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getText()}"></td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getOp().getEmail()}"></td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
+                <td th:text="${publication.getDate()}"></td>
+                <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row"><a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}">Aceptada</a></td>
+                <td th:unless="${publication.getState().equals('Moderada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row"><a th:id="${'moderatePublication' + publication.id}" class="dropdown-item" th:href="${'/publication/moderate/' + publication.id}">Moderada</a></td>
+                <td th:unless="${publication.getState().equals('Censurada')}" sec:authorize="hasRole('ROLE_ADMIN')"scope="row"><a th:id="${'censorPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/censor/' + publication.id}">Censurada</a></td>
+            </tr>
+            </tbody>
+        </table>
 
     </div>
     <div th:if="${#lists.isEmpty(publicationsList)}"> No publications </div>
     <footer th:replace="fragments/pagination"/>
+  
 </div>
 <footer th:replace="fragments/footer"></footer>
 

@@ -88,6 +88,7 @@ public class PublicationsController {
         Page<Publication> publications = new PageImpl<>(user.getPublications());
 
         model.addAttribute("publicationsList", publications.getContent());
+        model.addAttribute("user", user);
         model.addAttribute("page",publications );
         return "publication/list";
     }

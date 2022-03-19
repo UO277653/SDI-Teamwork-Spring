@@ -83,4 +83,11 @@ public class UsersService {
         usersRepository.deleteAllById(ids);
 
     }
+
+    public void addFriend (User receiver, User sender) {
+        usersRepository.save(receiver);
+        usersRepository.save(sender);
+        //receiver.getFriends().add(sender);
+        //sender.getFriends().add(receiver);
+    }
 }

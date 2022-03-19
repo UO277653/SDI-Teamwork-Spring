@@ -14,22 +14,21 @@
 
             <li id= "user-menu" class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" th:text="#{label.user}">
+                   aria-haspopup="true" aria-expanded="false"> Usuario
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a id="listUsersOption"class="dropdown-item" href="/user/list" th:text="#{label.userList}"></a>
+                    <a id="listUsersOption"class="dropdown-item" href="/user/list">Listado de usuarios</a>
                 </div>
             </li>
 
             <li id= "publication-menu" class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" href="#" id="publicationDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false" th:text="#{label.pubications}">
+                   aria-haspopup="true" aria-expanded="false"> Publicaciones
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a id="listPublicationOption"class="dropdown-item" href="/publication/listown" th:text="#{label.ownPublications}"></a>
                     <a id="addPublication"class="dropdown-item" href="/publication/add" th:tect="#{label.addPublication}"></a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" id="listPublications" class="dropdown-item" href="/publication/list" th:text="#{label.publicationsList}"></a>
-
                 </div>
             </li>
 
@@ -46,30 +45,30 @@
                 <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" id="btnEnglish" value="EN">
                         <img th:src="@{/images/if_uk_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-                        <span th:text="#{language.en}"></span>
+                        <span th:text="#{language.en}">Inglés</span>
                     </a>
                     <a class="dropdown-item" id="btnSpanish" value="ES">
                         <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-                        <span th:text="#{language.es}"></span>
+                        <span th:text="#{language.es}">Español</span>
                     </a>
                 </div>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/signup" >
+                <a class="nav-link" href="/signup" th:text="#{signup.message}">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span th:text="#{signup.message}"></span>
+                    <span>Registrate</span>
                 </a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/login">
+                <a class="nav-link" href="/login" th:text="#{login.message}">
                     <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
-                    <span th:text="#{login.message}"></span>
+                    <span>Identifícate</span>
                 </a>
             </li>
-            <li id="logoutBtn" sec:authorize="isAuthenticated()" class="nav-item">
+            <li sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
-                    <span th:text="#{logout.message}"></span>
+                    <span>Desconectar</span>
                 </a>
             </li>
         </ul>
