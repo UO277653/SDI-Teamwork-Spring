@@ -24,7 +24,10 @@ class SocialnetworkApplicationTests {
 //	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
-	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+
+	//Diego
+	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox, Geckodriver);
 	static String URL = "http://localhost:8090";
@@ -305,4 +308,31 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals("http://localhost:8090/user/list?page=1", driver.getCurrentUrl()); // Nos aseguramos de que la segunda era la última página
 	}
 
+
+
+	@Test
+	void PRUEBA24(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "Default", "123456");
+		driver.navigate().to("localhost:8090/publication/add");
+
+		PO_PublicationView.fillAddPublicationForm(driver, "Dancing on the club", "Having fun with the besties, ;) ");
+
+		driver.navigate().to("localhost:8090/publication/listown");
+		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		Assertions.assertTrue(publications == 3);
+
+	}
+
+	@Test
+	void PRUEBA25(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "Default", "123456");
+		driver.navigate().to("localhost:8090/publication/add");
+
+		PO_PublicationView.fillAddPublicationForm(driver, " ", " ");
+
+		PO_View.getP().getString("Error.createPublication.title.invalid", PO_Properties.getSPANISH());
+		PO_View.getP().getString("Error.createPublication.text.invalid", PO_Properties.getSPANISH());
+	}
 }

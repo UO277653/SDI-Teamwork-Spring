@@ -1,0 +1,19 @@
+<table class="table table-hover"  id="publicationsTable">
+    <thead>
+    <tr>
+        <th scope="col">Titulo</th>
+        <th scope="col">Texto</th>
+        <th scope="col">Fecha</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="publication : ${publicationsList}">
+        <td scope="row" th:text="${publication.getTitle()}"></td>
+        <td th:text="${publication.getText()}"></td>
+        <td th:text="${publication.getDate()}"></td>
+    </tr>
+    </tbody>
+</table>
