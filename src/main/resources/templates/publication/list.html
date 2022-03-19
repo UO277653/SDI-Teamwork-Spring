@@ -8,10 +8,13 @@
 <body>
 <nav th:replace="fragments/nav"></nav>
 <div class="container" id="main-container">
-    <h2>Publicaciones del usuario</h2>
-    <p>Lista de usuarios:</p>
+    <h2 sec:authorize="!hasRole('ROLE_ADMIN')">Publicaciones del usuario</h2>
+    <h2 sec:authorize="hasRole('ROLE_ADMIN')">Publicaciones del sistema</h2>
     <div class="table-responsive">
+
         <table th:replace="fragments/publicationsTable"></table>
+
+       
 
     </div>
     <div th:if="${#lists.isEmpty(publicationsList)}"> No publications </div>

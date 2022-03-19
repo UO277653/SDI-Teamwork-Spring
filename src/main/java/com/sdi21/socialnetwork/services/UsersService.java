@@ -21,11 +21,8 @@ public class UsersService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PostConstruct
-    public void init(){
-        usersRepository.save(new User("sara@uniovi.es", "Sara", "González"));
-    }
-
+    @Autowired
+    private RolesService rolesService;
 
 
     public Page<User> getUsers(Pageable pageable) {
@@ -40,6 +37,16 @@ public class UsersService {
         List<User> users = new ArrayList<User>();
         usersRepository.findAll().forEach(users::add);
         return users;
+    }
+
+    public List<User> findAllUserRole() {
+        List<User> all = getUsers();
+        List<User> result = new ArrayList<User>();
+        for(User u : all){
+            if (u.getRole().equals("ROLE_USER"))
+                result.add(u);
+        }
+        return result;
     }
 
     public Page<User> getUsersWithRole(Pageable pageable, String role) {
@@ -63,10 +70,6 @@ public class UsersService {
         return usersRepository.findByEmail("sara@uniovi.es");
     }
 
-//    public Page<User> searchUsersByEmailNameAndSurnameWithRole(
-//            Pageable pageable, String searchText, String role) {
-//        return usersRepository.searchByEmailNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
-//    }
 
     public void deleteAll(){
         usersRepository.deleteAll();

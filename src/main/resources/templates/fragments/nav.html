@@ -14,20 +14,22 @@
 
             <li id= "user-menu" class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Usuario
+                   aria-haspopup="true" aria-expanded="false" th:text="#{label.user}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a id="listUsersOption"class="dropdown-item" href="/user/list">Listado de usuarios</a>
+                    <a id="listUsersOption"class="dropdown-item" href="/user/list" th:text="#{label.userList}"></a>
                 </div>
             </li>
 
             <li id= "publication-menu" class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" href="#" id="publicationDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Publicaciones
+                   aria-haspopup="true" aria-expanded="false" th:text="#{label.pubications}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a id="listPublicationOption"class="dropdown-item" href="/publication/listown">Publicaciones propias</a>
-                    <a id="addPublication"class="dropdown-item" href="/publication/add">Añadir publicaión</a>
+                    <a id="listPublicationOption"class="dropdown-item" href="/publication/listown" th:text="#{label.ownPublications}"></a>
+                    <a id="addPublication"class="dropdown-item" href="/publication/add" th:tect="#{label.addPublication}"></a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" id="listPublications" class="dropdown-item" href="/publication/list" th:text="#{label.publicationsList}"></a>
+
                 </div>
             </li>
 
@@ -44,30 +46,30 @@
                 <div id="languageDropdownMenuButton" class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" id="btnEnglish" value="EN">
                         <img th:src="@{/images/if_uk_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-                        <span th:text="#{language.en}">Inglés</span>
+                        <span th:text="#{language.en}"></span>
                     </a>
                     <a class="dropdown-item" id="btnSpanish" value="ES">
                         <img th:src="@{/images/if_spain_flag.png}" style="border: 0; float: left; margin-right: 15px"/>
-                        <span th:text="#{language.es}">Español</span>
+                        <span th:text="#{language.es}"></span>
                     </a>
                 </div>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/signup" th:text="#{signup.message}">
+                <a class="nav-link" href="/signup" >
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span>Registrate</span>
+                    <span th:text="#{signup.message}"></span>
                 </a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/login" th:text="#{login.message}">
+                <a class="nav-link" href="/login">
                     <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
-                    <span>Identifícate</span>
+                    <span th:text="#{login.message}"></span>
                 </a>
             </li>
-            <li sec:authorize="isAuthenticated()" class="nav-item">
+            <li id="logoutBtn" sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
-                    <span>Desconectar</span>
+                    <span th:text="#{logout.message}"></span>
                 </a>
             </li>
         </ul>
