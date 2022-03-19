@@ -15,6 +15,7 @@ public class Publication {
     private String title;
     private String text;
     private Date date;
+    private String state = "Aceptada";
 
     @ManyToOne
     private User op;
@@ -72,6 +73,14 @@ public class Publication {
         this.date = date;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
     @Override
     public String toString() {
         return "Publication{" +
@@ -79,6 +88,7 @@ public class Publication {
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", date=" + date +
+                ", state='" + state + '\'' +
                 ", op=" + op +
                 '}';
     }
