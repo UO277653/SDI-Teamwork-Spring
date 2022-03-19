@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PublicationsService {
@@ -40,5 +41,15 @@ public class PublicationsService {
 
     public Page<Publication> getPublicationsByEmail(Pageable pageable, String email){
         return publicationsRepository.findByUserEmail(pageable, email);
+    }
+
+    public Page<Publication> getPublications(Pageable pageable){
+
+        return publicationsRepository.findAll(pageable);
+    }
+
+    public Optional<Publication> getPublicationById(Long id){
+
+        return publicationsRepository.findById(id);
     }
 }

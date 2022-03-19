@@ -3,6 +3,7 @@ package com.sdi21.socialnetwork.controllers;
 import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
 import com.sdi21.socialnetwork.services.PublicationsService;
+import com.sdi21.socialnetwork.services.RolesService;
 import com.sdi21.socialnetwork.services.UsersService;
 import com.sdi21.socialnetwork.validators.PublicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class PublicationsController {
     @Autowired
     private UsersService usersService;
 
-
+    @Autowired
+    private RolesService rolesService;
 
     //Add publication -----------------
     @GetMapping(value ="/publication/add")
@@ -90,10 +92,41 @@ public class PublicationsController {
         return "publication/list";
     }
 
+    @GetMapping("/publication/list")
+    public String getListPublications(Model model, Pageable pageable){
+
+        Page<Publication> publications = publicationsService.getPublications(pageable);
 
 
+        model.addAttribute("publicationsList", publications.getContent());
+        model.addAttribute("page",publications);
 
+        return "publication/list";
+    }
 
+    @GetMapping("/publication/accept/{id}")
+    public String switchToAccepted(Model model, @PathVariable Long id, Pageable pageable){
+
+        publicationsService.getPublicationById(id).get().setState(rolesService.getPublicationStatus()[0]);
+
+        return getListPublications(model, pageable);
+    }
+
+    @GetMapping("/publication/moderate/{id}")
+    public String switchToModerate(Model model, @PathVariable Long id, Pageable pageable){
+
+        publicationsService.getPublicationById(id).get().setState(rolesService.getPublicationStatus()[1]);
+
+        return getListPublications(model, pageable);
+    }
+
+    @GetMapping("/publication/censor/{id}")
+    public String switchToCensored(Model model, @PathVariable Long id, Pageable pageable){
+
+        publicationsService.getPublicationById(id).get().setState(rolesService.getPublicationStatus()[2]);
+
+        return getListPublications(model, pageable);
+    }
 
 
 }
