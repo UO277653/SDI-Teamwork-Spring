@@ -3,6 +3,7 @@ package com.sdi21.socialnetwork.services;
 import com.sdi21.socialnetwork.entities.FriendRequest;
 import com.sdi21.socialnetwork.entities.User;
 import com.sdi21.socialnetwork.repositories.RequestRepository;
+import org.hibernate.loader.plan.build.internal.LoadGraphLoadPlanBuildingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,6 +26,10 @@ public class RequestService {
 
     public void addRequest(FriendRequest request){
         requestRepository.save(request);
+    }
+
+    public void setFriendRequestAccepted(boolean accepted, Long id) {
+        requestRepository.setFriendRequestAccepted(accepted, id);
     }
 
 

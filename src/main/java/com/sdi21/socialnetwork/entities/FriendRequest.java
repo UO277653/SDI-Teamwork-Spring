@@ -16,6 +16,7 @@ public class FriendRequest {
     @JoinColumn(name ="receiver")
     private User receiver;
     private State state;
+    private boolean accepted;
 
     public enum State {
         ACCEPTED,
@@ -31,6 +32,7 @@ public class FriendRequest {
         this.sender = sender;
         this.receiver = receiver;
         this.state = State.PENDING;
+        this.accepted = false;
     }
 
     public FriendRequest (User sender, User receiver) {
@@ -62,6 +64,10 @@ public class FriendRequest {
     public void setState(State state) {
         this.state = state;
     }
+
+    public boolean isAccepted() { return accepted; }
+
+    public void setAccepted(boolean accepted) { this.accepted = accepted; }
 
     @Override
     public String toString() {

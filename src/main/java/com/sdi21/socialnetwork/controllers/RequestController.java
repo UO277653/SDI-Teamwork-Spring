@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -36,6 +38,12 @@ public class RequestController {
         model.addAttribute("page", requests);
         model.addAttribute("requestList", requests.getContent());
         return "request/list";
+    }
+
+    @PostMapping("/request/list")
+    public String acceptFriendRequest(Model model, @PathVariable Long id, Pageable pageable) {
+        requestService.setFriendRequestAccepted(true, id);
+        return "request/list"; //getFriendRequestList(model, principal, pageable);
     }
 
 }
