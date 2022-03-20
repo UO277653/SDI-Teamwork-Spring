@@ -21,13 +21,13 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	//Adrian
-	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-//	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox, Geckodriver);
 	static String URL = "http://localhost:8090";
@@ -304,11 +304,11 @@ class SocialnetworkApplicationTests {
 	}
 
 
-
+*/
 	@Test
 	void PRUEBA24(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
+		PO_LoginView.fillLoginForm(driver, "nopublications@email.com", "123456");
 
 		driver.navigate().to("localhost:8090/publication/listown");
 		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
@@ -350,7 +350,34 @@ class SocialnetworkApplicationTests {
 		publications += PO_PublicationView.countPubliactionsOnPage(driver, 2);
 
 		Assertions.assertTrue( publications == 10);
-	}*/
+	}
+
+	@Test
+	void PRUEBA27(){
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
+
+		//3 = id of user01
+		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 1);
+		Assertions.assertTrue(publications == 10);
+
+	}
+
+	//THIS FAILS BECAUSE userService.areFriends() is not implemented otherwise it works
+	@Test
+	void PRUEBA28(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
+
+		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+
+		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
 
 	@Test
 	@Order(37)
