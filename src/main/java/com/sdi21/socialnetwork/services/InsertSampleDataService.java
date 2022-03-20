@@ -1,5 +1,6 @@
 package com.sdi21.socialnetwork.services;
 
+import com.sdi21.socialnetwork.entities.FriendRequest;
 import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,12 @@ public class InsertSampleDataService {
     @Autowired
     private PublicationsService publicationsService;
 
+    @Autowired
+    private FriendsService friendsService;
+
+    @Autowired
+    private RequestService requestService;
+
     @PostConstruct
     public void init() {
 
@@ -47,7 +54,7 @@ public class InsertSampleDataService {
 
         generatePublications(10); //10 for each user
 
-
+        generateRequests();
     }
 
     private void generateUsers(int numberOfUsers) {
@@ -81,5 +88,23 @@ public class InsertSampleDataService {
         p.setState(rolesService.getPublicationStatus()[2]);
         p.setOp(usersService.getUserByEmail("default@email.com"));
         publicationsService.addPublication(p);
+    }
+
+    private void generateRequests() {
+        List<User> users = usersService.getUsers();
+        FriendRequest.State state = FriendRequest.State.PENDING;
+
+        FriendRequest fr;
+        for(int i = 0; i < users.size(); i++) {
+            if (!users.get(i).getRole().equals("ROLE_ADMIN")) { //admin can't have friends
+                for (int j = 0; j < users.size(); j++) {
+                    if(i != j) { // can't send friend request to oneself
+                        fr = new FriendRequest(users.get(i), users.get(j), state);
+                        friendsService.addFriend(fr);
+                        requestService.addRequest(fr);
+                    }
+                }
+            }
+        }
     }
 }

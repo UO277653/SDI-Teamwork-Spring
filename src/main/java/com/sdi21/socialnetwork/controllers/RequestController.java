@@ -29,7 +29,7 @@ public class RequestController {
 
     @RequestMapping("/request/list")
     public String getFriendRequestList(Model model, Principal principal, Pageable pageable) {
-        String email = "testPrincipal"; //principal.getName(); //email es getName de la autenticación
+        String email = principal.getName(); //email es getName de la autenticación
         User user = usersService.getUserByEmail(email);
         Page<FriendRequest> requests = requestService.getFriendRequestsForUser(pageable, user);
 
