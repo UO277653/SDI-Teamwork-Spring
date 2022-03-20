@@ -25,9 +25,9 @@
                 <td scope="row" th:text="${user.sender.name} + ' ' + ${user.sender.surname}"></td>
 
 
-                <td th:if="${user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="'Aceptada!'" ></td>
+                <td th:if="${user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.accepted}" ></td>
                 <td th:if="${!user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" >
-                    <a th:href="${'/request/accept/' + user.id}" class="btn btn-success">✓ Aceptar</a>
+                    <a th:href="${'/request/accept/' + user.id}" class="btn btn-success" th:text="'✓' #{label.accept}"></a>
                 </td>
             </tr>
             </tbody>
