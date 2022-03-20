@@ -29,14 +29,6 @@
                 <td th:if="${!user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" >
                     <a th:href="${'/request/accept/' + user.id}" class="btn btn-success">✓ Aceptar</a>
                 </td>
-                <!--
-                <td th:if="${!user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" >
-                    <form class="form" th:action="${'/request/accept/' + user.id}" method="post">
-                        <input type="submit" class="btn btn-success" th:id="${'acceptButton'}" value="✓ Aceptar" >
-                    </form>
-                </td>
-                -->
-
             </tr>
             </tbody>
         </table>
