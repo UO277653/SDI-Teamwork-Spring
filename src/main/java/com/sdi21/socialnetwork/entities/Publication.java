@@ -17,6 +17,7 @@ public class Publication {
     private Date date;
     private String state = "Aceptada";
     private int recommendations;
+    private boolean recommended;
 
     @ManyToOne
     private User op;
@@ -27,7 +28,7 @@ public class Publication {
         this.title = title;
         this.text = text;
         this.recommendations = 0;
-
+        this.recommended = false;
     }
 
     public Publication() {
@@ -86,6 +87,14 @@ public class Publication {
     public int getRecommendations() { return recommendations; }
 
     public void setRecommendations(int recommendations) { this.recommendations = recommendations; }
+
+    public boolean isRecommended() {
+        return recommended;
+    }
+
+    public void setRecommended(boolean recommended) {
+        this.recommended = recommended;
+    }
 
     @Override
     public String toString() {

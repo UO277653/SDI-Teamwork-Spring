@@ -10,6 +10,7 @@
 <div class="container" id="main-container">
     <h2 sec:authorize="!hasRole('ROLE_ADMIN')">Publicaciones del usuario</h2>
     <h2 sec:authorize="hasRole('ROLE_ADMIN')">Publicaciones del sistema</h2>
+    <p></p>
     <div class="table-responsive">
         <table class="table table-hover"  id="publicationsTable">
             <thead>
@@ -18,11 +19,9 @@
                 <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col">Texto</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Email</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Estado</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Recomendaciones</th>
-                <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Recomendar</th>
                 <th scope="col">Fecha</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th sec:authorize="hasRole('ROLE_USER')" scope="col">Recomendaciones</th>
+                <th sec:authorize="hasRole('ROLE_USER')" scope="col">Recomendar</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -32,8 +31,24 @@
                 <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getText()}"></td>
                 <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getOp().getEmail()}"></td>
                 <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
-                <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
                 <td th:text="${publication.getDate()}"></td>
+                <td sec:authorize="hasRole('ROLE_USER')" th:text="${publication.getRecommendations()}"></td>
+                <td sec:authorize="hasRole('ROLE_USER')">
+                    <div th:if="${publication.isRecommended()}">
+                        <button type="button" th:id="${'unrecommendButton'}
+                        "class="btn btn-success">
+                            <a th:href="${'/publication/list/{id}'}"> Recomendada </a>
+                        </button>
+
+                    </div>
+                    <div th:if="${!publication.isRecommended()}">
+                        <button type="button" th:id="${'recommendButton'}
+                        "class="btn btn-success">
+                            <a th:href="${'/publication/list/{id}'}"> Recomendar </a>
+                        </button>
+
+                    </div>
+                </td>
                 <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row"><a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}">Aceptada</a></td>
                 <td th:unless="${publication.getState().equals('Moderada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row"><a th:id="${'moderatePublication' + publication.id}" class="dropdown-item" th:href="${'/publication/moderate/' + publication.id}">Moderada</a></td>
                 <td th:unless="${publication.getState().equals('Censurada')}" sec:authorize="hasRole('ROLE_ADMIN')"scope="row"><a th:id="${'censorPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/censor/' + publication.id}">Censurada</a></td>
