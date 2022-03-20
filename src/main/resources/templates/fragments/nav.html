@@ -26,7 +26,7 @@
                    aria-haspopup="true" aria-expanded="false" th:text="#{label.pubications}"></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a id="listPublicationOption"class="dropdown-item" href="/publication/listown" th:text="#{label.ownPublications}"></a>
-                    <a id="addPublication"class="dropdown-item" href="/publication/add" th:tect="#{label.addPublication}"></a>
+                    <a id="addPublication"class="dropdown-item" href="/publication/add" th:text="#{label.addPublication}"></a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" id="listPublications" class="dropdown-item" href="/publication/list" th:text="#{label.publicationsList}"></a>
                 </div>
             </li>
