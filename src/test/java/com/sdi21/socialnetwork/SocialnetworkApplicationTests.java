@@ -353,6 +353,33 @@ class SocialnetworkApplicationTests {
 	}
 
 	@Test
+	void PRUEBA27(){
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
+
+		//3 = id of user01
+		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 1);
+		Assertions.assertTrue(publications == 10);
+
+	}
+
+	//THIS FAILS BECAUSE userService.areFriends() is not implemented otherwise it works
+	@Test
+	void PRUEBA28(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
+
+		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+
+		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
+
+	@Test
 	@Order(37)
 	void PRUEBA37() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");

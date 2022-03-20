@@ -81,10 +81,18 @@ public class PublicationsController {
     }
 
     @GetMapping("/publication/list/{id}")
-    public String getList(Model model, @PathVariable Long id, Pageable pageable){
+    public String getList(Model model, @PathVariable Long id, Pageable pageable, Principal principal){
 
         User user = usersService.getUser(id);
         Page<Publication> publications = publicationsService.getPublicationsByEmail(pageable, user.getEmail());
+
+        String email = principal.getName();
+        User loggedUser = usersService.getUserByEmail(email);
+
+        if(!usersService.areFriends(user, loggedUser)){
+            return "home";
+        }
+
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("user", user);
         model.addAttribute("page",publications );

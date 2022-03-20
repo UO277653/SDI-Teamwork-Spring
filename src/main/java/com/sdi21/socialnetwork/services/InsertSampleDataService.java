@@ -53,6 +53,10 @@ public class InsertSampleDataService {
         noPublicationsUser.setRole(rolesService.getRoles()[0]);
         usersService.addUser(noPublicationsUser);
 
+        User noFriendsUser = new User("nofriends@email.com", "Default", "Default");
+        noFriendsUser.setPassword("123456");
+        noFriendsUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(noFriendsUser);
 
 
 
