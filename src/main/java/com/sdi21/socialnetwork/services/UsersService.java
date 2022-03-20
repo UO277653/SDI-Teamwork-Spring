@@ -90,4 +90,9 @@ public class UsersService {
         //receiver.getFriends().add(sender);
         //sender.getFriends().add(receiver);
     }
+
+    public boolean areFriends(User user, User loggedUser) {
+        //HAS TO BE IMPLEMENTED
+        return true;
+    }
 }

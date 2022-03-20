@@ -48,6 +48,18 @@ public class InsertSampleDataService {
         generatePublications(10); //10 for each user
 
 
+        User noPublicationsUser = new User("nopublications@email.com", "Default", "Default");
+        noPublicationsUser.setPassword("123456");
+        noPublicationsUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(noPublicationsUser);
+
+        User noFriendsUser = new User("nofriends@email.com", "Default", "Default");
+        noFriendsUser.setPassword("123456");
+        noFriendsUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(noFriendsUser);
+
+
+
     }
 
     private void generateUsers(int numberOfUsers) {
