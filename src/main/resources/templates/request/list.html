@@ -30,8 +30,17 @@
             </thead>
             <tbody>
             <tr th:each="user : ${requestList}">
-                <td scope="row" th:text="${user.sender}"></td>
-                <td th:text="${user.state}"></td>
+                <td scope="row" th:text="${user.sender.name} + ' ' + ${user.sender.surname}"></td>
+
+
+                <td th:if="${user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="'Aceptada!'" ></td>
+                <td th:if="${!user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" >
+                    <form action="#" class="form" th:action="${'/request/accepted/' + user.id}" method="post">
+                        <input type="submit" class="btn btn-success" th:id="${'acceptButton'}" value="✓ Aceptar" >
+                    </form>
+                </td>
+
+
             </tr>
             </tbody>
         </table>

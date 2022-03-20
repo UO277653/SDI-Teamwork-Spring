@@ -69,6 +69,10 @@ public class FriendRequest {
 
     public void setAccepted(boolean accepted) { this.accepted = accepted; }
 
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
+
     @Override
     public String toString() {
         return "FriendRequest{" +
