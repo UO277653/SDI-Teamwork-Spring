@@ -41,7 +41,7 @@
                 <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getOp().getEmail()}"></td>
                 <td th:id="${'state'+publication.getId()}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
                 <td th:text="${publication.getDate()}"></td>
-                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
+                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendationCount()}"></td>
 
                 <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row">
                     <a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}" th:text="#{label.publication.acepted}"></a>
@@ -53,11 +53,14 @@
                     <a th:id="${'censorPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/censor/' + publication.id}" th:text="#{label.publication.censored}"></a>
                 </td>
 
-                <td th:if="${publication.isRecommended()}" sec:authorize="hasRole('ROLE_USER')" th:text="'Recomendada!'"></td>
-                <td th:if="${!publication.isRecommended()}" sec:authorize="hasRole('ROLE_USER')">
+                <td th:if="${publication.isRecommendedBy(user)}" sec:authorize="hasRole('ROLE_USER')" th:text="'Recomendada!'"></td>
+                <td th:if="${!publication.isRecommendedBy(user)}" sec:authorize="hasRole('ROLE_USER')">
+                    <a th:href="${'/publication/recommend/' + publication.id}" class="btn btn-success">✓ Recomendar</a>
+                    <!--
                     <form action="#"  class="form" th:action="${'/publication/recommend/' + publication.id}" method="post">
                         <input type="submit" class="btn btn-success" th:id="${'recommendButton'}" value="Recommend" >
                     </form>
+                    -->
                 </td>
 
 

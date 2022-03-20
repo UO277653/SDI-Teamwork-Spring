@@ -48,6 +48,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
     private Set<FriendRequest> friendRequestReceiver = new HashSet<>();
 
+    @ManyToMany(mappedBy = "recommendations", fetch = FetchType.LAZY,
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private Set<Publication> recommended = new HashSet<>();
+
+
     public User() {}
   
     public User(String email){
@@ -127,6 +132,7 @@ public class User {
 
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
+
 
     //@ManyToMany(mappedBy = "friends")
     //private List<User> friends;
