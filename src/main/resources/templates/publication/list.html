@@ -26,9 +26,9 @@
                 <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col" th:text="#{label.text}"></th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col">Email</th>
                 <th sec:authorize="hasRole('ROLE_ADMIN')" scope="col"  th:text="#{label.status}"></th>
+                <th scope="col" th:text="#{label.date}"></th>
                 <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col" th:text="#{label.recomendations}"></th>
                 <th sec:authorize="!hasRole('ROLE_ADMIN')" scope="col" th:text="#{label.recomend}"></th>
-                <th scope="col" th:text="#{label.date}"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -40,8 +40,9 @@
                 <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getText()}"></td>
                 <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getOp().getEmail()}"></td>
                 <td th:id="${'state'+publication.getId()}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
-                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
                 <td th:text="${publication.getDate()}"></td>
+                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendations()}"></td>
+
                 <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row">
                     <a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}" th:text="#{label.publication.acepted}"></a>
                 </td>
@@ -51,6 +52,15 @@
                 <td th:unless="${publication.getState().equals('Censurada')}" sec:authorize="hasRole('ROLE_ADMIN')"scope="row">
                     <a th:id="${'censorPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/censor/' + publication.id}" th:text="#{label.publication.censored}"></a>
                 </td>
+
+                <td th:if="${publication.isRecommended()}" sec:authorize="hasRole('ROLE_USER')" th:text="'Recomendada!'"></td>
+                <td th:if="${!publication.isRecommended()}" sec:authorize="hasRole('ROLE_USER')">
+                    <form action="#"  class="form" th:action="${'/publication/recommend/' + publication.id}" method="post">
+                        <input type="submit" class="btn btn-success" th:id="${'recommendButton'}" value="Recommend" >
+                    </form>
+                </td>
+
+
             </tr>
             </tbody>
         </table>

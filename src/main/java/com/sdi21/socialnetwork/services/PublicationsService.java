@@ -58,4 +58,9 @@ public class PublicationsService {
 
         usersRepository.setPublicationState(id, publicationStatus);
     }
+
+    public void setPublicationRecommended(Long id, boolean recommended) {
+
+        publicationsRepository.setPublicationRecommended(id, recommended);
+    }
 }

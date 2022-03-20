@@ -91,6 +91,12 @@ public class PublicationsController {
         return "publication/list";
     }
 
+    @PostMapping("/publication/recommend/{id}")
+    public String recommendPublication(Model model, @PathVariable Long id, Pageable pageable) {
+        publicationsService.setPublicationRecommended(id, true);
+        return getListPublications(model, pageable, null);
+    }
+
     @GetMapping("/publication/list")
     public String getListPublications(Model model, Pageable pageable, @RequestParam(required = false) String searchTextPub){
 
