@@ -19,7 +19,7 @@ public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
     @Query("SELECT f FROM FriendRequest f WHERE (f.sender = ?1 AND f.receiver = ?2) OR (f.sender = ?2 AND f.receiver = ?1)")
     List<FriendRequest> findBySenderAndReceiver(User sender, User receiver);
 
-    @Query("SELECT f.receiver FROM FriendRequest f WHERE f.sender = ?1 AND f.state = 'ACCEPTED'")
+    @Query("SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = 'ACCEPTED'")
     Page<User> findFriendsForUser(Pageable pageable, User user);
 
     @Modifying
