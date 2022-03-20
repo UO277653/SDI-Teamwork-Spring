@@ -9,10 +9,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
 
     @Query("SELECT f FROM FriendRequest f WHERE f.receiver = ?1")
     Page<FriendRequest> findAllByUser(Pageable pageable, User user);
+
+    @Query("SELECT f FROM FriendRequest f WHERE (f.sender = ?1 AND f.receiver = ?2) OR (f.sender = ?2 AND f.receiver = ?1)")
+    List<FriendRequest> findBySenderAndReceiver(User sender, User receiver);
+
+    @Query("SELECT f.receiver FROM FriendRequest f WHERE f.sender = ?1 AND f.state = 'ACCEPTED'")
+    Page<User> findFriendsForUser(Pageable pageable, User user);
 
     @Modifying
     @Transactional

@@ -128,13 +128,7 @@ public class User {
     @OneToMany(mappedBy = "op")
     private List<Publication> publications;
 
-    //@ManyToMany(mappedBy = "friends")
-    //private List<User> friends;
+    //@OneToMany(mappedBy = "receiver")
+    //private List<FriendRequest> receivedRequests;
 
-    @OneToMany(mappedBy = "receiver")
-    private List<FriendRequest> receivedRequests;
-
-    //public List<User> getFriends() {
-    //    return friends;
-    //}
 }
