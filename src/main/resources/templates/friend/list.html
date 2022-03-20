@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head"/>
+<body>
+
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2 th:text="#{label.users}"></h2>
+
+    <p th:text="#{label.userList}"></p>
+    <div class="table-responsive">
+        <form action="/user/delete" method="post">
+            <table class="table table-hover" th:fragment="tableMarks" id="tableMarks">
+                <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col" th:text="#{label.name}"></th>
+                    <th scope="col" th:text="#{label.surname}"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${friendList}">
+
+
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row" th:text="${user.email}"></td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.name}"></td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.surname}"></td>
+
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.email}"></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}"></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" ><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
+                </tr>
+                </tbody>
+
+            </table>
+
+            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteBtn" type="submit" th:text="#{label.delete}"></button>
+
+            <footer th:replace="fragments/pagination"/>
+
+        </form>
+    </div>
+    <div th:if="${#lists.isEmpty(friendList)}" th:text="#{label.noUsers}"></div>
+</div>
+<footer th:replace="fragments/footer"></footer>
+</body>
+</html>

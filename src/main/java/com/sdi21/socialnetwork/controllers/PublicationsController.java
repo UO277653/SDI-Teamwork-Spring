@@ -75,6 +75,7 @@ public class PublicationsController {
 
 
         model.addAttribute("publicationsList", publications.getContent());
+        model.addAttribute("user", user);
         model.addAttribute("page",publications );
 
         return "publication/listown";
@@ -94,13 +95,22 @@ public class PublicationsController {
         }
 
         model.addAttribute("publicationsList", publications.getContent());
-        model.addAttribute("user", user);
         model.addAttribute("page",publications );
+        model.addAttribute("user", loggedUser);
+
         return "publication/list";
     }
 
+    @GetMapping("/publication/recommend/{id}")
+    public String recommendPublication(Model model, Principal principal, @PathVariable Long id, Pageable pageable) {
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
+        publicationsService.addRecommendation(id, user);
+        return getListPublications(model, principal, pageable, null);
+    }
+
     @GetMapping("/publication/list")
-    public String getListPublications(Model model, Pageable pageable, @RequestParam(required = false) String searchTextPub){
+    public String getListPublications(Model model, Principal principal, Pageable pageable, @RequestParam(required = false) String searchTextPub){
 
         Page<Publication> publications;
 
@@ -110,33 +120,37 @@ public class PublicationsController {
             publications = publicationsService.getPublications(pageable);
         }
 
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
+
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("page",publications);
+        model.addAttribute("user", user);
 
         return "publication/list";
     }
 
     @GetMapping("/publication/accept/{id}")
-    public String switchToAccepted(Model model, @PathVariable Long id, Pageable pageable){
+    public String switchToAccepted(Model model, @PathVariable Long id, Pageable pageable, Principal principal){
 
         publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[0]);
 
-        return getListPublications(model, pageable, null);
+        return getListPublications(model, principal, pageable, null);
     }
 
     @GetMapping("/publication/moderate/{id}")
-    public String switchToModerate(Model model, @PathVariable Long id, Pageable pageable){
+    public String switchToModerate(Model model, @PathVariable Long id, Pageable pageable, Principal principal){
 
         publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[1]);
 
-        return getListPublications(model, pageable, null);
+        return getListPublications(model, principal, pageable, null);
     }
 
     @GetMapping("/publication/censor/{id}")
-    public String switchToCensored(Model model, @PathVariable Long id, Pageable pageable){
+    public String switchToCensored(Model model, @PathVariable Long id, Pageable pageable, Principal principal){
 
         publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[2]);
 
-        return getListPublications(model, pageable, null);
+        return getListPublications(model, principal, pageable, null);
     }
 }

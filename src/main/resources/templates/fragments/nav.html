@@ -26,9 +26,13 @@
                    aria-haspopup="true" aria-expanded="false" th:text="#{label.pubications}"></a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a id="listPublicationOption"class="dropdown-item" href="/publication/listown" th:text="#{label.ownPublications}"></a>
-                    <a id="addPublication"class="dropdown-item" href="/publication/add" th:tect="#{label.addPublication}"></a>
+                    <a id="addPublication"class="dropdown-item" href="/publication/add" th:text="#{label.addPublication}"></a>
                     <a sec:authorize="hasRole('ROLE_ADMIN')" id="listPublications" class="dropdown-item" href="/publication/list" th:text="#{label.publicationsList}"></a>
                 </div>
+            </li>
+
+            <li class="nav-item ">
+                <a class="nav-link" href="/friend/list" th:text="#{label.friendList}"><span class="sr-only">(current)</span></a>
             </li>
 
         </ul>
@@ -65,7 +69,7 @@
                 </a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item">
-                <a class="nav-link" href="/logout">
+                <a class="nav-link" href="/logout" id ="logoutBtn">
                     <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
                     <span th:text="#{label.logout}"></span>
                 </a>
