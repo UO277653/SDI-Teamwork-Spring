@@ -1,7 +1,9 @@
 package com.sdi21.socialnetwork.entities;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -14,20 +16,46 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
 
     private String name;
     private String surname;
+
     private String role;
 
-    private String password;
-    @Transient
-    private String passwordConfirm;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender", orphanRemoval = true)
+    private Set<FriendRequest> friendRequest = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
+    private Set<FriendRequest> friendRequestReceiver = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "op", orphanRemoval = true)
     private List<Publication> publications;
 
-    public User() {}
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
+    private List<FriendRequest> requests;
 
+    public User() {}
+  
     public User(String email){
         this.email = email;
     }
@@ -46,23 +74,6 @@ public class User {
         this.role = role;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-
     public String getEmail() {
         return email;
     }
@@ -71,24 +82,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getName() {
+        return name;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-    public List<Publication> getPublications() {
-        return publications;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public long getId() {
@@ -99,6 +98,14 @@ public class User {
         this.id = id;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -106,6 +113,22 @@ public class User {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 '}'; 
+    }
+
+    Set<FriendRequest> _getFriendRequest() {
+        return friendRequest;
+    }
+
+    public Set<FriendRequest> getFriendRequest() {
+        return new HashSet<>(friendRequest);
+    }
+
+    Set<FriendRequest> _getFriendRequestReceiver() {
+        return friendRequestReceiver;
+    }
+
+    public Set<FriendRequest> getFriendRequestReceiver() {
+        return new HashSet<>(friendRequestReceiver);
     }
 
 

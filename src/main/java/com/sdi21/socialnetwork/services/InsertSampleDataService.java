@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -31,38 +33,65 @@ public class InsertSampleDataService {
     @PostConstruct
     public void init() {
 
-
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setRole(rolesService.getRoles()[1]);
         admin.setPassword("admin");
         usersService.addUser(admin);
-        User defaultUser = new User("Default","Default", "Default");
-        defaultUser.setRole(rolesService.getRoles()[0]);
+
+        generateUsers(15);
+
+        User defaultUser = new User("default@email.com", "Default", "Default");
         defaultUser.setPassword("123456");
+        defaultUser.setRole(rolesService.getRoles()[0]);
         usersService.addUser(defaultUser);
 
-        Publication publication = new Publication("Default publication", "Default text");
-        publication.setOp(defaultUser);
-        publicationsService.addPublication(publication);
+        generatePublications(10); //10 for each user
 
-        Publication publication2 = new Publication("Default publication 2", "Default text 2");
-        publication2.setOp(defaultUser);
-        publicationsService.addPublication(publication2);
 
-        generateUsers(10);
+        User noPublicationsUser = new User("nopublications@email.com", "Default", "Default");
+        noPublicationsUser.setPassword("123456");
+        noPublicationsUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(noPublicationsUser);
+
+        User noFriendsUser = new User("nofriends@email.com", "Default", "Default");
+        noFriendsUser.setPassword("123456");
+        noFriendsUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(noFriendsUser);
+
+
+
     }
 
     private void generateUsers(int numberOfUsers) {
-        for(int i = 0; i < numberOfUsers; i++) {
+        for(int i = 1; i <= numberOfUsers; i++) {
             String name = NAMES[new Random().nextInt(NAMES.length)];
             String surname = SURNAMES[new Random().nextInt(SURNAMES.length)];
-            String email = String.format("user%02d@email.com", i + 1);
+            String email = String.format("user%02d@email.com", i);
             User user = new User(email, name, surname);
             user.setRole(rolesService.getRoles()[0]); // ROLE_USER
-            user.setPassword("123456");
-            user.setPasswordConfirm("123456");
-            //System.out.println(user);
+            String password = String.format("user%02d", i);
+            user.setPassword(password);
+            user.setPasswordConfirm(password);
             usersService.addUser(user);
         }
+    }
+
+    private void generatePublications(int numberOfPublications) {
+        List<User> users = usersService.findAllUserRole();
+        for (User u : users){
+            for(int i = 1; i <= numberOfPublications; i++){
+                String title = String.format("Publication %d, %s", i, u.getName());
+                String text = String.format("%d. My publication: %s", i, u.getEmail());
+                Publication publication = new Publication(title, text);
+                publication.setOp(u);
+                publicationsService.addPublication(publication);
+            }
+        }
+
+        // NECESSARY FOR TESTING
+        Publication p = new Publication("Publication censored", "This is censored");
+        p.setState(rolesService.getPublicationStatus()[2]);
+        p.setOp(usersService.getUserByEmail("default@email.com"));
+        publicationsService.addPublication(p);
     }
 }
