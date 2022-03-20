@@ -33,15 +33,15 @@
                 <tr th:each="user : ${userList}">
 
 
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row" th:text="${user.email}"> 1</td>
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.name}"> Ejercicio 1</td>
-                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.surname}">10</td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row" th:text="${user.email}"></td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.name}"></td>
+                    <td th:if="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${user.surname}"></td>
 
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.email}"> 1</td>
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"> Ejercicio 1</td>
-                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}">10</td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.email}"></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}"></td>
                     <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
-                    <td><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" ><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
                 </tr>
                 </tbody>
 
@@ -53,7 +53,7 @@
 
         </form>
     </div>
-    <div th:if="${#lists.isEmpty(userList)}" th:text="#{label.noUsers}">  </div>
+    <div th:if="${#lists.isEmpty(userList)}" th:text="#{label.noUsers}"></div>
 </div>
 <footer th:replace="fragments/footer"></footer>
 </body>
