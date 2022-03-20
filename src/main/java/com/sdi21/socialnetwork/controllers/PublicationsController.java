@@ -86,6 +86,14 @@ public class PublicationsController {
 
         User user = usersService.getUser(id);
         Page<Publication> publications = publicationsService.getPublicationsByEmail(pageable, user.getEmail());
+
+        String email = principal.getName();
+        User loggedUser = usersService.getUserByEmail(email);
+
+        if(!usersService.areFriends(user, loggedUser)){
+            return "home";
+        }
+
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("page",publications );
 

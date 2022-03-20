@@ -21,13 +21,13 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	//Adrian
-	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-//	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox, Geckodriver);
 	static String URL = "http://localhost:8090";
@@ -60,7 +60,7 @@ class SocialnetworkApplicationTests {
 	/**
 	 * 1. Registro de usuario con datos válidos
 	 */
-/*	@Test
+	@Test
 	@Order(1)
 	void prueba1() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
@@ -71,10 +71,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 1. Registro de usuario con datos inválidos:
 	 * 		Campos vacíos (email, nombre, apellidos)
-	 *//*
+	 */
 	@Test
 	@Order(2)
 	void prueba2() {
@@ -87,10 +87,10 @@ class SocialnetworkApplicationTests {
 	}
 
 
-	*//**
+	/*
 	 * 1. Registro de usuario con datos inválidos
 	 * 		repetición de contraseña inválida
-	 *//*
+	 */
 	@Test
 	@Order(3)
 	void prueba3() {
@@ -102,10 +102,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 1. Registro de usuario con datos inválidos
 	 * 		email existente
-	 *//*
+	 */
 	@Test
 	@Order(4)
 	void prueba4() {
@@ -118,10 +118,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText , result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 2. Inicio de sesión con datos válidos
 	 * 		Administrador
-	 *//*
+	 */
 	@Test
 	@Order(5)
 	public void prueba5(){
@@ -133,10 +133,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 2. Inicio de sesión con datos válidos
 	 * 		Usuario
-	 *//*
+	 */
 	@Test
 	@Order(6)
 	public void prueba6(){
@@ -148,10 +148,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 2. Inicio de sesión con datos inválidos
 	 * 		Usuario estandar, email y contraseña vacíos
-	 *//*
+	 */
 	@Test
 	@Order(7)
 	public void prueba7(){
@@ -163,10 +163,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 2. Inicio de sesión con datos válidos
 	 * 		Email conrrecto pero contraseña incorrecta
-	 *//*
+	 */
 	@Test
 	@Order(8)
 	public void prueba8(){
@@ -179,13 +179,13 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 3. Fin de sesión
 	 * Salir sesion y comprobar que vuleve a redirigir a login
-	 *//*
+	 */
 	@Test
 	@Order(9)
-	public void prubea9(){
+	public void prueba9(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
 
@@ -202,10 +202,10 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	*//**
+	/*
 	 * 3. Fin de sesión
 	 * Comprobar que el botón cerrar sesión no está visible si el usuario no está autenticado
-	 *//*
+	 */
 	@Test
 	@Order(10)
 	public void prueba10(){
@@ -251,12 +251,12 @@ class SocialnetworkApplicationTests {
 
 		driver.navigate().to("localhost:8090/user/list");
 		List<WebElement> tableElements = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
-		WebElement firstChild = tableElements.get(0);
-		List<WebElement> removeElement = driver.findElements(By.name("userid1"));
+		WebElement firstChild = tableElements.get(1);
+		List<WebElement> removeElement = driver.findElements(By.name("userid3"));
 		removeElement.get(0).click();
 		PO_UserListView.delete(driver);
 		tableElements = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
-		WebElement newFirstChild = tableElements.get(0);
+		WebElement newFirstChild = tableElements.get(1);
 
 		// TERMINAR CON ASSERT
 		Assertions.assertNotEquals(firstChild, newFirstChild);
@@ -300,15 +300,13 @@ class SocialnetworkApplicationTests {
 
 		// TERMINAR CON ASSERT
 		Assertions.assertEquals(10, elementos);
-		Assertions.assertEquals("http://localhost:8090/user/list?page=1", driver.getCurrentUrl()); // Nos aseguramos de que la segunda era la última página
+		Assertions.assertEquals("http://localhost:8090/user/list?page=2", driver.getCurrentUrl());
 	}
-
-
-
 	@Test
+	@Order(24)
 	void PRUEBA24(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
+		PO_LoginView.fillLoginForm(driver, "nopublications@email.com", "123456");
 
 		driver.navigate().to("localhost:8090/publication/listown");
 		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
@@ -323,9 +321,10 @@ class SocialnetworkApplicationTests {
 	}
 
 	@Test
+	@Order(25)
 	void PRUEBA25(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456");
+		PO_LoginView.fillLoginForm(driver, "user07@email.com", "user07");
 		driver.navigate().to("localhost:8090/publication/add");
 
 		PO_PublicationView.fillAddPublicationForm(driver, " ", " ");
@@ -340,17 +339,47 @@ class SocialnetworkApplicationTests {
 	}
 
 	@Test
+	@Order(26)
 	void PRUEBA26(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.fillLoginForm(driver, "user07@email.com", "user07");
 
 		driver.navigate().to("localhost:8090/publication/listown");
 		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
 		publications += PO_PublicationView.countPubliactionsOnPage(driver, 1);
 		publications += PO_PublicationView.countPubliactionsOnPage(driver, 2);
 
-		Assertions.assertTrue( publications == 10);
-	}*/
+		Assertions.assertEquals( 10, publications);
+	}
+
+	@Test
+	@Order(27)
+	void PRUEBA27(){
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user06@email.com", "user06");
+
+		//9 = id of user07
+		driver.navigate().to("localhost:8090/publication/list/" + 9 );
+		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
+		publications += PO_PublicationView.countPubliactionsOnPage(driver, 1);
+		Assertions.assertEquals( 10, publications);
+
+	}
+
+	//THIS FAILS BECAUSE userService.areFriends() is not implemented otherwise it works
+	@Test
+	@Order(28)
+	void PRUEBA28(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
+
+		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+
+		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
 
 	@Test
 	@Order(37)
