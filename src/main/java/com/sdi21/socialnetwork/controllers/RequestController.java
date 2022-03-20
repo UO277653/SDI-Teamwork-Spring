@@ -40,10 +40,10 @@ public class RequestController {
         return "request/list";
     }
 
-    @PostMapping("/request/accept/{id}")
-    public String acceptFriendRequest(Model model, @PathVariable Long id, Pageable pageable) {
-        requestService.setFriendRequestAccepted(true, id);
-        return "request/list"; //getFriendRequestList(model, principal, pageable);
+    @PostMapping("/request/accept/{id}") //("/request/list")
+    public String acceptFriendRequest(Model model, @PathVariable Long id, Principal principal, Pageable pageable) {
+        requestService.setFriendRequestAccepted(id);
+        return getFriendRequestList(model, principal, pageable); //"request/list";
     }
 
 }

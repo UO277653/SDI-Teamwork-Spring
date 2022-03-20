@@ -28,8 +28,8 @@ public class RequestService {
         requestRepository.save(request);
     }
 
-    public void setFriendRequestAccepted(boolean accepted, Long id) {
-        requestRepository.setFriendRequestAccepted(accepted, id);
+    public void setFriendRequestAccepted(Long id) {
+        requestRepository.setFriendRequestState(FriendRequest.State.ACCEPTED, id);
     }
 
 

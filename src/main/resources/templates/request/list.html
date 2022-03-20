@@ -8,14 +8,6 @@
 <div class="container" id="main-container">
     <h2 th:text="#{label.invitations}"></h2>
 
-    <form class="form-inline" action="/request/list">
-    </form>
-    <button type="button" id="updateButton" class="btn btn-default" th:text="#{label.update}"></button>
-    <script>
-        $( "#updateButton" ).click(function() {
-            $("#tableUsers").load('/user/list/update');
-        });
-    </script>
     <p></p>
     <div class="table-responsive">
         <table class="table table-hover" th:fragment="tableRequests" id="tableRequests">
@@ -35,7 +27,7 @@
 
                 <td th:if="${user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="'Aceptada!'" ></td>
                 <td th:if="${!user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" >
-                    <form action="#" class="form" th:action="${'/request/accepted/' + user.id}" method="post">
+                    <form class="form" th:action="${'/request/accept/' + user.id}" method="post">
                         <input type="submit" class="btn btn-success" th:id="${'acceptButton'}" value="✓ Aceptar" >
                     </form>
                 </td>

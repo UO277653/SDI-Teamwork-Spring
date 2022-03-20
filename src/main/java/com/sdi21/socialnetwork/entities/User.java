@@ -132,7 +132,7 @@ public class User {
     //private List<User> friends;
 
     @OneToMany(mappedBy = "receiver")
-    private List<FriendRequest> requests;
+    private List<FriendRequest> receivedRequests;
 
     //public List<User> getFriends() {
     //    return friends;

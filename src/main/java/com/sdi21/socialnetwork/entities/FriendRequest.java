@@ -1,5 +1,7 @@
 package com.sdi21.socialnetwork.entities;
 
+import org.springframework.web.bind.annotation.Mapping;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,8 +17,9 @@ public class FriendRequest {
     @ManyToOne
     @JoinColumn(name ="receiver")
     private User receiver;
+
+    @Enumerated(EnumType.STRING)
     private State state;
-    private boolean accepted;
 
     public enum State {
         ACCEPTED,
@@ -32,7 +35,6 @@ public class FriendRequest {
         this.sender = sender;
         this.receiver = receiver;
         this.state = State.PENDING;
-        this.accepted = false;
     }
 
     public FriendRequest (User sender, User receiver) {
@@ -65,9 +67,7 @@ public class FriendRequest {
         this.state = state;
     }
 
-    public boolean isAccepted() { return accepted; }
-
-    public void setAccepted(boolean accepted) { this.accepted = accepted; }
+    public boolean isAccepted() { return this.state == State.ACCEPTED; }
 
     public long getId() { return id; }
 

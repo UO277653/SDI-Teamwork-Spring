@@ -16,6 +16,6 @@ public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
 
     @Modifying
     @Transactional
-    @Query("UPDATE FriendRequest SET accepted =?1 WHERE id=?2")
-    void setFriendRequestAccepted(boolean accepted, Long id);
+    @Query("UPDATE FriendRequest SET state =?1 WHERE id=?2")
+    void setFriendRequestState(FriendRequest.State state, Long id);
 }
