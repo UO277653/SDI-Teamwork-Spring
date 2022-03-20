@@ -23,4 +23,10 @@ public class RequestService {
         return requestRepository.findAllByUser(pageable, user);
     }
 
+    public void addRequest(FriendRequest request){
+        requestRepository.save(request);
+    }
+
+
+
 }

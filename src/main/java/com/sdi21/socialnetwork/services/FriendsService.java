@@ -29,7 +29,8 @@ public class FriendsService {
     }
 
     public void addFriend(FriendRequest friendRequest) {
+        usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
         friendsRepository.save(friendRequest);
-        //usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
+
     }
 }

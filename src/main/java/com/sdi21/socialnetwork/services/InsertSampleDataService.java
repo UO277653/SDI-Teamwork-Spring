@@ -50,6 +50,8 @@ public class InsertSampleDataService {
 
         friendsService.addFriend(fr1);
         friendsService.addFriend(fr2);
+        requestService.addRequest(fr1);
+        requestService.addRequest(fr2);
     }
 
     private void generateUsers(int numberOfUsers) {
