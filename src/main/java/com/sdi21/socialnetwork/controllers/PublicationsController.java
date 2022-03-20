@@ -96,10 +96,7 @@ public class PublicationsController {
 
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("page",publications );
-
-        String email = principal.getName();
-        User loggedInUser = usersService.getUserByEmail(email);
-        model.addAttribute("user", loggedInUser);
+        model.addAttribute("user", loggedUser);
 
         return "publication/list";
     }
