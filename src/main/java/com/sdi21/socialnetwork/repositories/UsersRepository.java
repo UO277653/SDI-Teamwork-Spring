@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface UsersRepository extends CrudRepository<User,Long> {
 
     //List<User> findAllByRole(String role);
@@ -31,4 +33,14 @@ public interface UsersRepository extends CrudRepository<User,Long> {
     void setPublicationState(Long id, String publicationStatus);
 
     //Page<User> searchByEmailNameAndSurnameWithRole(Pageable pageable, String searchText, String role);
+
+
+    // En cristiano: find users that recommend a publication.
+    // The fancy naming comes as follows:
+    //      "find" : self-explanatory
+    //      "Recommendations" : is the name of the set of users found in Publication
+    //      "by" : fancy automagic stuff
+    //      "Recommended" : is the name of the set of recommended publications found in User
+    //      "Id" : The ID of a publication inside "Recommended"
+    List<User> findRecommendationsByRecommendedId(Long publicationId);
 }

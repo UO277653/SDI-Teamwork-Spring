@@ -58,4 +58,10 @@ public class PublicationsService {
 
         usersRepository.setPublicationState(id, publicationStatus);
     }
+
+    public void addRecommendation(Long publicationId, User user) {
+        Publication publication = publicationsRepository.findById(publicationId).get();
+        publication.addRecommendation(user);
+        publicationsRepository.save(publication);
+    }
 }

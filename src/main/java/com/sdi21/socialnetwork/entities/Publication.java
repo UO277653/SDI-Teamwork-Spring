@@ -2,7 +2,7 @@ package com.sdi21.socialnetwork.entities;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "publication")
@@ -16,18 +16,26 @@ public class Publication {
     private String text;
     private Date date;
     private String state = "Aceptada";
-    private int recommendations;
 
     @ManyToOne
     private User op;
 
-    public Publication(String title, String text){
 
+    // Tabla que marca la relación "recommends", n-n entre usuarios y publicaciones
+    @JoinTable(
+        name = "rel_user_recommends",
+        joinColumns = @JoinColumn(name = "FK_PUBLICATION", nullable = false),
+        inverseJoinColumns = @JoinColumn(name="FK_USER", nullable = false)
+    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private Set<User> recommendations;
+
+
+    public Publication(String title, String text){
         this.date = new Date();
         this.title = title;
         this.text = text;
-        this.recommendations = 0;
-
+        this.recommendations = new HashSet<User>();
     }
 
     public Publication() {
@@ -83,9 +91,13 @@ public class Publication {
         this.state = state;
     }
 
-    public int getRecommendations() { return recommendations; }
+    public int getRecommendationCount() { return recommendations.size(); }
 
-    public void setRecommendations(int recommendations) { this.recommendations = recommendations; }
+    public boolean isRecommendedBy(User user) {
+        return this.recommendations.contains(user);
+    }
+
+    public void addRecommendation(User user) { recommendations.add(user); }
 
     @Override
     public String toString() {

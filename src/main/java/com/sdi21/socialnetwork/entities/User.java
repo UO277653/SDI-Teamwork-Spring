@@ -48,6 +48,10 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
     private Set<FriendRequest> friendRequestReceiver = new HashSet<>();
 
+    @ManyToMany(mappedBy = "recommendations", fetch = FetchType.LAZY,
+        cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private Set<Publication> recommended = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "op", orphanRemoval = true)
     private List<Publication> publications;
 
@@ -130,6 +134,5 @@ public class User {
     public Set<FriendRequest> getFriendRequestReceiver() {
         return new HashSet<>(friendRequestReceiver);
     }
-
 
 }
