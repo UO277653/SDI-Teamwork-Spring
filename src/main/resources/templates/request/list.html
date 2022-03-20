@@ -6,11 +6,11 @@
 <!-- Barra de Navegación superior -->
 <nav th:replace="fragments/nav"/>
 <div class="container" id="main-container">
-    <h2>Invitaciones de amistad</h2>
+    <h2 th:text="#{label.invitations}"></h2>
 
     <form class="form-inline" action="/request/list">
     </form>
-    <button type="button" id="updateButton" class="btn btn-default">Actualizar</button>
+    <button type="button" id="updateButton" class="btn btn-default" th:text="#{label.update}"></button>
     <script>
         $( "#updateButton" ).click(function() {
             $("#tableUsers").load('/user/list/update');
@@ -21,8 +21,8 @@
         <table class="table table-hover" th:fragment="tableRequests" id="tableRequests">
             <thead>
             <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Estado</th>
+                <th scope="col" th:text="#{label.name}"></th>
+                <th scope="col" th:text="#{label.status}"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -30,14 +30,14 @@
             </thead>
             <tbody>
             <tr th:each="user : ${requestList}">
-                <td scope="row" th:text="${user.sender}"> 1</td>
-                <td th:text="${user.state}"> Ejercicio 1</td>
+                <td scope="row" th:text="${user.sender}"></td>
+                <td th:text="${user.state}"></td>
             </tr>
             </tbody>
         </table>
         <footer th:replace="fragments/pagination"/>
     </div>
-    <div th:if="${#lists.isEmpty(requestList)}"> No friend requests </div>
+    <div th:if="${#lists.isEmpty(requestList)}" th:text="#{label.noRequest}"></div>
 </div>
 </body>
 </html>

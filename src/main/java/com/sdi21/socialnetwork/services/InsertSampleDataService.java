@@ -1,12 +1,13 @@
 package com.sdi21.socialnetwork.services;
 
-import com.sdi21.socialnetwork.entities.FriendRequest;
+import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -27,61 +28,58 @@ public class InsertSampleDataService {
     private RolesService rolesService;
 
     @Autowired
-    private FriendsService friendsService;
-
-    @Autowired
-    private RequestService requestService;
+    private PublicationsService publicationsService;
 
     @PostConstruct
     public void init() {
-        generateUsers(15);
-        generateRequests(15);
+
         User admin = new User("admin@email.com", "Admin", "Admin");
         admin.setRole(rolesService.getRoles()[1]);
+        admin.setPassword("admin");
         usersService.addUser(admin);
 
-        User user1 = new User("a@gmail.com", "N", "S");
-        User user2 = new User("b@gmail.com", "Na", "Su");
-        User user3 = new User("c@gmail.com", "Nam", "Sur");
-        User user4 = new User("d@gmail.com", "Name", "Surn");
+        generateUsers(15);
 
-        FriendRequest fr1 = new FriendRequest(user1, user2, FriendRequest.State.PENDING);
-        FriendRequest fr2 = new FriendRequest(user3, user4, FriendRequest.State.PENDING);
+        User defaultUser = new User("default@email.com", "Default", "Default");
+        defaultUser.setPassword("123456");
+        defaultUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(defaultUser);
 
-        friendsService.addFriend(fr1);
-        friendsService.addFriend(fr2);
-        requestService.addRequest(fr1);
-        requestService.addRequest(fr2);
+        generatePublications(10); //10 for each user
+
+
     }
 
     private void generateUsers(int numberOfUsers) {
-        for(int i = 0; i < numberOfUsers; i++) {
+        for(int i = 1; i <= numberOfUsers; i++) {
             String name = NAMES[new Random().nextInt(NAMES.length)];
             String surname = SURNAMES[new Random().nextInt(SURNAMES.length)];
-            String email = String.format("user%02d@email.com", i + 1);
+            String email = String.format("user%02d@email.com", i);
             User user = new User(email, name, surname);
             user.setRole(rolesService.getRoles()[0]); // ROLE_USER
-            //System.out.println(user);
+            String password = String.format("user%02d", i);
+            user.setPassword(password);
+            user.setPasswordConfirm(password);
             usersService.addUser(user);
         }
     }
 
-    private void generateRequests(int numberOfRequests) {
-        for (int i = 0; i < numberOfRequests; i++) {
-            String name = NAMES[new Random().nextInt(NAMES.length)];
-            String surname = SURNAMES[new Random().nextInt(SURNAMES.length)];
-            String email = String.format("user%02d@email.com", i + 1);
-            User user = new User(email, name, surname);
-            user.setRole(rolesService.getRoles()[0]); // ROLE_USER
-            //usersService.addUser(user);
-            User user2 = new User("a@gmail.com", "N", "S");
-
-            FriendRequest.State state = FriendRequest.State.PENDING;
-            FriendRequest fr = new FriendRequest(user, user, state);
-            //usersService.addFriend(user, user2);
-            //friendsService.addFriend(fr);
-            //usersService.addUser(user);
-            //requestService.getFriendRequestsForUser(pageable, user);
+    private void generatePublications(int numberOfPublications) {
+        List<User> users = usersService.findAllUserRole();
+        for (User u : users){
+            for(int i = 1; i <= numberOfPublications; i++){
+                String title = String.format("Publication %d, %s", i, u.getName());
+                String text = String.format("%d. My publication: %s", i, u.getEmail());
+                Publication publication = new Publication(title, text);
+                publication.setOp(u);
+                publicationsService.addPublication(publication);
+            }
         }
+
+        // NECESSARY FOR TESTING
+        Publication p = new Publication("Publication censored", "This is censored");
+        p.setState(rolesService.getPublicationStatus()[2]);
+        p.setOp(usersService.getUserByEmail("default@email.com"));
+        publicationsService.addPublication(p);
     }
 }

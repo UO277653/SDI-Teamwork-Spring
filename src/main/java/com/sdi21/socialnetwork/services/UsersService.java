@@ -5,6 +5,7 @@ import com.sdi21.socialnetwork.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -17,16 +18,35 @@ public class UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
-    @PostConstruct
-    public void init(){
-        usersRepository.save(new User("Default"));
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    private RolesService rolesService;
+
+
+    public Page<User> getUsers(Pageable pageable) {
+        return usersRepository.findAll(pageable);
+    }
+
+    public Page<User> getUsersByText(Pageable pageable, String searchText) {
+        return usersRepository.findAll(pageable, '%'+searchText+'%');
     }
 
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
         usersRepository.findAll().forEach(users::add);
         return users;
+    }
+
+    public List<User> findAllUserRole() {
+        List<User> all = getUsers();
+        List<User> result = new ArrayList<User>();
+        for(User u : all){
+            if (u.getRole().equals("ROLE_USER"))
+                result.add(u);
+        }
+        return result;
     }
 
     public Page<User> getUsersWithRole(Pageable pageable, String role) {
@@ -37,11 +57,8 @@ public class UsersService {
         return usersRepository.findById(id).get();
     }
 
-    public User getUserByEmail(String email){
-        return usersRepository.findByEmail(email);
-    }
-
     public void addUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
     }
 
@@ -50,12 +67,21 @@ public class UsersService {
     }
 
     public User getDefaultUser() {
-        return usersRepository.findByEmail("Default");
+        return usersRepository.findByEmail("sara@uniovi.es");
     }
 
-    public Page<User> searchUsersByEmailNameAndSurnameWithRole(
-            Pageable pageable, String searchText, String role) {
-        return usersRepository.searchByEmailNameAndSurnameWithRole(pageable, '%'+searchText+'%', role);
+
+    public void deleteAll(){
+        usersRepository.deleteAll();
+    }
+
+    public User getUserByEmail(String email){
+        return usersRepository.findByEmail(email);
+    }
+
+    public void deleteUsers(List<Long> ids){
+        usersRepository.deleteAllById(ids);
+
     }
 
     public void addFriend (User receiver, User sender) {

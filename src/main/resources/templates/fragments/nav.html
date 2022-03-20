@@ -14,10 +14,20 @@
 
             <li id= "user-menu" class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false"> Usuario
+                   aria-haspopup="true" aria-expanded="false" th:text="#{label.user}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/user/list">Listado de usuarios</a>
+                    <a id="listUsersOption"class="dropdown-item" href="/user/list" th:text="#{label.userList}"></a>
+                </div>
+            </li>
+
+            <li id= "publication-menu" class="nav-item dropdown" >
+                <a class="nav-link dropdown-toggle" href="#" id="publicationDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false" th:text="#{label.pubications}"></a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a id="listPublicationOption"class="dropdown-item" href="/publication/listown" th:text="#{label.ownPublications}"></a>
+                    <a id="addPublication"class="dropdown-item" href="/publication/add" th:tect="#{label.addPublication}"></a>
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" id="listPublications" class="dropdown-item" href="/publication/list" th:text="#{label.publicationsList}"></a>
                 </div>
             </li>
 
@@ -45,19 +55,19 @@
             <li sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" href="/signup" th:text="#{signup.message}">
                     <i class='fas fa-user-alt' style='font-size:16px'></i>
-                    <span>Registrate</span>
+                    <span th:text="#{label.signup}"></span>
                 </a>
             </li>
             <li sec:authorize="!isAuthenticated()" class="nav-item">
                 <a class="nav-link" href="/login" th:text="#{login.message}">
                     <i class='fas fa-sign-in-alt' style='font-size:16px'></i>
-                    <span>Identifícate</span>
+                    <span th:text="#{label.login}"></span>
                 </a>
             </li>
             <li sec:authorize="isAuthenticated()" class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class='fas fa-sign-out-alt' style='font-size:16px'></i>
-                    <span>Desconectar</span>
+                    <span th:text="#{label.logout}"></span>
                 </a>
             </li>
         </ul>

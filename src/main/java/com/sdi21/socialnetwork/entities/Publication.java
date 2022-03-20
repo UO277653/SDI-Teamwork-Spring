@@ -15,6 +15,8 @@ public class Publication {
     private String title;
     private String text;
     private Date date;
+    private String state = "Aceptada";
+    private int recommendations;
 
     @ManyToOne
     private User op;
@@ -24,6 +26,7 @@ public class Publication {
         this.date = new Date();
         this.title = title;
         this.text = text;
+        this.recommendations = 0;
 
     }
 
@@ -72,6 +75,18 @@ public class Publication {
         this.date = date;
     }
 
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public int getRecommendations() { return recommendations; }
+
+    public void setRecommendations(int recommendations) { this.recommendations = recommendations; }
+
     @Override
     public String toString() {
         return "Publication{" +
@@ -79,6 +94,8 @@ public class Publication {
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
                 ", date=" + date +
+                ", state='" + state + '\'' +
+                ", recommendations='" + recommendations + '\'' +
                 ", op=" + op +
                 '}';
     }
