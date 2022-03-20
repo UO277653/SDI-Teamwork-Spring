@@ -35,6 +35,7 @@ public class FriendsService {
     public void addFriend(FriendRequest friendRequest) {
         usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
         friendsRepository.save(friendRequest);
+    }
 
     public Page<User> getFriendsForUser(Pageable pageable, User user) {
         return requestRepository.findFriendsForUser(pageable, user);
