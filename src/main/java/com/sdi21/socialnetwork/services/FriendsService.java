@@ -32,6 +32,11 @@ public class FriendsService {
         //friendsRepository.save(new FriendRequest(new User("a@gmail.com", "N", "S"), new User("b@gmail.com", "N", "S"), FriendRequest.State.PENDING));
     }
 
+    public void addFriend(FriendRequest friendRequest) {
+        usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
+        friendsRepository.save(friendRequest);
+    }
+
     public Page<User> getFriendsForUser(Pageable pageable, User user) {
         return requestRepository.findFriendsForUser(pageable, user);
     }
