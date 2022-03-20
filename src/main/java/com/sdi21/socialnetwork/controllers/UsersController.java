@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -104,8 +105,11 @@ public class UsersController {
     }
 
     @RequestMapping("/user/list")
-    public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText) {
+    public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText,
+                          Principal principal) {
         Page<User> users;
+        String email = principal.getName();
+        User user = usersService.getUserByEmail(email);
 
         if(searchText != null && !searchText.isEmpty()) {
             users = usersService.getUsersByText(pageable, searchText);
@@ -133,7 +137,7 @@ public class UsersController {
         model.addAttribute("userList", users.getContent());
         model.addAttribute("page", users);
 
-        return getList(model,pageable,"");
+        return "redirect:/user/list";
     }
 
 
