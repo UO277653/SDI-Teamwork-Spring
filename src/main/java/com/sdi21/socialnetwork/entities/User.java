@@ -48,6 +48,12 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
     private Set<FriendRequest> friendRequestReceiver = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "op", orphanRemoval = true)
+    private List<Publication> publications;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver", orphanRemoval = true)
+    private List<FriendRequest> requests;
+
     public User() {}
   
     public User(String email){
@@ -125,16 +131,5 @@ public class User {
         return new HashSet<>(friendRequestReceiver);
     }
 
-    @OneToMany(mappedBy = "op")
-    private List<Publication> publications;
 
-    //@ManyToMany(mappedBy = "friends")
-    //private List<User> friends;
-
-    @OneToMany(mappedBy = "receiver")
-    private List<FriendRequest> requests;
-
-    //public List<User> getFriends() {
-    //    return friends;
-    //}
 }
