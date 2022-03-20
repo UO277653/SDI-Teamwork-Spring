@@ -11,4 +11,8 @@ public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
 
     @Query("SELECT f FROM FriendRequest f WHERE f.receiver = ?1")
     Page<FriendRequest> findAllByUser(Pageable pageable, User user);
+
+    @Query("SELECT f.receiver FROM FriendRequest f WHERE f.sender = ?1 AND f.state = 'ACCEPTED'")
+    Page<User> findFriendsForUser(Pageable pageable, User user);
+
 }
