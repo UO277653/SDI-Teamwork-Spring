@@ -24,16 +24,16 @@ class SocialnetworkApplicationTests {
 	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+  	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Ari
-	//static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox, Geckodriver);
 	static String URL = "http://localhost:8090";
@@ -767,6 +767,66 @@ class SocialnetworkApplicationTests {
 		Assertions.assertTrue(driver.findElements(By.cssSelector("#loggerList tbody tr")).size() > 0);
 		driver.findElement(By.id("deleteLogsBtn")).click();
 		Assertions.assertTrue(driver.findElements(By.cssSelector("#loggerList tbody tr")).size() == 0);
+	}
+
+	/*
+	 * 18. Recomendar publicación de un amigo
+	 * Acceder a las publicaciones de un amigo y recomendar una publicación.
+	 * Comprobar que el número de recomendaciones se ha incrementado en uno y que no aparece el botón/enlace recomendar.
+	 */
+	@Test
+	@Order(35)
+	void PRUEBA35() {
+
+		//loguearse como userA
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin"); //cambiar
+
+		//ir a user/list a la page donde está el userB
+		driver.navigate().to("localhost:8090/user/list?page=1"); //cambiar
+
+		//pulsar en + Añadir amigo (userB)
+		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
+		addButton.get(4).click(); //cambiar
+
+		//logout userA
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		// login userB
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin"); //cambiar
+
+		//ir a request/list
+		driver.navigate().to("localhost:8090/request/list");
+
+		//pulsar en Aceptar que redirige a request/accept/id
+		List<WebElement> acceptButton = driver.findElements(By.id("acceptFriendBtn"));
+		acceptButton.get(0).click();
+
+		// vamos a lista de amigos http://localhost:8090/friend/list
+		// y vamos a sus publicaciones http://localhost:8090/publication/list/15
+		// primer click no sucede nada (BUG), segundo click se recomienda, la URL cambia a http://localhost:8090/publication/recommend/18
+		// y el texto en pantalla es ¡Recomendada! y el counter es 1
+
+		//userA, login, manda request a userB, logout
+		//userB login, acepta request, publicaciones userA, recomendar
+		//counter = 1, no aparece botón recomendar
+	}
+
+	/*
+	 * 18. Recomendar publicación de un amigo
+	 * Utilizando un acceso vía URL u otra alternativa, tratar de recomendar una publicación de un usuario
+	 * con el que no se mantiene una relación de amistad.
+	 */
+	@Test
+	@Order(36)
+	void PRUEBA36() {
+
+		//login userA
+		//ir a user/list
+		//intentar acceder a publicaciones mediante URL navigate
+		//redirige a intro page
+
 	}
 
 	@Test
