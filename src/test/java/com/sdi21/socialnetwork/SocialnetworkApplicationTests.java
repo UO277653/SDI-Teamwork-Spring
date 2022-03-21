@@ -21,10 +21,10 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	//Adrian
-	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
-	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
 //	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -388,16 +388,17 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list");
-		Assertions.assertEquals("Aceptada", PO_PublicationListView.getPublicationState(driver, "state19"));
-		driver.findElements(By.id("moderatePublication19")).get(0).click();
-		Assertions.assertEquals("Moderada", PO_PublicationListView.getPublicationState(driver, "state19"));
+		Assertions.assertEquals("Aceptada", PO_PublicationListView.getPublicationState(driver, "state29"));
+		driver.findElements(By.id("moderatePublication29")).get(0).click();
+		Assertions.assertEquals("Moderada", PO_PublicationListView.getPublicationState(driver, "state29"));
 	}
 
 	@Test
 	@Order(38)
 	void PRUEBA38() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "default@email.com", "123456"); // This user has 10 accepted publications and 1 censored
+		PO_LoginView.fillLoginForm(driver, "user10@email.com", "user10");
+		// This user has 10 accepted publications and 1 censored (added in the generatePublications method in InsertSampleDataService)
 
 		driver.navigate().to("localhost:8090/publication/listown?page=0");
 		List<WebElement> elements = driver.findElements(By.cssSelector("#publicationsTable tbody tr"));
@@ -460,10 +461,10 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list"); // Trying to change a publication
-		driver.findElement(By.name("searchTextPub")).sendKeys("default@email.com");
+		driver.findElement(By.name("searchTextPub")).sendKeys("user10@email.com");
 		driver.findElement(By.id("searchBtn")).click();
 
-		Assertions.assertEquals("http://localhost:8090/publication/list?searchTextPub=default%40email.com", driver.getCurrentUrl());
+		Assertions.assertEquals("http://localhost:8090/publication/list?searchTextPub=user10%40email.com", driver.getCurrentUrl());
 		Assertions.assertEquals(5, driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size());
 	}
 }

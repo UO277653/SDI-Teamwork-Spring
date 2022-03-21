@@ -96,7 +96,7 @@ public class InsertSampleDataService {
         // NECESSARY FOR TESTING
         Publication p = new Publication("Publication censored", "This is censored");
         p.setState(rolesService.getPublicationStatus()[2]);
-        p.setOp(usersService.getUserByEmail("default@email.com"));
+        p.setOp(usersService.getUserByEmail("user10@email.com"));
         publicationsService.addPublication(p);
     }
 
