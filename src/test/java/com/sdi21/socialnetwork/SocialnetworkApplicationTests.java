@@ -652,6 +652,7 @@ class SocialnetworkApplicationTests {
 	void PRUEBA28(){
 		PO_LoginView.login(driver, "user06@email.com", "user06"); // This user has 10 accepted publications and 1 censored
 		driver.navigate().to("localhost:8090/publication/list/" + 9 );
+
 		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
