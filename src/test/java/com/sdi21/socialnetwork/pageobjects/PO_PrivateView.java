@@ -33,4 +33,9 @@ public class PO_PrivateView extends PO_NavView {
         //Nos vamos a la última página
         elements.get(pagina).click();
     }
+
+    public static void goToUsersList(WebDriver driver) {
+        driver.findElement(By.id("user-menu")).click();
+        driver.findElement(By.id("listUsersOption")).click();
+    }
 }
