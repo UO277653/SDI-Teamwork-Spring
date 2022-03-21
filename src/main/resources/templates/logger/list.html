@@ -8,7 +8,7 @@
 <div class="container" id="main-container">
     <h2>Logs</h2>
 
-    <p>Listado de logs</p>
+    <p th:text="#{label.listLogs}"></p>
     <div class="table-responsive">
         <form action="/logger/delete" method="post">
             <table class="table table-hover" th:fragment="loggerList" id="loggerList">
@@ -16,8 +16,8 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Log</th>
-                    <th scope="col">Texto</th>
-                    <th scope="col">Fecha</th>
+                    <th scope="col" th:text="#{label.text}"></th>
+                    <th scope="col" th:text="#{label.date}"></th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
@@ -33,7 +33,7 @@
                 </tbody>
             </table>
 
-            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteLogsBtn" type="submit">Borrar logs</button>
+            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteLogsBtn" type="submit" th:text="#{label.deleteLogs}"></button>
         </form>
 
         <h2>Filtros</h2>

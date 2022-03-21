@@ -27,7 +27,7 @@
                 <td th:if="${request.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.accepted}" ></td>
 
                 <td th:if="${!request.isAccepted() && request.sender == loggedUser}" sec:authorize="hasRole('ROLE_USER')" >
-                    <a href="#" class="btn" disabled >Pendiente...</a>
+                    <a href="#" class="btn" disabled th:text="#{label.request.pending}"></a>
                 </td>
                 <td th:if="${!request.isAccepted() && request.receiver == loggedUser}" sec:authorize="hasRole('ROLE_USER')" >
                     <a th:href="${'/request/accept/' + request.id}" class="btn btn-success" id="acceptFriendBtn" th:text="'✓ ' + #{label.accept}"></a>

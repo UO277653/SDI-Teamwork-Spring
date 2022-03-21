@@ -6,7 +6,26 @@
 <nav th:replace="fragments/nav"/>
 
 <div class="container" style="text-align: center">
-  <h2 th:text="#{welcome.message}"></h2>
+  <h1 th:text="#{welcome.message}"></h1>
+  <h2 th:text="#{label.selectOption}"></h2>
+
+  <div class="form-group center">
+    <form class="form-inline center" action="/user/list">
+      <button type="submit" class="btn btn-primary center" th:text="#{label.userList}"></button>
+    </form>
+    <form class="form-inline center" action="/friend/list">
+      <button type="submit" class="btn btn-primary center" th:text="#{label.friendList}"></button>
+    </form>
+    <form class="form-inline center" action="/request/list">
+      <button type="submit" class="btn btn-primary center" th:text="#{label.invitations}"></button>
+    </form>
+    <form class="form-inline center" action="/publication/add">
+      <button type="submit" class="btn btn-primary center" th:text="#{label.addPublication}"></button>
+    </form>
+    <form class="form-inline center" action="/publication/listown">
+      <button type="submit" class="btn btn-primary center" th:text="#{label.ownPublications}"></button>
+    </form>
+  </div>
 
 </div>
 
