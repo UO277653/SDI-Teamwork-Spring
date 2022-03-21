@@ -267,11 +267,11 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=3");
-		List<WebElement> elementToRemove = driver.findElements(By.name("userid439"));
+		List<WebElement> elementToRemove = driver.findElements(By.name("userid182"));
 		Assertions.assertTrue(!elementToRemove.isEmpty());
 		elementToRemove.get(0).click();
 		PO_UserListView.delete(driver);
-		List<WebElement> removedElement = driver.findElements(By.name("userid439"));
+		List<WebElement> removedElement = driver.findElements(By.name("userid182"));
 
 		// TERMINAR CON ASSERT
 		Assertions.assertTrue(removedElement.isEmpty());
@@ -389,9 +389,9 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list");
-		Assertions.assertEquals("Aceptada", PO_PublicationListView.getPublicationState(driver, "state29"));
-		driver.findElements(By.id("moderatePublication29")).get(0).click();
-		Assertions.assertEquals("Moderada", PO_PublicationListView.getPublicationState(driver, "state29"));
+		Assertions.assertEquals("Aceptada", PO_PublicationListView.getPublicationState(driver, "state18"));
+		driver.findElements(By.id("moderatePublication18")).get(0).click();
+		Assertions.assertEquals("Moderada", PO_PublicationListView.getPublicationState(driver, "state18"));
 	}
 
 	@Test
