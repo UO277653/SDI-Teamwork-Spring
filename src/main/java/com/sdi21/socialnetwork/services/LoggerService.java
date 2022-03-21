@@ -21,6 +21,7 @@ public class LoggerService {
     LoggerRepository repo;
 
     public void addLog(LogType logType, String text){
+        System.out.println(logType +  "  ---  " +  text);
         repo.save(new Log(logType,text));
     }
 

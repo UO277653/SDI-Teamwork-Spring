@@ -21,16 +21,16 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
-	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-  	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Ari
 	//static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -548,17 +548,6 @@ class SocialnetworkApplicationTests {
 	}
 
 	@Test
-	@Order(23)
-	void prueba23() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
-		driver.findElement(By.id("friendList")).click();
-
-		List<WebElement> friends = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
-		Assertions.assertEquals(1, friends.size());
-	}
-
-	@Test
 	@Order(24)
 	void PRUEBA24(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -629,10 +618,11 @@ class SocialnetworkApplicationTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
 
-		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+		driver.navigate().to("localhost:8090/publication/list/" + 9 );
 
 		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
@@ -713,6 +703,70 @@ class SocialnetworkApplicationTests {
 		checkText = PO_HomeView.getP().getString("label.date", locale);
 		result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
+
+	@Test
+	@Order(30)
+	public void Prueba30(){
+		if(!driver.findElements(By.id("logoutBtn")).isEmpty()) {
+			driver.findElement(By.id("logoutBtn")).click(); // Nos aseguramos de que no hay ningun usuario autenticado
+		}
+		driver.navigate().to("localhost:8090/user/list");
+		Assertions.assertEquals("http://localhost:8090/login", driver.getCurrentUrl());
+	}
+
+	@Test
+	@Order(31)
+	public void Prueba31(){
+		if(!driver.findElements(By.id("logoutBtn")).isEmpty()) {
+			driver.findElement(By.id("logoutBtn")).click(); // Nos aseguramos de que no hay ningun usuario autenticado
+		}
+		driver.navigate().to("http://localhost:8090/request/list");
+		Assertions.assertEquals("http://localhost:8090/login", driver.getCurrentUrl());
+	}
+
+	@Test
+	@Order(32)
+	public void Prueba32(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "nofriends@email.com", "123456");
+		driver.navigate().to("http://localhost:8090/logger/list");
+
+		Assertions.assertTrue(driver.findElement(By.id("loginForm")).isDisplayed());
+	}
+
+	@Test
+	@Order(33)
+	public void Prueba33(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "usuarioquenoexiste", "noexiste");
+		PO_LoginView.fillLoginForm(driver, "otroquenoexiste", "noexiste");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_SignUpView.fillForm(driver, "sarap2@uniovi.es", "Paco", "Perez", "123456", "123456");
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_SignUpView.fillForm(driver, "sarap3@uniovi.es", "Paco", "Perez", "123456", "123456");
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		driver.navigate().to("http://localhost:8090/logger/list");
+		Assertions.assertTrue(PO_LoggerView.verifyThatThereAreNOfLogMessages(driver, 2));
+
+	}
+
+	@Test
+	@Order(34)
+	public void Prueba34(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+
+		driver.navigate().to("http://localhost:8090/logger/list");
+
+		Assertions.assertTrue(driver.findElements(By.cssSelector("#loggerList tbody tr")).size() > 0);
+		driver.findElement(By.id("deleteLogsBtn")).click();
+		Assertions.assertTrue(driver.findElements(By.cssSelector("#loggerList tbody tr")).size() == 0);
 	}
 
 	@Test

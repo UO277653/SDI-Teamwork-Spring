@@ -1,6 +1,9 @@
 package com.sdi21.socialnetwork;
 
 import com.sdi21.socialnetwork.entities.logtype.LogType;
+import com.sdi21.socialnetwork.loghandlers.LogInSuccessfulHandler;
+import com.sdi21.socialnetwork.loghandlers.LogInUnsuccessfulHandler;
+import com.sdi21.socialnetwork.loghandlers.LogoutSuccessfulHandler;
 import com.sdi21.socialnetwork.services.LoggerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,39 +31,12 @@ import java.util.Date;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private LogoutSuccessHandler logoutSuccessHandler = new LogoutSuccessHandler() {
-
-
-        @Override
-        public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            //loggerService.addLog(LogType.LOGOUT, "SUCCESSFUL LOGOUT: "+ authentication.getName());
-            response.sendRedirect(request.getContextPath());
-        }
-    };
-
-    private AuthenticationSuccessHandler logInSuccessHandler = new AuthenticationSuccessHandler() {
-
-
-        @Override
-        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String username = userDetails.getUsername();
-
-            //loggerService.addLog(LogType.LOGIN_EX, "SUCCESSFUL LOGIN: ");
-            response.sendRedirect(request.getContextPath());
-        }
-    };
-
-    private AuthenticationFailureHandler logInUnsuccessfulHandler = new AuthenticationFailureHandler() {
-
-
-        @Override
-        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-            String email = request.getParameter("email");
-            //loggerService.addLog(LogType.LOGIN_ERR, "FAILED LOGIN ATTEMPT: "+ email);
-            response.sendRedirect("/login");
-        }
-    };
+    @Autowired
+    private LogInSuccessfulHandler logInSuccessfulHandler;
+    @Autowired
+    private LogInUnsuccessfulHandler logInUnsuccessfulHandler;
+    @Autowired
+    private LogoutSuccessfulHandler logoutSuccessfulHandler;
 
 
     @Bean
@@ -95,12 +71,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/user/list")//2. la redireccion segun admin o user se hace en el servicio
-                .successHandler(logInSuccessHandler)
+                .successHandler(logInSuccessfulHandler)
                 .failureHandler(logInUnsuccessfulHandler)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login")
-                .logoutSuccessHandler(logoutSuccessHandler)
+                .logoutSuccessHandler(logoutSuccessfulHandler)
                 .permitAll()
         ; //3. redirigir a la página de login
     }
