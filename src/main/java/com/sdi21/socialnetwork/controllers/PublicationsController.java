@@ -2,6 +2,7 @@ package com.sdi21.socialnetwork.controllers;
 
 import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
+import com.sdi21.socialnetwork.services.FriendsService;
 import com.sdi21.socialnetwork.services.PublicationsService;
 import com.sdi21.socialnetwork.services.RolesService;
 import com.sdi21.socialnetwork.services.UsersService;
@@ -29,6 +30,9 @@ public class PublicationsController {
 
     @Autowired
     private UsersService usersService;
+
+    @Autowired
+    private FriendsService friendsService;
 
     @Autowired
     private RolesService rolesService;
@@ -90,7 +94,7 @@ public class PublicationsController {
         String email = principal.getName();
         User loggedUser = usersService.getUserByEmail(email);
 
-        if(!usersService.areFriends(user, loggedUser)){
+        if(!friendsService.areFriends(user, loggedUser)){
             return "home";
         }
 
