@@ -25,12 +25,14 @@ public class UsersService {
     private RolesService rolesService;
 
 
-    public Page<User> getUsers(Pageable pageable) {
-        return usersRepository.findAll(pageable);
+    public Page<User> getUsers(Pageable pageable, User user) {
+        return user.getRole().equals("ROLE_ADMIN") ? usersRepository.findAll(pageable) :
+                usersRepository.findAll(pageable, user);
     }
 
-    public Page<User> getUsersByText(Pageable pageable, String searchText) {
-        return usersRepository.findAll(pageable, '%'+searchText+'%');
+    public Page<User> getUsersByText(Pageable pageable, String searchText, User user) {
+        return user.getRole().equals("ROLE_ADMIN") ? usersRepository.findAll(pageable, '%'+searchText+'%') :
+                usersRepository.findAll(pageable, '%'+searchText+'%', user);
     }
 
     public List<User> getUsers() {
