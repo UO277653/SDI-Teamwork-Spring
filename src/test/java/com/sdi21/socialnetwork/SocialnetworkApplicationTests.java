@@ -77,7 +77,7 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 1. Registro de usuario con datos inválidos:
 	 * 		Campos vacíos (email, nombre, apellidos)
 	 */
@@ -92,7 +92,7 @@ class SocialnetworkApplicationTests {
 	}
 
 
-	/*
+	/**
 	 * 1. Registro de usuario con datos inválidos
 	 * 		repetición de contraseña inválida
 	 */
