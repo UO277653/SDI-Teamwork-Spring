@@ -41,7 +41,7 @@
                 <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getOp().getEmail()}"></td>
                 <td th:id="${'state'+publication.getId()}" sec:authorize="hasRole('ROLE_ADMIN')" th:text="${publication.getState()}"></td>
                 <td th:text="${publication.getDate()}"></td>
-                <td sec:authorize="!hasRole('ROLE_ADMIN')" th:text="${publication.getRecommendationCount()}"></td>
+                <td sec:authorize="!hasRole('ROLE_ADMIN')" id="recommendationCount" th:text="${publication.getRecommendationCount()}"></td>
 
                 <td th:unless="${publication.getState().equals('Aceptada')}" sec:authorize="hasRole('ROLE_ADMIN')" scope="row">
                     <a th:id="${'acceptPublication' + publication.id}" class="dropdown-item" th:href="${'/publication/accept/' + publication.id}" th:text="#{label.publication.acepted}"></a>

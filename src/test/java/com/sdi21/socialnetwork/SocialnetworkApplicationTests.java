@@ -21,7 +21,7 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
- 	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+ 	// static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
 	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -69,7 +69,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(1)
-	void prueba1() {
+	void Prueba1() {
 		PO_SignUpView.signup(driver, "sarap@uniovi.es", "Paco", "Perez", "123456", "123456");
 
 		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
@@ -83,7 +83,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(2)
-	void prueba2() {
+	void Prueba2() {
 		PO_SignUpView.signup(driver, "", "", "", "123456", "123456");
 
 		String checkText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
@@ -98,7 +98,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(3)
-	void prueba3() {
+	void Prueba3() {
 		PO_SignUpView.signup(driver, "sara@uniovi.com", "Paco", "Perez", "123456", "122222");
 
 		String checkText = PO_HomeView.getP().getString("Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
@@ -112,7 +112,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(4)
-	void prueba4() {
+	void Prueba4() {
 		PO_SignUpView.signup(driver, "admin@email.com", "Paco", "Perez", "123456", "123456");
 
 		String checkText = PO_HomeView.getP().getString("Error.signup.email.duplicate", PO_Properties.getSPANISH());
@@ -126,7 +126,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(5)
-	public void prueba5(){
+	public void Prueba5(){
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
@@ -140,7 +140,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(6)
-	public void prueba6(){
+	public void Prueba6(){
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
@@ -154,7 +154,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(7)
-	public void prueba7(){
+	public void Prueba7(){
 		PO_LoginView.login(driver, "", "");
 
 		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
@@ -168,7 +168,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(8)
-	public void prueba8(){
+	public void Prueba8(){
 		PO_LoginView.login(driver, "user01@email.com", "user02");
 
 		//Vuelve a mostrar el login
@@ -183,7 +183,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(9)
-	public void prueba9(){
+	public void Prueba9(){
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
@@ -205,7 +205,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(10)
-	public void prueba10(){
+	public void Prueba10(){
 		//Sin estar autenticado el boton no está presente
 		List<WebElement> boton = driver.findElements(By.id("logoutBtn"));
 		Assertions.assertEquals(0, boton.size());
@@ -224,7 +224,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(11)
-	void PRUEBA11() {
+	void Prueba11() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		List<WebElement> userMenu = SeleniumUtils.waitLoadElementsBy(driver, "id", "userDropdown", PO_View.getTimeout());
@@ -246,7 +246,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(12)
-	void PRUEBA12() {
+	void Prueba12() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list");
@@ -268,7 +268,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(13)
-	void PRUEBA13() {
+	void Prueba13() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=3");
@@ -288,7 +288,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(14)
-	void PRUEBA14() {
+	void Prueba14() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=2");
@@ -320,7 +320,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(15)
-	void prueba15() {
+	void Prueba15() {
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
@@ -340,7 +340,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(16)
-	void prueba16() {
+	void Prueba16() {
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
@@ -355,7 +355,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(17)
-	void prueba17() {
+	void Prueba17() {
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
@@ -370,7 +370,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(18)
-	void prueba18() {
+	void Prueba18() {
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
@@ -386,9 +386,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(19)
-	void PRUEBA19() {
-
-		//TODO: refactorizar si da tiempo: enviar friend request de un user a otro
+	void Prueba19() {
 
 		//loguearse como user01 (no admin, admin no puede)
 		PO_LoginView.login(driver, "user01@email.com", "user01");
@@ -427,7 +425,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(20)
-	void PRUEBA20() {
+	void Prueba20() {
 		//loguearse como user01
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 
@@ -445,12 +443,6 @@ class SocialnetworkApplicationTests {
 		//comprobamos si la invitación está pendiente, no podemos enviar una nueva, aparece "Pending..." como texto
 		String checkText = PO_HomeView.getP().getString("label.request.pending", PO_Properties.getSPANISH());
 		SeleniumUtils.textIsPresentOnPage(driver, checkText);
-
-		//TODO:otros checks: comprobar si el botón está deshabilitado, o intentar hacer click y ver a qué url redirige
-
-		//getElementById, disabled, true
-		//Assertions.assertEquals("http://localhost:8090/user/list", driver.getCurrentUrl());
-		//si nos dejase añadirlo de nuevo la url camnbiaría a request/send/id!!!
 	}
 
 	/**
@@ -460,7 +452,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(21)
-	void PRUEBA21() {
+	void Prueba21() {
 		//loguearse como user08
 		PO_LoginView.login(driver, "user08@email.com", "user08");
 
@@ -524,7 +516,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(22)
-	void PRUEBA22() {
+	void Prueba22() {
 		//loguearse como user15
 		PO_LoginView.login(driver, "user15@email.com", "user15");
 
@@ -558,7 +550,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(23)
-	void prueba23() {
+	void Prueba23() {
 		PO_LoginView.login(driver, "user14@email.com", "user14");
 		driver.findElement(By.id("friendList")).click();
 
@@ -572,7 +564,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(24)
-	void PRUEBA24(){
+	void Prueba24(){
 		PO_LoginView.login(driver, "nopublications@email.com", "123456");
 
 		driver.navigate().to("localhost:8090/publication/listown");
@@ -593,7 +585,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(25)
-	void PRUEBA25(){
+	void Prueba25(){
 		PO_LoginView.login(driver, "user07@email.com", "user07");
 		driver.navigate().to("localhost:8090/publication/add");
 
@@ -614,7 +606,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(26)
-	void PRUEBA26(){
+	void Prueba26(){
 		PO_LoginView.login(driver, "user07@email.com", "user07");
 
 		driver.navigate().to("localhost:8090/publication/listown");
@@ -631,7 +623,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(27)
-	void PRUEBA27(){
+	void Prueba27(){
 		PO_LoginView.login(driver, "user06@email.com", "user06");
 
 		//9 = id of user07
@@ -648,8 +640,8 @@ class SocialnetworkApplicationTests {
 	 * Error de autenticación
 	 */
 	@Test
-	@Order(28) //TODO
-	void PRUEBA28(){
+	@Order(28)
+	void Prueba28(){
 		PO_LoginView.login(driver, "user06@email.com", "user06"); // This user has 10 accepted publications and 1 censored
 		driver.navigate().to("localhost:8090/publication/list/" + 9 );
 
@@ -664,7 +656,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(29)
-	public void prueba29(){
+	public void Prueba29(){
 		PO_LoginView.login(driver, "user01@email.com", "user01"); //Fill the form, now loged in spanish
 
 		PO_UserListView.checkUsersList(driver, PO_Properties.getSPANISH());
@@ -680,10 +672,6 @@ class SocialnetworkApplicationTests {
 		PO_PublicationListView.checkOwnPublications(driver, PO_Properties.getENGLISH());
 		PO_PublicationView.checkAddPublication(driver, PO_Properties.getENGLISH());
 	}
-
-
-
-
 
 	/**
 	 * 16. Seguridad
@@ -781,57 +769,50 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(35)
-	void PRUEBA35() {
+	void Prueba35() {
 
-		//loguearse como user07
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user07@email.com", "user07"); //cambiar
+		// Login user01
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 
-		//ir a user/list a la page donde está el user08
-		driver.navigate().to("localhost:8090/user/list?page=1");
+		// Ir a user/list a la page donde está el user03
+		driver.navigate().to("localhost:8090/user/list");
 
-		//pulsar en + Añadir amigo (user08)
+		// Pulsar en + Añadir amigo (user03)
 		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
 		addButton.get(0).click();
 
-		//logout user07
-		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		// Logout user01
+		PO_LoginView.logout(driver);
 
-		// login user08
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user08@email.com", "user08"); //cambiar
+		// Login user03
 
-		//ir a request/list
+		PO_LoginView.login(driver, "user03@email.com", "user03");
+
+		// Ir a request/list
 		driver.navigate().to("localhost:8090/request/list");
 
-		//pulsar en Aceptar que redirige a request/accept/id
+		// Pulsar en Aceptar que redirige a request/accept/id
 		List<WebElement> acceptButton = driver.findElements(By.id("acceptFriendBtn"));
 		acceptButton.get(0).click();
 
-		//ir a friend/list
+		// Ir a friend/list
 		driver.navigate().to("localhost:8090/friend/list");
 
-		//recoger las publicaciones de los amigos, y clicar en ella
-		List<WebElement> friendPosts = driver.findElements(By.id("publicationsUrl"));
+		// Recoger las publicaciones de los amigos, y clicar en ella
+		List<WebElement> friendPosts = driver.findElements(By.cssSelector("#tableFriends tbody tr td a"));
 		friendPosts.get(0).click();
 
-		//assert: comprobar que la url es publication/list/07 creo
+		// En la lista de publicaciones, recomendamos la primera
 		List<WebElement> recommendButton = driver.findElements(By.id("recommendBtn"));
 		recommendButton.get(0).click();
-		recommendButton.get(0).click(); //twice porque no funciona uno solo
 
-		// comprobamos que salga ¡Recomendada!
+		// Comprobamos que salga ¡Recomendada!
 		SeleniumUtils.textIsPresentOnPage(driver, "¡Recomendada!");
-		// comprobar que el counter es igual a 1
 
-
-		// y vamos a sus publicaciones http://localhost:8090/publication/list/15
-		// primer click no sucede nada (BUG), segundo click se recomienda, la URL cambia a http://localhost:8090/publication/recommend/18
-		// y el texto en pantalla es ¡Recomendada! y el counter es 1
-
-		//userA, login, manda request a userB, logout
-		//userB login, acepta request, publicaciones userA, recomendar
-		//counter = 1, no aparece botón recomendar
+		// Comprobamos que el counter de recomendaciones es igual a 1
+		List<WebElement> recommendCount = driver.findElements(By.id("recommendationCount"));
+		String result = recommendCount.get(0).getText();
+		Assertions.assertEquals(1, Integer.valueOf(result));
 	}
 
 	/*
@@ -841,7 +822,22 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(36)
-	void PRUEBA36() {
+	void Prueba36() {
+
+		// Login user01
+		PO_LoginView.login(driver, "user01@email.com", "user01");
+
+		// Ir a user/list
+		driver.navigate().to("localhost:8090/user/list");
+
+		// Intentamos acceder a las publicaciones de user04 (que no es amigo)
+		List<WebElement> userPosts = driver.findElements(By.id("publicationsUrl"));
+		userPosts.get(1).click();
+
+		// Como no somos amigos, no nos permite entrar y nos redirige a la página de inicio
+		SeleniumUtils.textIsPresentOnPage(driver, "Bienvenido a SDIBook");
+
+
 
 		//login userA
 		//ir a user/list
@@ -850,15 +846,13 @@ class SocialnetworkApplicationTests {
 
 	}
 
-	//TODO 35-36
-
 	/**
 	 * 19. Moderación de publicaciones
 	 * Como administrador, cambiar el estado de una publicación y comprobar que el estado ha cambiado.
 	 */
 	@Test
 	@Order(37)
-	void PRUEBA37() {
+	void Prueba37() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list");
@@ -873,7 +867,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(38)
-	void PRUEBA38() {
+	void Prueba38() {
 		PO_LoginView.login(driver, "user10@email.com", "user10");
 		// This user has 10 accepted publications and 1 censored (added in the generatePublications method in InsertSampleDataService)
 
@@ -893,7 +887,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(39)
-	void PRUEBA39() {
+	void Prueba39() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01"); // We log as user01
 
@@ -926,7 +920,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(40)
-	void PRUEBA40() {
+	void Prueba40() {
 		PO_LoginView.login(driver, "default@email.com", "123456");
 
 		driver.navigate().to("localhost:8090/publication/moderate/4"); // Trying to change a publication
@@ -940,7 +934,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(41)
-	void PRUEBA41() {
+	void Prueba41() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list"); // Trying to change a publication
@@ -957,7 +951,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(42)
-	void PRUEBA42() {
+	void Prueba42() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list"); // Trying to change a publication
@@ -975,7 +969,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(43)
-	void PRUEBA43() {
+	void Prueba43() {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/publication/list"); // Trying to change a publication
