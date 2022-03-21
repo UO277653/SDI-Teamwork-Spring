@@ -21,13 +21,13 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
-	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   // Adrian
   //	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
-	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
 //	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -321,7 +321,7 @@ class SocialnetworkApplicationTests {
 		elementos += PO_UserListView.countUsersOnPage(driver, 3);
 
 		// all users but the deleted ones and the admin and logged in users
-		Assertions.assertEquals(15, elementos);
+		Assertions.assertEquals(14, elementos);
 	}
 
 	@Test
@@ -354,7 +354,7 @@ class SocialnetworkApplicationTests {
 
 		PO_UserListView.search(driver,"default");
 		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
-		Assertions.assertEquals(4, users.size());
+		Assertions.assertEquals(3, users.size());
 	}
 
 	@Test
