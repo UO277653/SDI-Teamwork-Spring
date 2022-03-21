@@ -72,7 +72,7 @@ class SocialnetworkApplicationTests {
 	void prueba1() {
 		PO_SignUpView.signup(driver, "sarap@uniovi.es", "Paco", "Perez", "123456", "123456");
 
-		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("welcome.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -86,7 +86,7 @@ class SocialnetworkApplicationTests {
 	void prueba2() {
 		PO_SignUpView.signup(driver, "", "", "", "123456", "123456");
 
-		String checkText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("signup.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText , result.get(0).getText());
 	}
@@ -101,7 +101,7 @@ class SocialnetworkApplicationTests {
 	void prueba3() {
 		PO_SignUpView.signup(driver, "sara@uniovi.com", "Paco", "Perez", "123456", "122222");
 
-		String checkText = PO_HomeView.getP().getString("Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -115,7 +115,7 @@ class SocialnetworkApplicationTests {
 	void prueba4() {
 		PO_SignUpView.signup(driver, "admin@email.com", "Paco", "Perez", "123456", "123456");
 
-		String checkText = PO_HomeView.getP().getString("Error.signup.email.duplicate", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("Error.signup.email.duplicate", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -129,7 +129,7 @@ class SocialnetworkApplicationTests {
 	public void prueba5(){
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
-		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -143,7 +143,7 @@ class SocialnetworkApplicationTests {
 	public void prueba6(){
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 
-		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -157,7 +157,7 @@ class SocialnetworkApplicationTests {
 	public void prueba7(){
 		PO_LoginView.login(driver, "", "");
 
-		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("login.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -172,7 +172,7 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.login(driver, "user01@email.com", "user02");
 
 		//Vuelve a mostrar el login
-		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("login.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -186,7 +186,7 @@ class SocialnetworkApplicationTests {
 	public void prueba9(){
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 
-		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 
@@ -194,7 +194,7 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.logout(driver);
 
 		//Comprobamos que volvemos a la página de login
-		checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
+		checkText = PO_NavView.getP().getString("login.message", PO_Properties.getSPANISH());
 		result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -388,8 +388,6 @@ class SocialnetworkApplicationTests {
 	@Order(19)
 	void PRUEBA19() {
 
-		//TODO: refactorizar si da tiempo: enviar friend request de un user a otro
-
 		//loguearse como user01 (no admin, admin no puede)
 		PO_LoginView.login(driver, "user01@email.com", "user01");
 
@@ -443,7 +441,7 @@ class SocialnetworkApplicationTests {
 		driver.navigate().to("localhost:8090/user/list");
 
 		//comprobamos si la invitación está pendiente, no podemos enviar una nueva, aparece "Pending..." como texto
-		String checkText = PO_HomeView.getP().getString("label.request.pending", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("label.request.pending", PO_Properties.getSPANISH());
 		SeleniumUtils.textIsPresentOnPage(driver, checkText);
 
 	}
@@ -643,12 +641,12 @@ class SocialnetworkApplicationTests {
 	 * Error de autenticación
 	 */
 	@Test
-	@Order(28) //TODO
+	@Order(28)
 	void PRUEBA28(){
 		PO_LoginView.login(driver, "user06@email.com", "user06"); // This user has 10 accepted publications and 1 censored
 		driver.navigate().to("localhost:8090/publication/list/" + 9 );
 
-		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
+		String checkText = PO_NavView.getP().getString("welcome.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
@@ -667,7 +665,7 @@ class SocialnetworkApplicationTests {
 		PO_PublicationListView.checkOwnPublications(driver, PO_Properties.getSPANISH());
 		PO_PublicationView.checkAddPublication(driver, PO_Properties.getSPANISH());
 
-		PO_HomeView.changeLang(driver, "btnEnglish"); //Change to English
+		PO_NavView.changeLang(driver, "btnEnglish"); //Change to English
 
 		//English
 		PO_UserListView.checkUsersList(driver, PO_Properties.getENGLISH());
@@ -713,7 +711,7 @@ class SocialnetworkApplicationTests {
 	/**
 	 * 16. Seguridad
 	 * Como usuario normal intentar acceder a una opcion solo disponible para administradores
-	 * Mensaje de accion prohibida //TODO
+	 * Mensaje de accion prohibida
 	 */
 	@Test
 	@Order(32)
@@ -769,7 +767,6 @@ class SocialnetworkApplicationTests {
 		Assertions.assertTrue(driver.findElements(By.cssSelector("#loggerList tbody tr")).size() == 0);
 	}
 
-	//TODO 35-36
 
 	/**
 	 * 19. Moderación de publicaciones
