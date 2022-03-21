@@ -64,4 +64,8 @@ public class PublicationsService {
         publication.addRecommendation(user);
         publicationsRepository.save(publication);
     }
+
+    public Page<Publication> getPublicPublicationsByEmail(Pageable pageable, String email) {
+        return publicationsRepository.findPublicByUserEmail(pageable, email);
+    }
 }

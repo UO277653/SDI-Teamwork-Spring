@@ -24,7 +24,7 @@ class SocialnetworkApplicationTests {
  	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-//  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 
 	//Sara
@@ -551,23 +551,25 @@ class SocialnetworkApplicationTests {
 		SeleniumUtils.textIsPresentOnPage(driver, "¡Aceptada!");
 	}
 
-	//TODO: FALTA 23
 
 	/**
-	 * 12. Crear nueva publicación
-	 * Datos válidos
+	 * 11. Listado de amigos
+	 * Mostrar el listado de amigos de un usuario
 	 */
 	@Test
 	@Order(23)
 	void prueba23() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
+		PO_LoginView.login(driver, "user14@email.com", "user14");
 		driver.findElement(By.id("friendList")).click();
 
 		List<WebElement> friends = driver.findElements(By.cssSelector("#tableFriends tbody tr"));
 		Assertions.assertEquals(1, friends.size());
 	}
 
+	/**
+	 * 12. Crear nueva publicación
+	 * Datos válidos
+	 */
 	@Test
 	@Order(24)
 	void PRUEBA24(){
@@ -648,7 +650,7 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(28) //TODO
 	void PRUEBA28(){
-		PO_LoginView.login(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
+		PO_LoginView.login(driver, "user01@email.com", "user01"); // This user has 10 accepted publications and 1 censored
 
 		driver.navigate().to("localhost:8090/publication/list/" + 9 );
 
@@ -667,62 +669,23 @@ class SocialnetworkApplicationTests {
 	public void prueba29(){
 		PO_LoginView.login(driver, "user01@email.com", "user01"); //Fill the form, now loged in spanish
 
-		checkUsersList(PO_Properties.getSPANISH());
-		checkFriendList(PO_Properties.getSPANISH());
-		checkOwnPublications(PO_Properties.getSPANISH());
-		checkAddPublication(PO_Properties.getSPANISH());
+		PO_UserListView.checkUsersList(driver, PO_Properties.getSPANISH());
+		PO_FriendsListView.checkFriendList(driver, PO_Properties.getSPANISH());
+		PO_PublicationListView.checkOwnPublications(driver, PO_Properties.getSPANISH());
+		PO_PublicationView.checkAddPublication(driver, PO_Properties.getSPANISH());
 
 		PO_HomeView.changeLang(driver, "btnEnglish"); //Change to English
 
 		//English
-		checkUsersList(PO_Properties.getENGLISH());
-		checkFriendList(PO_Properties.getENGLISH());
-		checkOwnPublications(PO_Properties.getENGLISH());
-		checkAddPublication(PO_Properties.getENGLISH());
+		PO_UserListView.checkUsersList(driver, PO_Properties.getENGLISH());
+		PO_FriendsListView.checkFriendList(driver, PO_Properties.getENGLISH());
+		PO_PublicationListView.checkOwnPublications(driver, PO_Properties.getENGLISH());
+		PO_PublicationView.checkAddPublication(driver, PO_Properties.getENGLISH());
 	}
 
-	private void checkUsersList(int locale){
-		driver.navigate().to("localhost:8090/user/list");
-		String checkText = PO_HomeView.getP().getString("label.name", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.surname", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
-	private void checkAddPublication(int locale){
-		driver.navigate().to("localhost:8090/publication/add");
-		String checkText = PO_HomeView.getP().getString("label.addPublication", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.send", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
-	private void checkFriendList(int locale){
-		driver.navigate().to("localhost:8090/friend/list");
-		String checkText = PO_HomeView.getP().getString("label.name", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.surname", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
-	private void checkOwnPublications(int locale){
-		driver.navigate().to("localhost:8090/publication/listown");
-		String checkText = PO_HomeView.getP().getString("label.title", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.text",locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.date", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
 	/**
 	 * 16. Seguridad
@@ -857,7 +820,29 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(39)
 	void PRUEBA39() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01"); // We log as user01
 
+		List<WebElement> addFriendBtns = driver.findElements(By.id("addFriendBtn"));
+		addFriendBtns.get(0).click(); // We send a friend request to user02 (who has a moderated publication, and 10 accepted)
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user03@email.com", "user03"); // We log as user02
+		driver.navigate().to("http://localhost:8090/request/list");
+		driver.findElement(By.cssSelector("#tableRequests tbody tr td a")).click(); // User 2 accepts the request
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		driver.navigate().to("http://localhost:8090/friend/list");
+		driver.findElement(By.cssSelector("#tableMarks tbody tr td a")).click();
+
+		int nPublication = 0;
+		nPublication += driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size();
+		driver.navigate().to("http://localhost:8090/publication/list/4?page=1");
+		nPublication += driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size(); // Last page
+
+		Assertions.assertEquals(10, nPublication); // Only the 10 accepted publications are shown
 	}
 
 	/**

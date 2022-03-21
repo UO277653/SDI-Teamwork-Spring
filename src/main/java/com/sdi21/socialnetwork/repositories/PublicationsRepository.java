@@ -1,13 +1,10 @@
 package com.sdi21.socialnetwork.repositories;
 
 import com.sdi21.socialnetwork.entities.Publication;
-import com.sdi21.socialnetwork.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,4 +27,7 @@ public interface PublicationsRepository extends CrudRepository<Publication,Long>
     //      "Recommendations" : is the name of the set of users found in Publication
     //      "Id" : The ID of a user inside "Recommendations"
     List<Publication> findRecommendedByRecommendationsId(Long userId);
+
+    @Query("SELECT p FROM Publication p WHERE p.op.email LIKE ?1 AND p.state LIKE 'Aceptada'")
+    Page<Publication> findPublicByUserEmail(Pageable pageable, String email);
 }

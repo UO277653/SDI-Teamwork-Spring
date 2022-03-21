@@ -94,7 +94,7 @@ public class PublicationsController {
     public String getList(Model model, @PathVariable Long id, Pageable pageable, Principal principal){
 
         User user = usersService.getUser(id);
-        Page<Publication> publications = publicationsService.getPublicationsByEmail(pageable, user.getEmail());
+        Page<Publication> publications = publicationsService.getPublicPublicationsByEmail(pageable, user.getEmail());
 
         String email = principal.getName();
         User loggedUser = usersService.getUserByEmail(email);

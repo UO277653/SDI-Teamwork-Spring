@@ -1,5 +1,6 @@
 package com.sdi21.socialnetwork.pageobjects;
 
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,5 +32,15 @@ public class PO_PublicationView extends PO_NavView {
         driver.navigate().to("localhost:8090/publication/listown?page=" + page );
         return driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size();
 
+    }
+
+    public static void checkAddPublication(WebDriver driver, int locale){
+        driver.navigate().to("localhost:8090/publication/add");
+        String checkText = PO_HomeView.getP().getString("label.content", locale) + ":";
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+        checkText = PO_HomeView.getP().getString("label.send", locale);
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 }
