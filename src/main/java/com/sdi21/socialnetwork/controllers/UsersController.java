@@ -9,6 +9,7 @@ import com.sdi21.socialnetwork.validators.SignUpFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -95,9 +97,9 @@ public class UsersController {
         User user = usersService.getUserByEmail(email);
 
         if(searchText != null && !searchText.isEmpty()) {
-            users = usersService.getUsersByText(pageable, searchText);
+            users = usersService.getUsersByText(pageable, searchText, user);
         } else {
-            users = usersService.getUsers(pageable);
+            users = usersService.getUsers(pageable, user);
         }
 
         List<User> userFriends = friendsService.getFriendsForUser(user);
