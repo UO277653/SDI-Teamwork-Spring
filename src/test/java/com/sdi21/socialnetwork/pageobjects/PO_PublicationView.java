@@ -36,10 +36,10 @@ public class PO_PublicationView extends PO_NavView {
 
     public static void checkAddPublication(WebDriver driver, int locale){
         driver.navigate().to("localhost:8090/publication/add");
-        String checkText = PO_HomeView.getP().getString("label.content", locale) + ":";
+        String checkText = PO_NavView.getP().getString("label.content", locale) + ":";
         List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
-        checkText = PO_HomeView.getP().getString("label.send", locale);
+        checkText = PO_NavView.getP().getString("label.send", locale);
         result = PO_View.checkElementBy(driver, "text", checkText);
         Assertions.assertEquals(checkText, result.get(0).getText());
     }
