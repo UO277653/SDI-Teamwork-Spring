@@ -23,19 +23,15 @@ public class PO_LoginView extends PO_NavView {
         driver.findElement(boton).click();
     }
 
-    static public void login(WebDriver driver, String dni, String password, String text){
-
+    static public void login(WebDriver driver, String email, String password){
         //Vamos al formulario de logueo.
         PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
         //Rellenamos el formulario
-        PO_LoginView.fillLoginForm(driver, dni, password);
+        PO_LoginView.fillLoginForm(driver, email, password);
         //COmprobamos que entramos en la pagina privada de Alumno
-        List<WebElement> result = PO_View.checkElementBy(driver, "text", text);
     }
 
-    static public void logout(WebDriver driver, int locale){
-
-        String loginText = PO_HomeView.getP().getString("signup.message", locale);
-        PO_PrivateView.clickOption(driver, "logout", "text", loginText);
+    static public void logout(WebDriver driver){
+        PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
     }
 }

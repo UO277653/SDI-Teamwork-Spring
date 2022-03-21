@@ -24,10 +24,10 @@ class SocialnetworkApplicationTests {
 	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+//  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
-	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
 	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -69,8 +69,7 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(1)
 	void prueba1() {
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		PO_SignUpView.fillForm(driver, "sarap@uniovi.es", "Paco", "Perez", "123456", "123456");
+		PO_SignUpView.signup(driver, "sarap@uniovi.es", "Paco", "Perez", "123456", "123456");
 
 		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
@@ -84,8 +83,7 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(2)
 	void prueba2() {
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		PO_SignUpView.fillForm(driver, "", "", "", "123456", "123456");
+		PO_SignUpView.signup(driver, "", "", "", "123456", "123456");
 
 		String checkText = PO_HomeView.getP().getString("signup.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
@@ -100,84 +98,77 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(3)
 	void prueba3() {
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		PO_SignUpView.fillForm(driver, "sara@uniovi.com", "Paco", "Perez", "123456", "122222");
+		PO_SignUpView.signup(driver, "sara@uniovi.com", "Paco", "Perez", "123456", "122222");
 
 		String checkText = PO_HomeView.getP().getString("Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 1. Registro de usuario con datos inválidos
 	 * 		email existente
 	 */
 	@Test
 	@Order(4)
 	void prueba4() {
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-		PO_SignUpView.fillForm(driver, "admin@email.com", "Paco", "Perez", "123456", "123456");
+		PO_SignUpView.signup(driver, "admin@email.com", "Paco", "Perez", "123456", "123456");
 
-		List<WebElement> result = PO_SignUpView.checkElementByKey(driver, "Error.signup.email.duplicate", PO_Properties.getSPANISH() );
-		//Comprobamos el error de email repetido.
 		String checkText = PO_HomeView.getP().getString("Error.signup.email.duplicate", PO_Properties.getSPANISH());
-		Assertions.assertEquals(checkText , result.get(0).getText());
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 2. Inicio de sesión con datos válidos
 	 * 		Administrador
 	 */
 	@Test
 	@Order(5)
 	public void prueba5(){
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 2. Inicio de sesión con datos válidos
 	 * 		Usuario
 	 */
 	@Test
 	@Order(6)
 	public void prueba6(){
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 2. Inicio de sesión con datos inválidos
 	 * 		Usuario estandar, email y contraseña vacíos
 	 */
 	@Test
 	@Order(7)
 	public void prueba7(){
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "", "");
+		PO_LoginView.login(driver, "", "");
 
 		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 2. Inicio de sesión con datos válidos
 	 * 		Email conrrecto pero contraseña incorrecta
 	 */
 	@Test
 	@Order(8)
 	public void prueba8(){
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user02");
+		PO_LoginView.login(driver, "user01@email.com", "user02");
 
 		//Vuelve a mostrar el login
 		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
@@ -185,22 +176,21 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 3. Fin de sesión
 	 * Salir sesion y comprobar que vuleve a redirigir a login
 	 */
 	@Test
 	@Order(9)
 	public void prueba9(){
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 
 		//Desconexion
-		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.logout(driver);
 
 		//Comprobamos que volvemos a la página de login
 		checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
@@ -208,7 +198,7 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
-	/*
+	/**
 	 * 3. Fin de sesión
 	 * Comprobar que el botón cerrar sesión no está visible si el usuario no está autenticado
 	 */
@@ -220,19 +210,21 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(0, boton.size());
 
 		//Nos identificamos
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 
 		//Ahora el botón si está presente
 		boton = driver.findElements(By.id("logoutBtn"));
 		Assertions.assertEquals(1, boton.size());
 	}
 
+	/**
+	 * 4. Listado de usuarios del sistema: admin
+	 * Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el sistema
+	 */
 	@Test
 	@Order(11)
 	void PRUEBA11() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		List<WebElement> userMenu = SeleniumUtils.waitLoadElementsBy(driver, "id", "userDropdown", PO_View.getTimeout());
 		userMenu.get(0).click();
@@ -247,11 +239,14 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(20, elementos);
 	}
 
+	/**
+	 * 5. Admin: borrado múltiple de usuarios
+	 * Borrar primer usuario
+	 */
 	@Test
 	@Order(12)
 	void PRUEBA12() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list");
 		List<WebElement> tableElements = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
@@ -266,11 +261,14 @@ class SocialnetworkApplicationTests {
 		Assertions.assertNotEquals(firstChild, newFirstChild); // El usuario se ha borrado
 	}
 
+	/**
+	 * 5. Admin: borrado múltiple de usuarios
+	 * Borrar último usuario
+	 */
 	@Test
 	@Order(13)
 	void PRUEBA13() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=3");
 		List<WebElement> elementToRemove = driver.findElements(By.name("userid181"));
@@ -283,11 +281,14 @@ class SocialnetworkApplicationTests {
 		Assertions.assertTrue(removedElement.isEmpty());
 	}
 
+	/**
+	 * 5. Admin: borrado múltiple de usuarios
+	 * Borrar tres usuarios
+	 */
 	@Test
 	@Order(14)
 	void PRUEBA14() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=2");
 		List<WebElement> checkBoxes = driver.findElements(By.cssSelector("#tableMarks tbody tr td input"));
@@ -311,11 +312,15 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals("http://localhost:8090/user/list?page=3", driver.getCurrentUrl());
 	}
 
+	/**
+	 * 6. Usuario: listado de usuarios
+	 * Mostrar el listado de usuarios y comprobar que se muestran todos los que existen en el sistema, excepto
+	 * el propio usuario y aquellos que sean Administradores
+	 */
 	@Test
 	@Order(15)
 	void prueba15() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
 		int elementos = 0;
@@ -328,11 +333,14 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(14, elementos);
 	}
 
+	/**
+	 * 7. Buscar usuarios
+	 * Búsqueda campo vacío
+	 */
 	@Test
 	@Order(16)
 	void prueba16() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"");
@@ -340,11 +348,14 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(5, users.size());
 	}
 
+	/**
+	 * 7. Buscar usuarios
+	 * Búsqueda texto que no existe
+	 */
 	@Test
 	@Order(17)
 	void prueba17() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"ZXCVBNM");
@@ -352,11 +363,14 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(0, users.size());
 	}
 
+	/**
+	 * 7. Buscar usuarios
+	 * Búsqueda texto correcto
+	 */
 	@Test
 	@Order(18)
 	void prueba18() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"default");
@@ -364,7 +378,7 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(3, users.size());
 	}
 
-	/*
+	/**
 	 * 8. Enviar invitación de amistad
 	 * Desde el listado de usuarios de la aplicación, enviar una invitación de amistad a un usuario.
 	 * Comprobar que la solicitud de amistad aparece en el listado de invitaciones
@@ -376,8 +390,7 @@ class SocialnetworkApplicationTests {
 		//refactorizar si da tiempo: enviar friend request de un user a otro
 
 		//loguearse como user01 (no admin, admin no puede)
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 
 		//ir a user/list
 		driver.navigate().to("localhost:8090/user/list");
@@ -387,7 +400,7 @@ class SocialnetworkApplicationTests {
 		addButton.get(2).click();
 
 		//logout user01
-		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.logout(driver);
 
 		//login con user05 (que no ha sido borrado previamente en el test anterior)
 		PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
@@ -405,7 +418,7 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(1, requests);
 	}
 
-	/*
+	/**
 	 * 8. Enviar invitación de amistad
 	 * Desde el listado de usuarios de la aplicación, enviar una invitación de amistad a un usuario al que ya le
 	 * habíamos enviado la invitación previamente. No debería dejarnos enviar la invitación. Se podría ocultar el

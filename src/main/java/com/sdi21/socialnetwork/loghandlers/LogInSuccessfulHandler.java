@@ -27,6 +27,6 @@ public class LogInSuccessfulHandler implements AuthenticationSuccessHandler {
         String username = userDetails.getUsername();
 
         loggerService.addLog(LogType.LOGIN_EX, "SUCCESSFUL LOGIN: " +  username);
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect("/user/list");
     }
 }
