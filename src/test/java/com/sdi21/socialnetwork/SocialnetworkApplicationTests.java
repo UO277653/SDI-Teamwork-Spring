@@ -21,13 +21,13 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
-// 	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
   	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
-	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
 	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -821,23 +821,23 @@ class SocialnetworkApplicationTests {
 	@Order(35)
 	void PRUEBA35() {
 
-		//loguearse como userA
+		//loguearse como user07
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin"); //cambiar
+		PO_LoginView.fillLoginForm(driver, "user07@email.com", "user07"); //cambiar
 
-		//ir a user/list a la page donde está el userB
-		driver.navigate().to("localhost:8090/user/list?page=1"); //cambiar
+		//ir a user/list a la page donde está el user08
+		driver.navigate().to("localhost:8090/user/list?page=1");
 
-		//pulsar en + Añadir amigo (userB)
+		//pulsar en + Añadir amigo (user08)
 		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
-		addButton.get(4).click(); //cambiar
+		addButton.get(0).click();
 
-		//logout userA
+		//logout user07
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 
-		// login userB
+		// login user08
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin"); //cambiar
+		PO_LoginView.fillLoginForm(driver, "user08@email.com", "user08"); //cambiar
 
 		//ir a request/list
 		driver.navigate().to("localhost:8090/request/list");
@@ -846,7 +846,23 @@ class SocialnetworkApplicationTests {
 		List<WebElement> acceptButton = driver.findElements(By.id("acceptFriendBtn"));
 		acceptButton.get(0).click();
 
-		// vamos a lista de amigos http://localhost:8090/friend/list
+		//ir a friend/list
+		driver.navigate().to("localhost:8090/friend/list");
+
+		//recoger las publicaciones de los amigos, y clicar en ella
+		List<WebElement> friendPosts = driver.findElements(By.id("publicationsUrl"));
+		friendPosts.get(0).click();
+
+		//assert: comprobar que la url es publication/list/07 creo
+		List<WebElement> recommendButton = driver.findElements(By.id("recommendBtn"));
+		recommendButton.get(0).click();
+		recommendButton.get(0).click(); //twice porque no funciona uno solo
+
+		// comprobamos que salga ¡Recomendada!
+		SeleniumUtils.textIsPresentOnPage(driver, "¡Recomendada!");
+		// comprobar que el counter es igual a 1
+
+
 		// y vamos a sus publicaciones http://localhost:8090/publication/list/15
 		// primer click no sucede nada (BUG), segundo click se recomienda, la URL cambia a http://localhost:8090/publication/recommend/18
 		// y el texto en pantalla es ¡Recomendada! y el counter es 1
