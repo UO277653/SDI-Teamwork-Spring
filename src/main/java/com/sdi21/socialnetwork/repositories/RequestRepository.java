@@ -19,6 +19,8 @@ public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
     @Query("SELECT f FROM FriendRequest f WHERE (f.sender = ?1 AND f.receiver = ?2) OR (f.sender = ?2 AND f.receiver = ?1)")
     List<FriendRequest> findBySenderOrReceiver(User sender, User receiver);
 
+    @Query("SELECT f FROM FriendRequest f WHERE f.state = ?3 AND ((f.sender = ?1 AND f.receiver = ?2) OR (f.sender = ?2 AND f.receiver = ?1))")
+    List<FriendRequest> findBySenderOrReceiverAndAccepted(User sender, User receiver, FriendRequest.State state);
 
     String FindUserQuery =
             "SELECT u FROM User u WHERE u IN"
