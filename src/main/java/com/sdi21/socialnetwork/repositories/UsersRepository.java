@@ -27,11 +27,11 @@ public interface UsersRepository extends CrudRepository<User,Long> {
     @Query("SELECT u from User u WHERE LOWER(u.email) LIKE LOWER(?1) OR LOWER(u.name) LIKE LOWER(?1) OR LOWER(u.surname) LIKE LOWER(?1)")
     Page<User> findAll(Pageable pageable, String s);
 
-    @Query("SELECT u from User u WHERE u <> ?1")
+    @Query("SELECT u from User u WHERE u <> ?1 AND u.role <> 'ROLE_ADMIN'")
     Page<User> findAll(Pageable pageable, User user);
 
     @Query("SELECT u from User u WHERE LOWER(u.email) LIKE LOWER(?1) OR LOWER(u.name) LIKE LOWER(?1) OR LOWER(u.surname) LIKE LOWER(?1)" +
-            "AND u <> ?2")
+            "AND u <> ?2 AND u.role <> 'ROLE_ADMIN'")
     Page<User> findAll(Pageable pageable, String s, User user);
 
     @Modifying
