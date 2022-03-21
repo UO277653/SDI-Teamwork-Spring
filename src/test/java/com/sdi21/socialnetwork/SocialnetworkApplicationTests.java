@@ -30,7 +30,10 @@ class SocialnetworkApplicationTests {
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-//	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+
+	//Ari
+	static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox, Geckodriver);
 	static String URL = "http://localhost:8090";
@@ -360,6 +363,188 @@ class SocialnetworkApplicationTests {
 		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
 		Assertions.assertEquals(3, users.size());
 	}
+
+	/*
+	 * 8. Enviar invitación de amistad
+	 * Desde el listado de usuarios de la aplicación, enviar una invitación de amistad a un usuario.
+	 * Comprobar que la solicitud de amistad aparece en el listado de invitaciones
+	 */
+	@Test
+	@Order(19)
+	void PRUEBA19() {
+
+		//refactorizar si da tiempo: enviar friend request de un user a otro
+
+		//loguearse como user01 (no admin, admin no puede)
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		//ir a user/list
+		driver.navigate().to("localhost:8090/user/list");
+
+		//pulsar en + Añadir amigo que redirige a request/send/id (user05)
+		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
+		addButton.get(2).click();
+
+		//logout user01
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		//login con user05 (que no ha sido borrado previamente en el test anterior)
+		PO_LoginView.fillLoginForm(driver, "user05@email.com", "user05");
+
+		//ir a request/list
+		driver.navigate().to("localhost:8090/request/list");
+
+		int requests = 0;
+		requests += PO_RequestListView.countRequestsOnPage(driver, 0);
+
+		//pulsar en Aceptar que redirige a request/accept/id  (no es necesario pero facilita los tests siguientes)
+		List<WebElement> acceptButton = driver.findElements(By.id("acceptFriendBtn"));
+		acceptButton.get(0).click();
+
+		Assertions.assertEquals(1, requests);
+	}
+
+	/*
+	 * 8. Enviar invitación de amistad
+	 * Desde el listado de usuarios de la aplicación, enviar una invitación de amistad a un usuario al que ya le
+	 * habíamos enviado la invitación previamente. No debería dejarnos enviar la invitación. Se podría ocultar el
+	 * botón de enviar invitación o notificar que ya había sido enviada previamente.
+	 */
+	@Test
+	@Order(20)
+	void PRUEBA20() {
+
+		//loguearse como user01
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		//ir a user/list
+		driver.navigate().to("localhost:8090/user/list");
+
+		//pulsar en + Añadir amigo que redirige a request/send/id (user06)
+		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
+		addButton.get(2).click(); //get(2).click correspondería a user05 y va a intentar hacer click en su botón de addFriend
+		// pero no puede porque está añadido como friend como resultado del test anterior, por tanto va a clickar en el user06
+
+		//volver a user/list
+		driver.navigate().to("localhost:8090/user/list");
+
+		//comprobamos si la invitación está pendiente, no podemos enviar una nueva, aparece "Pending..." como texto
+		SeleniumUtils.textIsPresentOnPage(driver, "Pending...");
+
+		//otros checks: comprobar si el botón está deshabilitado, o intentar hacer click y ver a qué url redirige
+
+		//getElementById, disabled, true
+		//Assertions.assertEquals("http://localhost:8090/user/list", driver.getCurrentUrl());
+		//si nos dejase añadirlo de nuevo la url camnbiaría a request/send/id!!!
+	}
+
+	/*
+	 * 9. Listar invitaciones de amistad
+	 * Mostrar el listado de invitaciones de amistad recibidas.
+	 * Comprobar con un listado que contenga varias invitaciones recibidas.
+	 */
+	@Test
+	@Order(21)
+	void PRUEBA21() {
+
+		//loguearse como user08
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user08@email.com", "user08");
+
+		//ir a request/list
+		driver.navigate().to("localhost:8090/request/list");
+
+		// contar invitaciones de amistad: en este momento ninguna
+		int requests = 0;
+		requests += PO_RequestListView.countRequestsOnPage(driver, 0);
+		Assertions.assertEquals(0, requests);
+
+		//logout user08
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		/////////////// USER 09 /////////////////////
+
+		//loguearse como user09
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user09@email.com", "user09");
+
+		//ir a user/list a la page donde está el user08
+		driver.navigate().to("localhost:8090/user/list?page=1");
+
+		//pulsar en + Añadir amigo (user08)
+		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
+		addButton.get(1).click();
+
+		//logout user09
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		/////////////// USER 10 /////////////////////
+
+		//loguearse como user10
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user10@email.com", "user10");
+
+		//ir a user/list a la page donde está el user08
+		driver.navigate().to("localhost:8090/user/list?page=1");
+
+		//pulsar en + Añadir amigo (user08)
+		addButton = driver.findElements(By.id("addFriendBtn"));
+		addButton.get(1).click(); //seguramente no sea este click
+
+		//logout user10
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		/////////////////// VOLVEMOS A USER08 ////////////////////
+
+		//loguearse como user08 de nuevo
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user08@email.com", "user08");
+
+		//ir a request/list
+		driver.navigate().to("localhost:8090/request/list");
+
+		// contar invitaciones de amistad: debería haber 2
+		requests += PO_RequestListView.countRequestsOnPage(driver, 0);
+		Assertions.assertEquals(2, requests);
+	}
+
+	/*
+	 * 10. Aceptar una invitación
+	 * Sobre el listado de invitaciones recibidas. Hacer clic en el botón/enlace de una de ellas y comprobar
+	 * que dicha solicitud desaparece del listado de invitaciones.
+	 */
+	@Test
+	@Order(22)
+	void PRUEBA22() {
+
+		//loguearse como user15
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user15@email.com", "user15");
+
+		//ir a user/list a la page donde está el user14
+		driver.navigate().to("localhost:8090/user/list?page=1");
+
+		//pulsar en + Añadir amigo (user14)
+		List<WebElement> addButton = driver.findElements(By.id("addFriendBtn"));
+		addButton.get(4).click();
+
+		//logout user15
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		//loguearse como user14
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
+
+		//ir a request/list
+		driver.navigate().to("localhost:8090/request/list");
+
+		//pulsar en Aceptar que redirige a request/accept/id
+		List<WebElement> acceptButton = driver.findElements(By.id("acceptFriendBtn"));
+		acceptButton.get(0).click();
+
+		SeleniumUtils.textIsPresentOnPage(driver, "¡Aceptada!");
 
 	@Test
 	@Order(24)

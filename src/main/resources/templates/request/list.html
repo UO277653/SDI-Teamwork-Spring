@@ -30,7 +30,7 @@
                     <a href="#" class="btn" disabled >Pendiente...</a>
                 </td>
                 <td th:if="${!request.isAccepted() && request.receiver == loggedUser}" sec:authorize="hasRole('ROLE_USER')" >
-                    <a th:href="${'/request/accept/' + request.id}" class="btn btn-success" th:text="'✓ ' + #{label.accept}"></a>
+                    <a th:href="${'/request/accept/' + request.id}" class="btn btn-success" id="acceptFriendBtn" th:text="'✓ ' + #{label.accept}"></a>
                 </td>
             </tr>
             </tbody>
