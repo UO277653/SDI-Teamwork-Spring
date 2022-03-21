@@ -267,11 +267,11 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=3");
-		List<WebElement> elementToRemove = driver.findElements(By.name("userid182"));
+		List<WebElement> elementToRemove = driver.findElements(By.name("userid181"));
 		Assertions.assertTrue(!elementToRemove.isEmpty());
 		elementToRemove.get(0).click();
 		PO_UserListView.delete(driver);
-		List<WebElement> removedElement = driver.findElements(By.name("userid182"));
+		List<WebElement> removedElement = driver.findElements(By.name("userid181"));
 
 		// TERMINAR CON ASSERT
 		Assertions.assertTrue(removedElement.isEmpty());
