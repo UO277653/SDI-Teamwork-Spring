@@ -650,7 +650,7 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(28) //TODO
 	void PRUEBA28(){
-		PO_LoginView.login(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
+		PO_LoginView.login(driver, "user01@email.com", "user01"); // This user has 10 accepted publications and 1 censored
 
 		driver.navigate().to("localhost:8090/publication/list/" + 9 );
 
