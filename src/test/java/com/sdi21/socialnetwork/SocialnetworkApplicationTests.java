@@ -21,13 +21,13 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	//Adrian
-	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+//	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-//	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Ari
 	static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -270,11 +270,11 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=3");
-		List<WebElement> elementToRemove = driver.findElements(By.name("userid182"));
+		List<WebElement> elementToRemove = driver.findElements(By.name("userid181"));
 		Assertions.assertTrue(!elementToRemove.isEmpty());
 		elementToRemove.get(0).click();
 		PO_UserListView.delete(driver);
-		List<WebElement> removedElement = driver.findElements(By.name("userid182"));
+		List<WebElement> removedElement = driver.findElements(By.name("userid181"));
 
 		// TERMINAR CON ASSERT
 		Assertions.assertTrue(removedElement.isEmpty());
@@ -566,6 +566,85 @@ class SocialnetworkApplicationTests {
 
 		String checkText = PO_HomeView.getP().getString("welcome.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
+
+	/**
+	 * 15. Internacionalización
+	 * Cuatro páginas en inglés y español
+	 */
+	@Test
+	@Order(29)
+	public void prueba29(){
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+
+		//Checking login both in Spanish and English
+		checkLogin(PO_Properties.getSPANISH());
+		driver.findElement(By.id("btnLanguage")).click();
+		driver.findElement(By.id("btnEnglish")).click();
+		checkLogin(PO_Properties.getENGLISH());
+
+
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01"); //Fill the form, now loged in spanish
+
+		//English
+		checkUsersList(PO_Properties.getENGLISH());
+
+		checkFriendList(PO_Properties.getENGLISH());
+
+		checkOwnPublications(PO_Properties.getENGLISH());
+
+
+		//Change language to Spanish
+		driver.findElement(By.id("btnLanguage")).click();
+		driver.findElement(By.id("btnSpanish")).click();
+
+		checkUsersList(PO_Properties.getSPANISH());
+
+		checkFriendList(PO_Properties.getSPANISH());
+
+		checkOwnPublications(PO_Properties.getSPANISH());
+	}
+
+	private void checkLogin(int locale){
+		String checkText = PO_HomeView.getP().getString("login.message", locale);
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+		checkText = PO_HomeView.getP().getString("label.password", locale) + ":";
+		result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
+
+	private void checkUsersList(int locale){
+		driver.navigate().to("localhost:8090/user/list");
+		String checkText = PO_HomeView.getP().getString("label.name", locale);
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+		checkText = PO_HomeView.getP().getString("label.surname", locale);
+		result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
+
+	private void checkFriendList(int locale){
+		driver.navigate().to("localhost:8090/friend/list");
+		String checkText = PO_HomeView.getP().getString("label.name", locale);
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+		checkText = PO_HomeView.getP().getString("label.surname", locale);
+		result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+	}
+
+	private void checkOwnPublications(int locale){
+		driver.navigate().to("localhost:8090/publication/listown");
+		String checkText = PO_HomeView.getP().getString("label.title", locale);
+		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+		checkText = PO_HomeView.getP().getString("label.text",locale);
+		result = PO_View.checkElementBy(driver, "text", checkText);
+		Assertions.assertEquals(checkText, result.get(0).getText());
+		checkText = PO_HomeView.getP().getString("label.date", locale);
+		result = PO_View.checkElementBy(driver, "text", checkText);
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
