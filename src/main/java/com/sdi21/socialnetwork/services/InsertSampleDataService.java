@@ -66,7 +66,10 @@ public class InsertSampleDataService {
         noFriendsUser.setRole(rolesService.getRoles()[0]);
         usersService.addUser(noFriendsUser);
 
-
+        User toDeleteUser = new User("dummy@email.com", "Default", "Default");
+        toDeleteUser.setPassword("123456");
+        toDeleteUser.setRole(rolesService.getRoles()[0]);
+        usersService.addUser(toDeleteUser);
 
     }
 

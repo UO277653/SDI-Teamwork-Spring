@@ -232,15 +232,13 @@ class SocialnetworkApplicationTests {
 		userMenu.get(0).click();
 		List<WebElement> userOptions = SeleniumUtils.waitLoadElementsBy(driver, "id", "listUsersOption", PO_View.getTimeout());
 		userOptions.get(0).click();
-
 		int elementos = 0;
-
-		elementos += PO_UserListView.countUsersOnPage(driver, 0);
-		elementos += PO_UserListView.countUsersOnPage(driver, 1);
-		elementos += PO_UserListView.countUsersOnPage(driver, 2);
+		for(int i = 0; i<4; i++){
+			elementos += PO_UserListView.countUsersOnPage(driver, i);
+		}
 
 		// TERMINAR CON ASSERT
-		Assertions.assertEquals(15, elementos);
+		Assertions.assertEquals(20, elementos);
 	}
 
 	@Test
@@ -259,7 +257,7 @@ class SocialnetworkApplicationTests {
 		WebElement newFirstChild = tableElements.get(1);
 
 		// TERMINAR CON ASSERT
-		Assertions.assertNotEquals(firstChild, newFirstChild);
+		Assertions.assertNotEquals(firstChild, newFirstChild); // El usuario se ha borrado
 	}
 
 	@Test
@@ -268,12 +266,12 @@ class SocialnetworkApplicationTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
 
-		driver.navigate().to("localhost:8090/user/list?page=2");
-		List<WebElement> elementToRemove = driver.findElements(By.name("userid15"));
+		driver.navigate().to("localhost:8090/user/list?page=3");
+		List<WebElement> elementToRemove = driver.findElements(By.name("userid439"));
 		Assertions.assertTrue(!elementToRemove.isEmpty());
 		elementToRemove.get(0).click();
 		PO_UserListView.delete(driver);
-		List<WebElement> removedElement = driver.findElements(By.name("userid15"));
+		List<WebElement> removedElement = driver.findElements(By.name("userid439"));
 
 		// TERMINAR CON ASSERT
 		Assertions.assertTrue(removedElement.isEmpty());
@@ -287,20 +285,24 @@ class SocialnetworkApplicationTests {
 
 		driver.navigate().to("localhost:8090/user/list?page=2");
 		List<WebElement> checkBoxes = driver.findElements(By.cssSelector("#tableMarks tbody tr td input"));
-		checkBoxes.forEach((checkBox) -> checkBox.click());
+		checkBoxes.get(0).click();
+		checkBoxes.get(1).click();
+		checkBoxes.get(2).click();
 
 		PO_UserListView.delete(driver);
 
 		int elementos = 0;
 		elementos += PO_UserListView.countUsersOnPage(driver, 0);
 		elementos += PO_UserListView.countUsersOnPage(driver, 1);
+		elementos += PO_UserListView.countUsersOnPage(driver, 2);
+		elementos += PO_UserListView.countUsersOnPage(driver, 3);
 
 		List<WebElement> lastPage = driver.findElements(By.id("lastPage"));
 		lastPage.get(0).click();
 
 		// TERMINAR CON ASSERT
-		Assertions.assertEquals(10, elementos);
-		Assertions.assertEquals("http://localhost:8090/user/list?page=2", driver.getCurrentUrl());
+		Assertions.assertEquals(16, elementos);
+		Assertions.assertEquals("http://localhost:8090/user/list?page=3", driver.getCurrentUrl());
 	}
 	@Test
 	@Order(24)
