@@ -24,7 +24,7 @@ class SocialnetworkApplicationTests {
  	// static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 
 	//Sara
@@ -34,7 +34,7 @@ class SocialnetworkApplicationTests {
 	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Ari
-	static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	static WebDriver driver = getDriver(PathFirefox, Geckodriver);
 	static String URL = "http://localhost:8090";
@@ -607,7 +607,7 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(26)
 	void Prueba26(){
-		PO_LoginView.login(driver, "user07@email.com", "user07");
+		PO_LoginView.login(driver, "user08@email.com", "user08");
 
 		driver.navigate().to("localhost:8090/publication/listown");
 		int publications = PO_PublicationView.countPubliactionsOnPage(driver, 0);
@@ -891,10 +891,10 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.login(driver, "user01@email.com", "user01"); // We log as user01
 
 		List<WebElement> addFriendBtns = driver.findElements(By.id("addFriendBtn"));
-		addFriendBtns.get(0).click(); // We send a friend request to user02 (who has a moderated publication, and 10 accepted)
+		addFriendBtns.get(1).click(); // We send a friend request to user02 (who has a moderated publication, and 10 accepted)
 		PO_LoginView.logout(driver);
 
-		PO_LoginView.login(driver, "user03@email.com", "user03"); // We log as user02
+		PO_LoginView.login(driver, "user07@email.com", "user07"); // We log as user02
 		driver.navigate().to("http://localhost:8090/request/list");
 		driver.findElement(By.cssSelector("#tableRequests tbody tr td a")).click(); // User 2 accepts the request
 		PO_LoginView.logout(driver);

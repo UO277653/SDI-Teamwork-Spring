@@ -101,7 +101,7 @@ public class InsertSampleDataService {
         // NECESSARY FOR TESTING (39)
         Publication p2 = new Publication("Publication moderated", "This is moderated");
         p2.setState(rolesService.getPublicationStatus()[1]);
-        p2.setOp(usersService.getUserByEmail("user03@email.com"));
+        p2.setOp(usersService.getUserByEmail("user07@email.com"));
         publicationsService.addPublication(p2);
     }
 
