@@ -252,7 +252,7 @@ class SocialnetworkApplicationTests {
 		WebElement firstChild = tableElements.get(1);
 		List<WebElement> removeElement = driver.findElements(By.name("userid3"));
 		removeElement.get(0).click();
-		PO_UserListView.delete(driver);/
+		PO_UserListView.delete(driver);
 		tableElements = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
 		WebElement newFirstChild = tableElements.get(1);
 
