@@ -24,7 +24,7 @@ class SocialnetworkApplicationTests {
  	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 
 	//Sara
@@ -835,7 +835,7 @@ class SocialnetworkApplicationTests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
 		driver.navigate().to("http://localhost:8090/friend/list");
-		driver.findElement(By.cssSelector("#tableMarks tbody tr td a")).click();
+		driver.findElement(By.cssSelector("#tableFriends tbody tr td a")).click();
 
 		int nPublication = 0;
 		nPublication += driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size();
