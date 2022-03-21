@@ -11,14 +11,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoggerService {
 
-    private Logger log = LoggerFactory.getLogger(LoggerService.class);
+
+
+    //private Logger log = LoggerFactory.getLogger(LoggerService.class);
 
     @Autowired
     LoggerRepository repo;
 
     public void addLog(LogType logType, String text){
-        //log.
         repo.save(new Log(logType,text));
     }
+
+
 
 }
