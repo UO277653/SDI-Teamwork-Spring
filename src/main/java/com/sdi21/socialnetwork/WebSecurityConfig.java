@@ -50,6 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/publication/moderate/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/censor/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/logger/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/request/**").hasAuthority("ROLE_USER")
+                .antMatchers("/home").hasAuthority("ROLE_USER")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().accessDeniedPage("/login").and()
