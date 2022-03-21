@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/head"/>
 <body>
 
+<nav th:replace="fragments/nav"></nav>
+<div class="container" id="main-container">
+    <h2>Logs</h2>
+
+    <p>Listado de logs</p>
+    <div class="table-responsive">
+        <form action="/logger/delete" method="post">
+            <table class="table table-hover" th:fragment="loggerList" id="loggerList">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Log</th>
+                    <th scope="col">Texto</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="log : ${logList}">
+
+                    <td th:text="${log.getId()}"></td>
+                    <td th:text="${log.getLogType()}"></td>
+                    <td th:text="${log.getText()}"></td>
+                    <td th:text="${log.getDate()}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <button sec:authorize="hasRole('ROLE_ADMIN')" id="deleteLogsBtn" type="submit">Borrar logs</button>
+        </form>
+
+        <h2>Filtros</h2>
+
+        <div style="display: inline-flex">
+           <form action="/logger/list/PET" method="post">
+               <button sec:authorize="hasRole('ROLE_ADMIN')" id="logsTypePet" type="submit">PET</button>
+           </form>
+            <form action="/logger/list/ALTA" method="post">
+                <button sec:authorize="hasRole('ROLE_ADMIN')" id="logsTypeAlta" type="submit">ALTA</button>
+            </form>
+            <form action="/logger/list/LOGIN_EX" method="post">
+                <button sec:authorize="hasRole('ROLE_ADMIN')" id="logsTypeLoginEx" type="submit">LOGIN-EX</button>
+            </form>
+            <form action="/logger/list/LOGIN_ERR" method="post">
+                <button sec:authorize="hasRole('ROLE_ADMIN')" id="logsTypeLoginErr" type="submit">LOGIN-ERR</button>
+            </form>
+            <form action="/logger/list/LOGOUT" method="post">
+                <button sec:authorize="hasRole('ROLE_ADMIN')" id="logsTypeLoginLogout" type="submit">LOGOUT</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer"></footer>
 </body>
 </html>
