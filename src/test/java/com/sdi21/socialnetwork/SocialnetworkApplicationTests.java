@@ -21,16 +21,16 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
-	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+  	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
-	static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Ari
 	//static String Geckodriver = "C:\\Users\\UO270119\\Desktop\\IIS (definitiva)\\3º - Tercero\\Segundo cuatri\\Sistemas Distribuidos e Internet\\Lab\\[materiales]\\5. Selenium\\PL-SDI-Sesión5-material\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -133,6 +133,7 @@ class SocialnetworkApplicationTests {
 	public void prueba5(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "admin@email.com", "admin");
+		PO_PrivateView.goToUsersList(driver);
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
@@ -148,6 +149,7 @@ class SocialnetworkApplicationTests {
 	public void prueba6(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_PrivateView.goToUsersList(driver);
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
@@ -194,6 +196,7 @@ class SocialnetworkApplicationTests {
 	public void prueba9(){
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_PrivateView.goToUsersList(driver);
 
 		String checkText = PO_HomeView.getP().getString("label.users", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
@@ -545,6 +548,17 @@ class SocialnetworkApplicationTests {
 		acceptButton.get(0).click();
 
 		SeleniumUtils.textIsPresentOnPage(driver, "¡Aceptada!");
+	}
+
+	@Test
+	@Order(23)
+	void prueba23() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
+		driver.findElement(By.id("friendList")).click();
+
+		List<WebElement> friends = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		Assertions.assertEquals(1, friends.size());
 	}
 
 	@Test
