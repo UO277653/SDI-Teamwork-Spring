@@ -887,7 +887,7 @@ class SocialnetworkApplicationTests {
 	 */
 	@Test
 	@Order(39)
-	void PRUEBA39() {
+	void Prueba39() {
 		PO_LoginView.login(driver, "user01@email.com", "user01"); // We log as user01
 
 		List<WebElement> addFriendBtns = driver.findElements(By.id("addFriendBtn"));
