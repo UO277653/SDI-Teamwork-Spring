@@ -1,15 +1,12 @@
 package com.sdi21.socialnetwork.controllers;
 
+import com.sdi21.socialnetwork.entities.logtype.LogType;
 import com.sdi21.socialnetwork.entities.User;
-import com.sdi21.socialnetwork.services.FriendsService;
-import com.sdi21.socialnetwork.services.RolesService;
-import com.sdi21.socialnetwork.services.SecurityService;
-import com.sdi21.socialnetwork.services.UsersService;
+import com.sdi21.socialnetwork.services.*;
 import com.sdi21.socialnetwork.validators.SignUpFormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +28,9 @@ public class UsersController {
     private UsersService usersService;
     @Autowired
     private FriendsService friendsService;
+
+    @Autowired
+    private LoggerService loggerService;
 
     @Autowired
     private RolesService rolesService;
@@ -50,6 +49,9 @@ public class UsersController {
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signup(Model model) {
         model.addAttribute("user", new User());
+
+        loggerService.addLog(LogType.PET, "Get: /signup");
+
         return "signup";
     }
 
@@ -64,17 +66,22 @@ public class UsersController {
     public String signup(@Validated User user, BindingResult result) {
         signUpFormValidator.validate(user, result);
         if (result.hasErrors()){
+            loggerService.addLog(LogType.PET, "Get: /signup");
             return "signup";
         }
         user.setRole(rolesService.getRoles()[0]); //user role
         usersService.addUser(user);
         securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+
+        loggerService.addLog(LogType.PET, "Post: /signup");
+        loggerService.addLog(LogType.ALTA, "Post: /signup");
         return "redirect:/home";
     }
 
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
     public String home(Model model) {
         //TODO opciones de usuario
+        loggerService.addLog(LogType.PET, "GET: /home");
         return "home";
     }
 
@@ -85,6 +92,7 @@ public class UsersController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
+        loggerService.addLog(LogType.PET, "GET: /login");
         return "login";
     }
 
@@ -110,6 +118,9 @@ public class UsersController {
         model.addAttribute("userFriends", userFriends);
         model.addAttribute("userPending", userPending);
         model.addAttribute("page", users);
+
+
+        loggerService.addLog(LogType.PET, "GET: /user/list - " + "searchText: " + searchText);
         return "user/list";
     }
 
@@ -128,6 +139,7 @@ public class UsersController {
         model.addAttribute("userList", users.getContent());
         model.addAttribute("page", users);
 
+        loggerService.addLog(LogType.PET, "POST: /user/list");
         return "redirect:/user/list";
     }
 

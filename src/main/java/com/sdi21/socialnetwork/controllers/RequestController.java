@@ -1,8 +1,10 @@
 package com.sdi21.socialnetwork.controllers;
 
 import com.sdi21.socialnetwork.entities.FriendRequest;
+import com.sdi21.socialnetwork.entities.logtype.LogType;
 import com.sdi21.socialnetwork.entities.User;
 import com.sdi21.socialnetwork.services.FriendsService;
+import com.sdi21.socialnetwork.services.LoggerService;
 import com.sdi21.socialnetwork.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,13 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
 
 @Controller
 public class RequestController {
+
+    @Autowired
+    private LoggerService loggerService;
 
     @Autowired
     private UsersService usersService;
@@ -36,6 +40,7 @@ public class RequestController {
         model.addAttribute("requestList", requests.getContent());
         model.addAttribute("loggedUser", user);
 
+        loggerService.addLog(LogType.PET, "GET: /request/list");
         return "request/list";
     }
 
@@ -43,6 +48,7 @@ public class RequestController {
     @GetMapping("/request/accept/{id}") //("/request/list")
     public String acceptFriendRequest(Model model, @PathVariable Long id, Principal principal, Pageable pageable) {
         friendsService.setFriendRequestAccepted(id);
+        loggerService.addLog(LogType.PET, "GET: /request/accept/{id} - id: " + id);
         return getFriendRequestList(model, principal, pageable); //"request/list";
     }
 
@@ -54,6 +60,7 @@ public class RequestController {
         User loggedUser = usersService.getUserByEmail(email);
         User receiver = usersService.getUser(id);
         friendsService.sendFriendRequest(loggedUser, receiver);
+        loggerService.addLog(LogType.PET, "GET: /request/send/{id} - id: " + id);
         return getFriendRequestList(model, principal, pageable); //"request/list";
     }
 
