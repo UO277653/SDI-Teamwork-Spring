@@ -313,6 +313,7 @@ class SocialnetworkApplicationTests {
 	void prueba15() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_PrivateView.goToUsersList(driver);
 
 		int elementos = 0;
 		elementos += PO_UserListView.countUsersOnPage(driver, 0);
@@ -329,6 +330,7 @@ class SocialnetworkApplicationTests {
 	void prueba16() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"");
 		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
@@ -340,6 +342,7 @@ class SocialnetworkApplicationTests {
 	void prueba17() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"ZXCVBNM");
 		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
@@ -351,6 +354,7 @@ class SocialnetworkApplicationTests {
 	void prueba18() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"default");
 		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
