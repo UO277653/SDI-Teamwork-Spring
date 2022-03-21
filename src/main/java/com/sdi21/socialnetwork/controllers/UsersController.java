@@ -1,6 +1,7 @@
 package com.sdi21.socialnetwork.controllers;
 
 import com.sdi21.socialnetwork.entities.User;
+import com.sdi21.socialnetwork.services.FriendsService;
 import com.sdi21.socialnetwork.services.RolesService;
 import com.sdi21.socialnetwork.services.SecurityService;
 import com.sdi21.socialnetwork.services.UsersService;
@@ -27,6 +28,8 @@ public class UsersController {
 
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private FriendsService friendsService;
 
     @Autowired
     private RolesService rolesService;
@@ -97,7 +100,11 @@ public class UsersController {
             users = usersService.getUsers(pageable);
         }
 
+        List<User> userFriends = friendsService.getFriendsForUser(user);
+
         model.addAttribute("userList", users.getContent());
+        model.addAttribute("loggedUser", user);
+        model.addAttribute("userFriends", userFriends);
         model.addAttribute("page", users);
         return "user/list";
     }

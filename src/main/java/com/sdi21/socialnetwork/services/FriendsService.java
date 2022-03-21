@@ -2,7 +2,6 @@ package com.sdi21.socialnetwork.services;
 
 import com.sdi21.socialnetwork.entities.FriendRequest;
 import com.sdi21.socialnetwork.entities.User;
-import com.sdi21.socialnetwork.repositories.FriendsRepository;
 import com.sdi21.socialnetwork.repositories.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,9 +17,6 @@ import java.util.List;
 public class FriendsService {
 
     @Autowired
-    private FriendsRepository friendsRepository;
-
-    @Autowired
     private UsersService usersService;
 
     @Autowired
@@ -28,17 +24,33 @@ public class FriendsService {
 
     @PostConstruct
     public void init() {
-        friendsRepository.save(new FriendRequest());
+        requestRepository.save(new FriendRequest());
         //friendsRepository.save(new FriendRequest(new User("a@gmail.com", "N", "S"), new User("b@gmail.com", "N", "S"), FriendRequest.State.PENDING));
     }
 
     public void addFriend(FriendRequest friendRequest) {
         usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
-        friendsRepository.save(friendRequest);
+        requestRepository.save(friendRequest);
     }
 
     public Page<User> getFriendsForUser(Pageable pageable, User user) {
         return requestRepository.findFriendsForUser(pageable, user);
+    }
+
+    public List<User> getFriendsForUser(User user) {
+        return requestRepository.findFriendsForUser(user);
+    }
+
+    public Page<FriendRequest> getFriendRequestsForUser(Pageable pageable, User user) {
+        return requestRepository.findAllByUser(pageable, user);
+    }
+
+    public void addRequest(User sender, User receiver){
+        requestRepository.save(new FriendRequest(sender, receiver));
+    }
+
+    public void setFriendRequestAccepted(Long id) {
+        requestRepository.setFriendRequestState(FriendRequest.State.ACCEPTED, id);
     }
 
 }
