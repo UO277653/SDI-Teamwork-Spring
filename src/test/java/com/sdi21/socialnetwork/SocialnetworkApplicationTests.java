@@ -21,10 +21,11 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
-	//static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+// 	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
 //  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+
 
 	//Sara
 	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -557,6 +558,17 @@ class SocialnetworkApplicationTests {
 	 * Datos válidos
 	 */
 	@Test
+	@Order(23)
+	void prueba23() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
+		driver.findElement(By.id("friendList")).click();
+
+		List<WebElement> friends = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		Assertions.assertEquals(1, friends.size());
+	}
+
+	@Test
 	@Order(24)
 	void PRUEBA24(){
 		PO_LoginView.login(driver, "nopublications@email.com", "123456");
@@ -638,10 +650,11 @@ class SocialnetworkApplicationTests {
 	void PRUEBA28(){
 		PO_LoginView.login(driver, "nofriends@email.com", "123456"); // This user has 10 accepted publications and 1 censored
 
-		driver.navigate().to("localhost:8090/publication/list/" + 3 );
+		driver.navigate().to("localhost:8090/publication/list/" + 9 );
 
 		String checkText = PO_HomeView.getP().getString("login.message", PO_Properties.getSPANISH());
 		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+
 		Assertions.assertEquals(checkText, result.get(0).getText());
 	}
 
