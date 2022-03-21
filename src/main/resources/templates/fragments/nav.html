@@ -32,7 +32,11 @@
             </li>
 
             <li id="friendList" class="nav-item ">
-                <a class="nav-link" href="/friend/list" th:text="#{label.friendList}"><span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/friend/list" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.friendList}"><span class="sr-only">(current)</span></a>
+            </li>
+
+            <li id="requestList" class="nav-item ">
+                <a class="nav-link" href="/request/list" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.requestList}"><span class="sr-only">(current)</span></a>
             </li>
 
             <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ">

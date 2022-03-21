@@ -1,7 +1,5 @@
 package com.sdi21.socialnetwork.entities;
 
-import org.springframework.web.bind.annotation.Mapping;
-
 import javax.persistence.*;
 
 @Entity

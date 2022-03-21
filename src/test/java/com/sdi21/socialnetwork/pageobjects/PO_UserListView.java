@@ -1,4 +1,5 @@
 package com.sdi21.socialnetwork.pageobjects;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +11,7 @@ public class PO_UserListView {
     static public int countUsersOnPage(WebDriver driver, int page){
 
         driver.navigate().to("localhost:8090/user/list?page=" + page);
-        return driver.findElements(By.cssSelector("#tableMarks tbody tr")).size();
+        return driver.findElements(By.cssSelector("#tableUsers tbody tr")).size();
 
     }
 
@@ -25,5 +26,15 @@ public class PO_UserListView {
         searchBar.clear();
         searchBar.sendKeys(searchText);
         driver.findElement(By.id("searchButton")).click();
+    }
+
+    public static void checkUsersList(WebDriver driver, int locale){
+        driver.navigate().to("localhost:8090/user/list");
+        String checkText = PO_HomeView.getP().getString("label.name", locale);
+        List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
+        checkText = PO_HomeView.getP().getString("label.surname", locale);
+        result = PO_View.checkElementBy(driver, "text", checkText);
+        Assertions.assertEquals(checkText, result.get(0).getText());
     }
 }

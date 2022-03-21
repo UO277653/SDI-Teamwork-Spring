@@ -28,6 +28,20 @@ public class SignUpFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Error.signup.name.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "Error.signup.surname.empty");
 
+        if(user.getEmail() == null ||user.getEmail().isBlank()){
+            errors.rejectValue("text","Error.signup.email.empty");
+
+        }
+        if(user.getName() == null ||user.getName().isBlank()){
+            errors.rejectValue("text","Error.signup.name.empty");
+
+        }
+        if(user.getSurname() == null ||user.getSurname().isBlank()){
+            errors.rejectValue("text","Error.signup.surname.empty");
+
+        }
+
+
         //checking email does not exist
         if (usersService.getUserByEmail(user.getEmail()) != null){
             errors.rejectValue("email", "Error.signup.email.duplicate");
