@@ -30,4 +30,9 @@ public class PO_SignUpView extends PO_NavView{
         By boton = By.className("btn");
         driver.findElement(boton).click();
     }
+
+    public static void signup(WebDriver driver, String emailp, String namep, String surnamep, String passwordp, String passwordconfp){
+        PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+        PO_SignUpView.fillForm(driver, emailp, namep, surnamep, passwordp, passwordconfp);
+    }
 }
