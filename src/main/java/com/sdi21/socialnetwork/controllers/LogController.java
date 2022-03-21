@@ -29,7 +29,7 @@ public class LogController {
     }
 
     @RequestMapping(value = "/logger/delete", method = RequestMethod.POST)
-    public String deleteLogs(Model model) {
+    public String deleteLogs() {
 
         loggerService.addLog(LogType.PET, "POST: /logger/delete");
 

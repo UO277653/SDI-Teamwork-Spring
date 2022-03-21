@@ -35,7 +35,7 @@ public class Publication {
         this.date = new Date();
         this.title = title;
         this.text = text;
-        this.recommendations = new HashSet<User>();
+        this.recommendations = new HashSet<>();
     }
 
     public Publication() {

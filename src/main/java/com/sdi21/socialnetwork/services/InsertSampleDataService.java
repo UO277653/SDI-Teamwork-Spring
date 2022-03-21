@@ -30,9 +30,6 @@ public class InsertSampleDataService {
     @Autowired
     private PublicationsService publicationsService;
 
-    @Autowired
-    private FriendsService friendsService;
-
     @PostConstruct
     public void init() {
 
@@ -110,18 +107,12 @@ public class InsertSampleDataService {
 
     private void generateRequests() {
         List<User> users = usersService.getUsers();
-        FriendRequest.State state = FriendRequest.State.PENDING;
-
-        FriendRequest fr;
         for(int i = 0; i < users.size(); i++) {
             if (!users.get(i).getRole().equals("ROLE_ADMIN")) { //admin can't have friends
                 for (int j = 0; j < users.size(); j++) {
                     if(i != j) { // can't send friend request to oneself
                         User sender = users.get(i);
                         User receiver = users.get(j);
-//                        fr = new FriendRequest(sender, receiver, state);
-//                        friendsService.addFriend(fr);
-//                        friendsService.sendFriendRequest(sender, receiver);
                     }
                 }
             }

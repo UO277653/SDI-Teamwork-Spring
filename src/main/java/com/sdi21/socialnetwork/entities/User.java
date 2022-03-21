@@ -94,22 +94,6 @@ public class User {
         this.surname = surname;
     }
 
-    Set<FriendRequest> _getFriendRequest() {
-        return friendRequest;
-    }
-
-    public Set<FriendRequest> getFriendRequest() {
-        return new HashSet<>(friendRequest);
-    }
-
-    Set<FriendRequest> _getFriendRequestReceiver() {
-        return friendRequestReceiver;
-    }
-
-    public Set<FriendRequest> getFriendRequestReceiver() {
-        return new HashSet<>(friendRequestReceiver);
-    }
-
     public String getPassword() {
         return password;
     }
