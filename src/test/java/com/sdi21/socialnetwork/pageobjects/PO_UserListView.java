@@ -10,7 +10,7 @@ public class PO_UserListView {
     static public int countUsersOnPage(WebDriver driver, int page){
 
         driver.navigate().to("localhost:8090/user/list?page=" + page);
-        return driver.findElements(By.cssSelector("#tableMarks tbody tr")).size();
+        return driver.findElements(By.cssSelector("#tableUsers tbody tr")).size();
 
     }
 

@@ -250,12 +250,12 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list");
-		List<WebElement> tableElements = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		List<WebElement> tableElements = driver.findElements(By.cssSelector("#tableUsers tbody tr"));
 		WebElement firstChild = tableElements.get(1);
 		List<WebElement> removeElement = driver.findElements(By.name("userid3"));
 		removeElement.get(0).click();
 		PO_UserListView.delete(driver);
-		tableElements = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		tableElements = driver.findElements(By.cssSelector("#tableUsers tbody tr"));
 		WebElement newFirstChild = tableElements.get(1);
 
 		// TERMINAR CON ASSERT
@@ -292,7 +292,7 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.login(driver, "admin@email.com", "admin");
 
 		driver.navigate().to("localhost:8090/user/list?page=2");
-		List<WebElement> checkBoxes = driver.findElements(By.cssSelector("#tableMarks tbody tr td input"));
+		List<WebElement> checkBoxes = driver.findElements(By.cssSelector("#tableUsers tbody tr td input"));
 		checkBoxes.get(0).click();
 		checkBoxes.get(1).click();
 		checkBoxes.get(2).click();
@@ -345,7 +345,7 @@ class SocialnetworkApplicationTests {
 		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"");
-		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		List<WebElement> users = driver.findElements(By.cssSelector("#tableUsers tbody tr"));
 		Assertions.assertEquals(5, users.size());
 	}
 
@@ -360,7 +360,7 @@ class SocialnetworkApplicationTests {
 		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"ZXCVBNM");
-		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		List<WebElement> users = driver.findElements(By.cssSelector("#tableUsers tbody tr"));
 		Assertions.assertEquals(0, users.size());
 	}
 
@@ -375,7 +375,7 @@ class SocialnetworkApplicationTests {
 		PO_PrivateView.goToUsersList(driver);
 
 		PO_UserListView.search(driver,"default");
-		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		List<WebElement> users = driver.findElements(By.cssSelector("#tableUsers tbody tr"));
 		Assertions.assertEquals(3, users.size());
 	}
 
@@ -564,7 +564,7 @@ class SocialnetworkApplicationTests {
 		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
 		driver.findElement(By.id("friendList")).click();
 
-		List<WebElement> friends = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		List<WebElement> friends = driver.findElements(By.cssSelector("#tableFriends tbody tr"));
 		Assertions.assertEquals(1, friends.size());
 	}
 
