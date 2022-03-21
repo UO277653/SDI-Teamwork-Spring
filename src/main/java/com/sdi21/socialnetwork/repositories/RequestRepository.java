@@ -22,6 +22,9 @@ public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
     @Query("SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = 'ACCEPTED'")
     Page<User> findFriendsForUser(Pageable pageable, User user);
 
+    @Query("SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = 'ACCEPTED'")
+    List<User> findFriendsForUser(User user);
+
     @Modifying
     @Transactional
     @Query("UPDATE FriendRequest SET state =?1 WHERE id=?2")
