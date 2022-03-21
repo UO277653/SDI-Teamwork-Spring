@@ -24,11 +24,11 @@ class SocialnetworkApplicationTests {
 // 	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
-//  	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 
 	//Sara
-	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
 	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -857,7 +857,29 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(39)
 	void PRUEBA39() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01"); // We log as user01
 
+		List<WebElement> addFriendBtns = driver.findElements(By.id("addFriendBtn"));
+		addFriendBtns.get(0).click(); // We send a friend request to user02 (who has a moderated publication, and 10 accepted)
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user03@email.com", "user03"); // We log as user02
+		driver.navigate().to("http://localhost:8090/request/list");
+		driver.findElement(By.cssSelector("#tableRequests tbody tr td a")).click(); // User 2 accepts the request
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		driver.navigate().to("http://localhost:8090/friend/list");
+		driver.findElement(By.cssSelector("#tableMarks tbody tr td a")).click();
+
+		int nPublication = 0;
+		nPublication += driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size();
+		driver.navigate().to("http://localhost:8090/publication/list/4?page=1");
+		nPublication += driver.findElements(By.cssSelector("#publicationsTable tbody tr")).size(); // Last page
+
+		Assertions.assertEquals(10, nPublication); // Only the 10 accepted publications are shown
 	}
 
 	/**
