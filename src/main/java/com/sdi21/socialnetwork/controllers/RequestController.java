@@ -34,12 +34,26 @@ public class RequestController {
 
         model.addAttribute("page", requests);
         model.addAttribute("requestList", requests.getContent());
+        model.addAttribute("loggedUser", user);
+
         return "request/list";
     }
 
+    // Accept a request with a given id
     @GetMapping("/request/accept/{id}") //("/request/list")
     public String acceptFriendRequest(Model model, @PathVariable Long id, Principal principal, Pageable pageable) {
         friendsService.setFriendRequestAccepted(id);
+        return getFriendRequestList(model, principal, pageable); //"request/list";
+    }
+
+    // Send request to an user id
+    @GetMapping("/request/send/{id}") //("/request/list")
+    public String sendFriendRequest(Model model, @PathVariable Long id, Principal principal, Pageable pageable) {
+
+        String email = principal.getName(); //email es getName de la autenticación
+        User loggedUser = usersService.getUserByEmail(email);
+        User receiver = usersService.getUser(id);
+        friendsService.sendFriendRequest(loggedUser, receiver);
         return getFriendRequestList(model, principal, pageable); //"request/list";
     }
 

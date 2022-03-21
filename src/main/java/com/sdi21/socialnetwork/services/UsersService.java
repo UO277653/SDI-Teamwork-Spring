@@ -85,16 +85,4 @@ public class UsersService {
         usersRepository.deleteAllById(ids);
 
     }
-
-    public void addFriend (User receiver, User sender) {
-        usersRepository.save(receiver);
-        usersRepository.save(sender);
-        //receiver.getFriends().add(sender);
-        //sender.getFriends().add(receiver);
-    }
-
-    public boolean areFriends(User user, User loggedUser) {
-        //HAS TO BE IMPLEMENTED
-        return true;
-    }
 }

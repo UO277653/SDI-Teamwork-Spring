@@ -103,10 +103,12 @@ public class UsersController {
         }
 
         List<User> userFriends = friendsService.getFriendsForUser(user);
+        List<User> userPending = friendsService.getPendingFriendsForUser(user);
 
         model.addAttribute("userList", users.getContent());
         model.addAttribute("loggedUser", user);
         model.addAttribute("userFriends", userFriends);
+        model.addAttribute("userPending", userPending);
         model.addAttribute("page", users);
         return "user/list";
     }

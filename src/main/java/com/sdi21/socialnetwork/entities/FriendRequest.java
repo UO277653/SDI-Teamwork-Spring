@@ -41,6 +41,7 @@ public class FriendRequest {
         super();
         this.sender = sender;
         this.receiver = receiver;
+        this.state = State.PENDING;
     }
 
     public User getSender() {

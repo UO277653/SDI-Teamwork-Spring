@@ -114,8 +114,9 @@ public class InsertSampleDataService {
                     if(i != j) { // can't send friend request to oneself
                         User sender = users.get(i);
                         User receiver = users.get(j);
-                        fr = new FriendRequest(sender, receiver, state);
-                        friendsService.addFriend(fr);
+                        //fr = new FriendRequest(sender, receiver, state);
+                        //friendsService.addFriend(fr);
+                        //friendsService.sendFriendRequest(sender, receiver);
                     }
                 }
             }
