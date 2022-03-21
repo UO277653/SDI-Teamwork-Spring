@@ -1,6 +1,5 @@
 package com.sdi21.socialnetwork.pageobjects;
 
-import com.sdi21.socialnetwork.util.SeleniumUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
