@@ -1,5 +1,6 @@
 package com.sdi21.socialnetwork.controllers;
 
+import com.sdi21.socialnetwork.entities.FriendRequest;
 import com.sdi21.socialnetwork.entities.logtype.LogType;
 import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
@@ -99,7 +100,7 @@ public class PublicationsController {
         String email = principal.getName();
         User loggedUser = usersService.getUserByEmail(email);
 
-        if(!friendsService.areFriends(user, loggedUser)){
+        if(!friendsService.areFriends(user, loggedUser, FriendRequest.State.ACCEPTED)){
             return "home";
         }
 

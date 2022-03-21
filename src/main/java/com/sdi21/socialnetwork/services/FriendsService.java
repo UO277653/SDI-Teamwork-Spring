@@ -73,4 +73,11 @@ public class FriendsService {
         return true;
     }
 
+    public boolean areFriends(User userA, User userB, FriendRequest.State state) {
+        List<FriendRequest> request = requestRepository.findBySenderOrReceiverAndAccepted(userA, userB, state);
+        if (request == null || request.size() == 0)
+            return false;
+        return true;
+    }
+
 }
