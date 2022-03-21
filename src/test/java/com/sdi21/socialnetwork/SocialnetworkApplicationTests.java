@@ -369,7 +369,6 @@ class SocialnetworkApplicationTests {
 
 	}
 
-	//THIS FAILS BECAUSE userService.areFriends() is not implemented otherwise it works
 	@Test
 	@Order(28)
 	void PRUEBA28(){

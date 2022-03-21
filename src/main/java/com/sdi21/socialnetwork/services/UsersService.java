@@ -25,12 +25,14 @@ public class UsersService {
     private RolesService rolesService;
 
 
-    public Page<User> getUsers(Pageable pageable) {
-        return usersRepository.findAll(pageable);
+    public Page<User> getUsers(Pageable pageable, User user) {
+        return user.getRole().equals("ROLE_ADMIN") ? usersRepository.findAll(pageable) :
+                usersRepository.findAll(pageable, user);
     }
 
-    public Page<User> getUsersByText(Pageable pageable, String searchText) {
-        return usersRepository.findAll(pageable, '%'+searchText+'%');
+    public Page<User> getUsersByText(Pageable pageable, String searchText, User user) {
+        return user.getRole().equals("ROLE_ADMIN") ? usersRepository.findAll(pageable, '%'+searchText+'%') :
+                usersRepository.findAll(pageable, '%'+searchText+'%', user);
     }
 
     public List<User> getUsers() {
@@ -82,17 +84,5 @@ public class UsersService {
     public void deleteUsers(List<Long> ids){
         usersRepository.deleteAllById(ids);
 
-    }
-
-    public void addFriend (User receiver, User sender) {
-        usersRepository.save(receiver);
-        usersRepository.save(sender);
-        //receiver.getFriends().add(sender);
-        //sender.getFriends().add(receiver);
-    }
-
-    public boolean areFriends(User user, User loggedUser) {
-        //HAS TO BE IMPLEMENTED
-        return true;
     }
 }

@@ -55,7 +55,7 @@
 
                 <td th:if="${publication.isRecommendedBy(user)}" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.recomended}"></td>
                 <td th:if="${!publication.isRecommendedBy(user)}" sec:authorize="hasRole('ROLE_USER')">
-                    <a th:href="${'/publication/recommend/' + publication.id}" class="btn btn-success" th:text="'✓' #{label.recomend}"></a>
+                    <a th:href="${'/publication/recommend/' + publication.id}" class="btn btn-success" th:text="'✓' + #{label.recomend}"></a>
                     <!--
                     <form action="#"  class="form" th:action="${'/publication/recommend/' + publication.id}" method="post">
                         <input type="submit" class="btn btn-success" th:id="${'recommendButton'}" value="Recommend" >

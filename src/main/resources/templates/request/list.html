@@ -21,13 +21,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${requestList}">
-                <td scope="row" th:text="${user.sender.name} + ' ' + ${user.sender.surname}"></td>
+            <tr th:each="request : ${requestList}">
+                <td scope="row" th:text="${request.sender.name} + ' ' + ${request.sender.surname} + ' -> ' + ${request.receiver.name} + ' ' + ${request.receiver.surname}"></td>
 
+                <td th:if="${request.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.accepted}" ></td>
 
-                <td th:if="${user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" th:text="#{label.accepted}" ></td>
-                <td th:if="${!user.isAccepted()}" sec:authorize="hasRole('ROLE_USER')" >
-                    <a th:href="${'/request/accept/' + user.id}" class="btn btn-success" th:text="'✓ ' + #{label.accept}"></a>
+                <td th:if="${!request.isAccepted() && request.sender == loggedUser}" sec:authorize="hasRole('ROLE_USER')" >
+                    <a href="#" class="btn" disabled >Pendiente...</a>
+                </td>
+                <td th:if="${!request.isAccepted() && request.receiver == loggedUser}" sec:authorize="hasRole('ROLE_USER')" >
+                    <a th:href="${'/request/accept/' + request.id}" class="btn btn-success" th:text="'✓ ' + #{label.accept}"></a>
                 </td>
             </tr>
             </tbody>

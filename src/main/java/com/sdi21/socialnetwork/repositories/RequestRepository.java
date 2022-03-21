@@ -13,17 +13,24 @@ import java.util.List;
 
 public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
 
-    @Query("SELECT f FROM FriendRequest f WHERE f.receiver = ?1")
+    @Query("SELECT f FROM FriendRequest f WHERE (f.receiver = ?1 OR f.sender = ?1)")
     Page<FriendRequest> findAllByUser(Pageable pageable, User user);
 
     @Query("SELECT f FROM FriendRequest f WHERE (f.sender = ?1 AND f.receiver = ?2) OR (f.sender = ?2 AND f.receiver = ?1)")
-    List<FriendRequest> findBySenderAndReceiver(User sender, User receiver);
+    List<FriendRequest> findBySenderOrReceiver(User sender, User receiver);
 
-    @Query("SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = 'ACCEPTED'")
-    Page<User> findFriendsForUser(Pageable pageable, User user);
 
-    @Query("SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = 'ACCEPTED'")
-    List<User> findFriendsForUser(User user);
+    final static String FindUserQuery =
+            "SELECT u FROM User u WHERE u IN"
+          + " (SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = ?2) "
+          + " OR u IN"
+          + " (SELECT f.receiver FROM FriendRequest f WHERE f.sender = ?1 AND f.state = ?2) " ;
+    @Query(value = FindUserQuery)
+    Page<User> findFriendsForUser(Pageable pageable, User user, FriendRequest.State state);
+    @Query(value = FindUserQuery)
+    List<User> findFriendsForUser(User user, FriendRequest.State state);
+
+
 
     @Modifying
     @Transactional

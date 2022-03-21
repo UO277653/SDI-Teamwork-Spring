@@ -24,21 +24,34 @@ public class FriendsService {
 
     @PostConstruct
     public void init() {
-        requestRepository.save(new FriendRequest());
+        //requestRepository.save(new FriendRequest());
         //friendsRepository.save(new FriendRequest(new User("a@gmail.com", "N", "S"), new User("b@gmail.com", "N", "S"), FriendRequest.State.PENDING));
     }
 
+
+
+    public void sendFriendRequest(User sender, User receiver) {
+        FriendRequest request = new FriendRequest(sender, receiver);
+        requestRepository.save(request);
+    }
+
     public void addFriend(FriendRequest friendRequest) {
-        usersService.addFriend(friendRequest.getReceiver(), friendRequest.getSender());
+        friendRequest.setState(FriendRequest.State.ACCEPTED);
         requestRepository.save(friendRequest);
+        //usersService.saveUser(friendRequest.getSender());
+        //usersService.saveUser(friendRequest.getReceiver());
     }
 
     public Page<User> getFriendsForUser(Pageable pageable, User user) {
-        return requestRepository.findFriendsForUser(pageable, user);
+        return requestRepository.findFriendsForUser(pageable, user, FriendRequest.State.ACCEPTED);
     }
 
     public List<User> getFriendsForUser(User user) {
-        return requestRepository.findFriendsForUser(user);
+        return requestRepository.findFriendsForUser(user, FriendRequest.State.ACCEPTED);
+    }
+
+    public List<User> getPendingFriendsForUser(User user) {
+        return requestRepository.findFriendsForUser(user, FriendRequest.State.PENDING);
     }
 
     public Page<FriendRequest> getFriendRequestsForUser(Pageable pageable, User user) {
@@ -51,6 +64,13 @@ public class FriendsService {
 
     public void setFriendRequestAccepted(Long id) {
         requestRepository.setFriendRequestState(FriendRequest.State.ACCEPTED, id);
+    }
+
+    public boolean areFriends(User userA, User userB) {
+        List<FriendRequest> request = requestRepository.findBySenderOrReceiver(userA, userB);
+        if (request == null || request.size() == 0)
+            return false;
+        return true;
     }
 
 }
