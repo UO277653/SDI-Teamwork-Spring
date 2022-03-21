@@ -34,6 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
             //loggerService.addLog(LogType.LOGOUT, "SUCCESSFUL LOGOUT: "+ authentication.getName());
+            response.sendRedirect(request.getContextPath());
         }
     };
 
@@ -57,9 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
             String email = request.getParameter("email");
             //loggerService.addLog(LogType.LOGIN_ERR, "FAILED LOGIN ATTEMPT: "+ email);
+            response.sendRedirect("/login");
         }
     };
-
 
 
     @Bean
@@ -67,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -77,29 +79,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http
-            .csrf().disable()
-            .authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/script/**", "/", "/signup", "/login/**").permitAll()
                 .antMatchers("/user/delete/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/list").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/accept/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/moderate/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/censor/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/logger/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
-            .and()
+                .and()
                 .exceptionHandling().accessDeniedPage("/login").and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/user/list")
+                .defaultSuccessUrl("/user/list")//2. la redireccion segun admin o user se hace en el servicio
                 .successHandler(logInSuccessHandler)
-               // .failureHandler(logInUnsuccessfulHandler)//2. la redireccion segun admin o user se hace en el servicio
-            .and()
-            .logout()
-                .permitAll()
+                .failureHandler(logInUnsuccessfulHandler)
+                .and()
+                .logout()
                 .logoutSuccessUrl("/login")
-                //.logoutSuccessHandler(logoutSuccessHandler)
-                ; //3. redirigir a la página de login
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .permitAll()
+        ; //3. redirigir a la página de login
     }
 
     @Bean

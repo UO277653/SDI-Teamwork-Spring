@@ -96,7 +96,6 @@ public class UsersController {
         return "login";
     }
 
-
     @RequestMapping("/user/list")
     public String getList(Model model, Pageable pageable, @RequestParam(required = false) String searchText,
                           Principal principal) {

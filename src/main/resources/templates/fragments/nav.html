@@ -31,9 +31,14 @@
                 </div>
             </li>
 
-            <li class="nav-item ">
+            <li id="friendList" class="nav-item ">
                 <a class="nav-link" href="/friend/list" th:text="#{label.friendList}"><span class="sr-only">(current)</span></a>
             </li>
+
+            <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item ">
+                <a class="nav-link" href="/logger/list">Listado de Logs<span class="sr-only">(current)</span></a>
+            </li>
+
 
         </ul>
     </div>
