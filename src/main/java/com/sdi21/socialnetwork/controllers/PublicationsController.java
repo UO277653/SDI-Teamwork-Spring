@@ -1,15 +1,12 @@
 package com.sdi21.socialnetwork.controllers;
 
+import com.sdi21.socialnetwork.entities.logtype.LogType;
 import com.sdi21.socialnetwork.entities.Publication;
 import com.sdi21.socialnetwork.entities.User;
-import com.sdi21.socialnetwork.services.FriendsService;
-import com.sdi21.socialnetwork.services.PublicationsService;
-import com.sdi21.socialnetwork.services.RolesService;
-import com.sdi21.socialnetwork.services.UsersService;
+import com.sdi21.socialnetwork.services.*;
 import com.sdi21.socialnetwork.validators.PublicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +18,10 @@ import java.util.Date;
 
 @Controller
 public class PublicationsController {
+
+    @Autowired
+    private LoggerService loggerService;
+
 
     @Autowired
     public PublicationValidator publicationValidator;
@@ -41,6 +42,7 @@ public class PublicationsController {
     @GetMapping(value ="/publication/add")
     public String addPublication(Model model){
         model.addAttribute("publication", new Publication());
+        loggerService.addLog(LogType.PET, "GET: /publication/add");
         return "publication/add";
     }
 
@@ -63,6 +65,8 @@ public class PublicationsController {
 
         publication.setDate(new Date());
         publicationsService.addPublication(publication);
+
+        loggerService.addLog(LogType.PET, "POST: /publication/add" + publication.toString());
         return "home";
     }
 
@@ -82,6 +86,7 @@ public class PublicationsController {
         model.addAttribute("user", user);
         model.addAttribute("page",publications );
 
+        loggerService.addLog(LogType.PET, "GET: /publication/listown");
         return "publication/listown";
     }
 
@@ -102,6 +107,7 @@ public class PublicationsController {
         model.addAttribute("page",publications );
         model.addAttribute("user", loggedUser);
 
+        loggerService.addLog(LogType.PET, "GET: /publication/list/{id} - id: " + id );
         return "publication/list";
     }
 
@@ -110,6 +116,8 @@ public class PublicationsController {
         String email = principal.getName();
         User user = usersService.getUserByEmail(email);
         publicationsService.addRecommendation(id, user);
+
+        loggerService.addLog(LogType.PET, "GET: /publication/recommend/{id} - id: " + id );
         return getListPublications(model, principal, pageable, null);
     }
 
@@ -130,7 +138,7 @@ public class PublicationsController {
         model.addAttribute("publicationsList", publications.getContent());
         model.addAttribute("page",publications);
         model.addAttribute("user", user);
-
+        loggerService.addLog(LogType.PET, "GET: /publication/list - searchTextPub:" + searchTextPub );
         return "publication/list";
     }
 
@@ -139,6 +147,7 @@ public class PublicationsController {
 
         publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[0]);
 
+        loggerService.addLog(LogType.PET, "GET: /publication/accept/{id} - id:" + id );
         return getListPublications(model, principal, pageable, null);
     }
 
@@ -147,6 +156,7 @@ public class PublicationsController {
 
         publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[1]);
 
+        loggerService.addLog(LogType.PET, "GET: /publication/moderate/{id} - id:" + id );
         return getListPublications(model, principal, pageable, null);
     }
 
@@ -155,6 +165,7 @@ public class PublicationsController {
 
         publicationsService.setPublicationState(id, rolesService.getPublicationStatus()[2]);
 
+        loggerService.addLog(LogType.PET, "GET: /publication/censor/{id} - id:" + id );
         return getListPublications(model, principal, pageable, null);
     }
 }
