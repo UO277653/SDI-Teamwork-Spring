@@ -88,14 +88,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .successHandler(logInSuccessHandler)
-                .failureHandler(logInUnsuccessfulHandler)
+//                .successHandler(logInSuccessHandler)
+//                .failureHandler(logInUnsuccessfulHandler)
                 .defaultSuccessUrl("/user/list")//2. la redireccion segun admin o user se hace en el servicio
             .and()
             .logout()
-                .logoutSuccessHandler(logoutSuccessHandler)
+                .logoutSuccessUrl("/login")
+//                .logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll()
-                .logoutSuccessUrl("/login"); //3. redirigir a la página de login
+                ; //3. redirigir a la página de login
     }
 
     @Bean
