@@ -40,7 +40,7 @@
                     <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" scope="row" th:text="${user.email}"></td>
                     <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" th:text="${user.name}"></td>
                     <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" th:text="${user.surname}"></td>
-                    <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
+                    <td th:unless="${user.getRole() == 'ROLE_ADMIN'}" sec:authorize="hasRole('ROLE_ADMIN')" ><input type="checkbox" th:name="userid +${user.id}" th:value="${user.id}"/></td>
                     <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" ><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
                     <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" th:text="${userFriends.contains(user)}"></td>
                     <td th:if="${!userFriends.contains(user)}" sec:authorize="hasRole('ROLE_USER')" >
