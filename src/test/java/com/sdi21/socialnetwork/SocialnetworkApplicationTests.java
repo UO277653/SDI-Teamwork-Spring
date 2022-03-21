@@ -551,23 +551,25 @@ class SocialnetworkApplicationTests {
 		SeleniumUtils.textIsPresentOnPage(driver, "¡Aceptada!");
 	}
 
-	//TODO: FALTA 23
 
 	/**
-	 * 12. Crear nueva publicación
-	 * Datos válidos
+	 * 11. Listado de amigos
+	 * Mostrar el listado de amigos de un usuario
 	 */
 	@Test
 	@Order(23)
 	void prueba23() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user14@email.com", "user14");
+		PO_LoginView.login(driver, "user14@email.com", "user14");
 		driver.findElement(By.id("friendList")).click();
 
 		List<WebElement> friends = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
 		Assertions.assertEquals(1, friends.size());
 	}
 
+	/**
+	 * 12. Crear nueva publicación
+	 * Datos válidos
+	 */
 	@Test
 	@Order(24)
 	void PRUEBA24(){
@@ -667,62 +669,23 @@ class SocialnetworkApplicationTests {
 	public void prueba29(){
 		PO_LoginView.login(driver, "user01@email.com", "user01"); //Fill the form, now loged in spanish
 
-		checkUsersList(PO_Properties.getSPANISH());
-		checkFriendList(PO_Properties.getSPANISH());
-		checkOwnPublications(PO_Properties.getSPANISH());
-		checkAddPublication(PO_Properties.getSPANISH());
+		PO_UserListView.checkUsersList(driver, PO_Properties.getSPANISH());
+		PO_FriendsListView.checkFriendList(driver, PO_Properties.getSPANISH());
+		PO_PublicationListView.checkOwnPublications(driver, PO_Properties.getSPANISH());
+		PO_PublicationView.checkAddPublication(driver, PO_Properties.getSPANISH());
 
 		PO_HomeView.changeLang(driver, "btnEnglish"); //Change to English
 
 		//English
-		checkUsersList(PO_Properties.getENGLISH());
-		checkFriendList(PO_Properties.getENGLISH());
-		checkOwnPublications(PO_Properties.getENGLISH());
-		checkAddPublication(PO_Properties.getENGLISH());
+		PO_UserListView.checkUsersList(driver, PO_Properties.getENGLISH());
+		PO_FriendsListView.checkFriendList(driver, PO_Properties.getENGLISH());
+		PO_PublicationListView.checkOwnPublications(driver, PO_Properties.getENGLISH());
+		PO_PublicationView.checkAddPublication(driver, PO_Properties.getENGLISH());
 	}
 
-	private void checkUsersList(int locale){
-		driver.navigate().to("localhost:8090/user/list");
-		String checkText = PO_HomeView.getP().getString("label.name", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.surname", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
-	private void checkAddPublication(int locale){
-		driver.navigate().to("localhost:8090/publication/add");
-		String checkText = PO_HomeView.getP().getString("label.addPublication", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.send", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
-	private void checkFriendList(int locale){
-		driver.navigate().to("localhost:8090/friend/list");
-		String checkText = PO_HomeView.getP().getString("label.name", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.surname", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
-	private void checkOwnPublications(int locale){
-		driver.navigate().to("localhost:8090/publication/listown");
-		String checkText = PO_HomeView.getP().getString("label.title", locale);
-		List<WebElement> result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.text",locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-		checkText = PO_HomeView.getP().getString("label.date", locale);
-		result = PO_View.checkElementBy(driver, "text", checkText);
-		Assertions.assertEquals(checkText, result.get(0).getText());
-	}
 
 	/**
 	 * 16. Seguridad
