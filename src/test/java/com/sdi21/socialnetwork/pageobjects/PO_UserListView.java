@@ -18,4 +18,12 @@ public class PO_UserListView {
         List<WebElement> removeButton = driver.findElements(By.id("deleteBtn"));
         removeButton.get(0).click();
     }
+
+    public static void search(WebDriver driver, String searchText) {
+        WebElement searchBar = driver.findElement(By.name("searchText"));
+        searchBar.click();
+        searchBar.clear();
+        searchBar.sendKeys(searchText);
+        driver.findElement(By.id("searchButton")).click();
+    }
 }
