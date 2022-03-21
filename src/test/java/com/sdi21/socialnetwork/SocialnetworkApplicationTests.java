@@ -21,7 +21,7 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	//Adrian
-	static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
 	//Sara
 	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -304,6 +304,56 @@ class SocialnetworkApplicationTests {
 		Assertions.assertEquals(16, elementos);
 		Assertions.assertEquals("http://localhost:8090/user/list?page=3", driver.getCurrentUrl());
 	}
+
+	@Test
+	@Order(15)
+	void prueba15() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		int elementos = 0;
+		elementos += PO_UserListView.countUsersOnPage(driver, 0);
+		elementos += PO_UserListView.countUsersOnPage(driver, 1);
+		elementos += PO_UserListView.countUsersOnPage(driver, 2);
+		elementos += PO_UserListView.countUsersOnPage(driver, 3);
+
+		// all users but the deleted ones and the admin and logged in users
+		Assertions.assertEquals(15, elementos);
+	}
+
+	@Test
+	@Order(16)
+	void prueba16() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		PO_UserListView.search(driver,"");
+		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		Assertions.assertEquals(5, users.size());
+	}
+
+	@Test
+	@Order(17)
+	void prueba17() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		PO_UserListView.search(driver,"ZXCVBNM");
+		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		Assertions.assertEquals(0, users.size());
+	}
+
+	@Test
+	@Order(18)
+	void prueba18() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+
+		PO_UserListView.search(driver,"default");
+		List<WebElement> users = driver.findElements(By.cssSelector("#tableMarks tbody tr"));
+		Assertions.assertEquals(4, users.size());
+	}
+
 	@Test
 	@Order(24)
 	void PRUEBA24(){
