@@ -21,6 +21,6 @@ public class LogoutSuccessfulHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         loggerService.addLog(LogType.LOGOUT, "SUCCESSFUL LOGOUT: "+ authentication.getName());
-        response.sendRedirect("/login");
+        response.sendRedirect("/login?logout");
     }
 }
