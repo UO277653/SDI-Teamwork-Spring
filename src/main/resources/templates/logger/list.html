@@ -26,7 +26,7 @@
                 <tr th:each="log : ${logList}">
 
                     <td th:text="${log.getId()}"></td>
-                    <td th:text="${log.getLogType()}"></td>
+                    <td th:id="tipoLogin" th:text="${log.getLogType()}"></td>
                     <td th:text="${log.getText()}"></td>
                     <td th:text="${log.getDate()}"></td>
                 </tr>
