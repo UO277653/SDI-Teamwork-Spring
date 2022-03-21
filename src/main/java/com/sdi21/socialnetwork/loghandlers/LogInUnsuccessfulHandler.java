@@ -23,6 +23,6 @@ public class LogInUnsuccessfulHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         String email = request.getParameter("username");
         loggerService.addLog(LogType.LOGIN_ERR, "FAILED LOGIN ATTEMPT: "+ email);
-        response.sendRedirect("/login");
+        response.sendRedirect("/login?error");
     }
 }
