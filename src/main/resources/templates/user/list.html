@@ -44,7 +44,7 @@
                     <td th:unless="${loggedUser.getRole() == 'ROLE_ADMIN'}" ><a th:href="${'/publication/list/' +  user.id  }" th:text="#{label.pubications}"></a></td>
 
                     <td th:if="${!userFriends.contains(user) && !userPending.contains(user)}" sec:authorize="hasRole('ROLE_USER')" >
-                        <a th:if="${loggedUser.id != user.id}" th:href="${'/request/send/' + user.id}" class="btn btn-success" th:text="'+'+ #{label.addFriend}"></a>
+                        <a th:if="${loggedUser.id != user.id}" th:href="${'/request/send/' + user.id}" class="btn btn-success" id="addFriendBtn" th:text="'+'+ #{label.addFriend}"></a>
                     </td>
                     <td th:if="${userPending.contains(user)}" sec:authorize="hasRole('ROLE_USER')" >
                         <a th:if="${loggedUser.id != user.id}" href="#" class="btn" disabled th:text="#{label.request.pending}"></a>
