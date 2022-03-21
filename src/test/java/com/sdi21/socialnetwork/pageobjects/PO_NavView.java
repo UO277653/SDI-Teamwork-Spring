@@ -2,6 +2,7 @@ package com.sdi21.socialnetwork.pageobjects;
 
 import com.sdi21.socialnetwork.util.SeleniumUtils;
 import org.junit.jupiter.api.Assertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -38,6 +39,7 @@ public class PO_NavView extends PO_View{
      * @param textLanguage: el texto que aparece en el enlace de idioma ("English" o "Spanish")
      */
     public static void changeLanguage(WebDriver driver, String textLanguage) {
+
         //clickamos la opción Idioma.
         List<WebElement> languageButton = SeleniumUtils.waitLoadElementsBy(driver, "id", "btnLanguage",
                 getTimeout());
@@ -48,5 +50,10 @@ public class PO_NavView extends PO_View{
         List<WebElement> Selectedlanguage = SeleniumUtils.waitLoadElementsBy(driver, "id", textLanguage,
                 getTimeout());
         Selectedlanguage.get(0).click();
+    }
+
+    public static void changeLang(WebDriver driver, String btn){
+        driver.findElement(By.id("btnLanguage")).click();
+        driver.findElement(By.id(btn)).click();
     }
 }
