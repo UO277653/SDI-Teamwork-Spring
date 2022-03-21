@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -21,42 +22,45 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private LogoutSuccessHandler logoutSuccessHandler = new LogoutSuccessHandler() {
-        @Autowired
-        private LoggerService loggerService;
+
 
         @Override
         public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            loggerService.addLog(LogType.LOGOUT, "SUCCESSFUL LOGOUT: "+ authentication.getName());
+            //loggerService.addLog(LogType.LOGOUT, "SUCCESSFUL LOGOUT: "+ authentication.getName());
+            response.sendRedirect(request.getContextPath());
         }
     };
 
     private AuthenticationSuccessHandler logInSuccessHandler = new AuthenticationSuccessHandler() {
-        @Autowired
-        private LoggerService loggerService;
+
 
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            loggerService.addLog(LogType.LOGIN_EX, "SUCCESSFUL LOGIN: "+ authentication.getName());
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+
+            //loggerService.addLog(LogType.LOGIN_EX, "SUCCESSFUL LOGIN: ");
+            response.sendRedirect(request.getContextPath());
         }
     };
 
     private AuthenticationFailureHandler logInUnsuccessfulHandler = new AuthenticationFailureHandler() {
 
-        @Autowired
-        private LoggerService loggerService;
+
         @Override
         public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
             String email = request.getParameter("email");
-            loggerService.addLog(LogType.LOGIN_ERR, "FAILED LOGIN ATTEMPT: "+ email);
+            //loggerService.addLog(LogType.LOGIN_ERR, "FAILED LOGIN ATTEMPT: "+ email);
+            response.sendRedirect("/login");
         }
     };
-
 
 
     @Bean
@@ -64,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -74,29 +79,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http
-            .csrf().disable()
-            .authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/css/**", "/images/**", "/script/**", "/", "/signup", "/login/**").permitAll()
                 .antMatchers("/user/delete/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/list").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/accept/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/moderate/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/publication/censor/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/logger/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
-            .and()
+                .and()
                 .exceptionHandling().accessDeniedPage("/login").and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .permitAll()
-//                .successHandler(logInSuccessHandler)
-//                .failureHandler(logInUnsuccessfulHandler)
                 .defaultSuccessUrl("/user/list")//2. la redireccion segun admin o user se hace en el servicio
-            .and()
-            .logout()
+                .successHandler(logInSuccessHandler)
+                .failureHandler(logInUnsuccessfulHandler)
+                .and()
+                .logout()
                 .logoutSuccessUrl("/login")
-//                .logoutSuccessHandler(logoutSuccessHandler)
+                .logoutSuccessHandler(logoutSuccessHandler)
                 .permitAll()
-                ; //3. redirigir a la página de login
+        ; //3. redirigir a la página de login
     }
 
     @Bean
