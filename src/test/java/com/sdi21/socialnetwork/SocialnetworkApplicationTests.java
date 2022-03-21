@@ -21,14 +21,14 @@ class SocialnetworkApplicationTests {
 	static String PathFirefox = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
 
 	// Jonas
- 	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
+// 	static String Geckodriver = "C:\\Users\\Alejandro\\Desktop\\SDI-2022\\software\\software\\geckodriver-v0.27.0-win64\\geckodriver.exe";
 
   	// Adrian
 	//static String Geckodriver = "C:\\Users\\adria\\OneDrive\\Escritorio\\UNIVERSIDAD\\AÑO 3\\SEMESTRE 2\\Sistemas Distribuidos e Internet\\Laboratorio\\Lab5\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 
 	//Sara
-	//static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
+	static String Geckodriver = "D:\\UNI\\3º\\2º cuatri\\SDI\\Lab\\sesion05\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
 
 	//Diego
 	//static String Geckodriver = "C:\\Users\\dimar\\Desktop\\sdi\\PL-SDI-Sesión5-material\\geckodriver-v0.30.0-win64.exe";
@@ -446,11 +446,6 @@ class SocialnetworkApplicationTests {
 		String checkText = PO_HomeView.getP().getString("label.request.pending", PO_Properties.getSPANISH());
 		SeleniumUtils.textIsPresentOnPage(driver, checkText);
 
-		//TODO:otros checks: comprobar si el botón está deshabilitado, o intentar hacer click y ver a qué url redirige
-
-		//getElementById, disabled, true
-		//Assertions.assertEquals("http://localhost:8090/user/list", driver.getCurrentUrl());
-		//si nos dejase añadirlo de nuevo la url camnbiaría a request/send/id!!!
 	}
 
 	/**
@@ -818,20 +813,17 @@ class SocialnetworkApplicationTests {
 	@Test
 	@Order(39)
 	void PRUEBA39() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01"); // We log as user01
+		PO_LoginView.login(driver, "user01@email.com", "user01"); // We log as user01
 
 		List<WebElement> addFriendBtns = driver.findElements(By.id("addFriendBtn"));
 		addFriendBtns.get(0).click(); // We send a friend request to user02 (who has a moderated publication, and 10 accepted)
-		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+		PO_LoginView.logout(driver);
 
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user03@email.com", "user03"); // We log as user02
+		PO_LoginView.login(driver, "user03@email.com", "user03"); // We log as user02
 		driver.navigate().to("http://localhost:8090/request/list");
 		driver.findElement(By.cssSelector("#tableRequests tbody tr td a")).click(); // User 2 accepts the request
-		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillLoginForm(driver, "user01@email.com", "user01");
+		PO_LoginView.logout(driver);
+		PO_LoginView.login(driver, "user01@email.com", "user01");
 		driver.navigate().to("http://localhost:8090/friend/list");
 		driver.findElement(By.cssSelector("#tableFriends tbody tr td a")).click();
 
