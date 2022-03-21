@@ -21,18 +21,11 @@ public class FriendRequest {
 
     public enum State {
         ACCEPTED,
-        PENDING;
+        PENDING
     }
 
     public FriendRequest() {
 
-    }
-
-    public FriendRequest (User sender, User receiver, State state) {
-        super();
-        this.sender = sender;
-        this.receiver = receiver;
-        this.state = State.PENDING;
     }
 
     public FriendRequest (User sender, User receiver) {
@@ -46,16 +39,8 @@ public class FriendRequest {
         return sender;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
     public User getReceiver() {
         return receiver;
-    }
-
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
     }
 
     public State getState() {

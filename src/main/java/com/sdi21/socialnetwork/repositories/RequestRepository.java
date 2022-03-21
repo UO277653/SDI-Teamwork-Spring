@@ -20,7 +20,7 @@ public interface RequestRepository extends CrudRepository<FriendRequest, Long> {
     List<FriendRequest> findBySenderOrReceiver(User sender, User receiver);
 
 
-    final static String FindUserQuery =
+    String FindUserQuery =
             "SELECT u FROM User u WHERE u IN"
           + " (SELECT f.sender FROM FriendRequest f WHERE f.receiver = ?1 AND f.state = ?2) "
           + " OR u IN"

@@ -15,16 +15,10 @@ import java.util.List;
 public class FriendsService {
 
     @Autowired
-    private UsersService usersService;
-
-    @Autowired
     private RequestRepository requestRepository;
 
     @PostConstruct
-    public void init() {
-        //requestRepository.save(new FriendRequest());
-        //friendsRepository.save(new FriendRequest(new User("a@gmail.com", "N", "S"), new User("b@gmail.com", "N", "S"), FriendRequest.State.PENDING));
-    }
+    public void init() {}
 
 
 
@@ -36,8 +30,6 @@ public class FriendsService {
     public void addFriend(FriendRequest friendRequest) {
         friendRequest.setState(FriendRequest.State.ACCEPTED);
         requestRepository.save(friendRequest);
-        //usersService.saveUser(friendRequest.getSender());
-        //usersService.saveUser(friendRequest.getReceiver());
     }
 
     public Page<User> getFriendsForUser(Pageable pageable, User user) {
@@ -66,9 +58,7 @@ public class FriendsService {
 
     public boolean areFriends(User userA, User userB) {
         List<FriendRequest> request = requestRepository.findBySenderOrReceiver(userA, userB);
-        if (request == null || request.size() == 0)
-            return false;
-        return true;
+        return request != null && request.size() != 0;
     }
 
 }

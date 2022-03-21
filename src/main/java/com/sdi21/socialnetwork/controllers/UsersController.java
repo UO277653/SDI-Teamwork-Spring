@@ -79,19 +79,17 @@ public class UsersController {
     }
 
     @RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-    public String home(Model model) {
-        //TODO opciones de usuario
+    public String home() {
         loggerService.addLog(LogType.PET, "GET: /home");
         return "home";
     }
 
     /**
      * 2. Inicio de sesión
-     * @param model
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model) {
+    public String login() {
         loggerService.addLog(LogType.PET, "GET: /login");
         return "login";
     }

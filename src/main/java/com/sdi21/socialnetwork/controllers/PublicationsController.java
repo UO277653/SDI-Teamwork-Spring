@@ -22,7 +22,6 @@ public class PublicationsController {
     @Autowired
     private LoggerService loggerService;
 
-
     @Autowired
     public PublicationValidator publicationValidator;
 
@@ -47,7 +46,7 @@ public class PublicationsController {
     }
 
     @PostMapping(value= "/publication/add")
-    public String addPublication(@ModelAttribute Publication publication, BindingResult result, Model model, Principal principal){
+    public String addPublication(@ModelAttribute Publication publication, BindingResult result, Principal principal){
         publicationValidator.validate(publication,result);
 
         //This will change when we can log in as an user
@@ -59,14 +58,14 @@ public class PublicationsController {
         publication.setOp(user);
 
         if(result.hasErrors()){
-            System.out.println(publication.toString());
+            System.out.println(publication);
             return "publication/add";
         }
 
         publication.setDate(new Date());
         publicationsService.addPublication(publication);
 
-        loggerService.addLog(LogType.PET, "POST: /publication/add" + publication.toString());
+        loggerService.addLog(LogType.PET, "POST: /publication/add" + publication);
         return "home";
     }
 

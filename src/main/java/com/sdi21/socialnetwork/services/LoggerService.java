@@ -11,10 +11,6 @@ import java.util.List;
 @Service
 public class LoggerService {
 
-
-
-    //private Logger log = LoggerFactory.getLogger(LoggerService.class);
-
     @Autowired
     LoggerRepository repo;
 

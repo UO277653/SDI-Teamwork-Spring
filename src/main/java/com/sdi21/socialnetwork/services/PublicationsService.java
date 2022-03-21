@@ -22,15 +22,6 @@ public class PublicationsService {
     @Autowired
     private UsersRepository usersRepository;
 
-
-    public List<Publication> getPublications(){
-        List<Publication> publications = new ArrayList<Publication>();
-        publicationsRepository.findAll().forEach(publications::add);
-        return publications;
-    }
-
-
-
     public void addPublication(Publication publication){
         publicationsRepository.save(publication);
     }
@@ -43,11 +34,6 @@ public class PublicationsService {
     public Page<Publication> getPublications(Pageable pageable){
 
         return publicationsRepository.findAll(pageable);
-    }
-
-    public Optional<Publication> getPublicationById(Long id){
-
-        return publicationsRepository.findById(id);
     }
 
     public Page<Publication> getPublicationsByText(Pageable pageable, String searchText) {
