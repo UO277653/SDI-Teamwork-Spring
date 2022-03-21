@@ -547,8 +547,6 @@ class SocialnetworkApplicationTests {
 		SeleniumUtils.textIsPresentOnPage(driver, "¡Aceptada!");
 	}
 
-	}
-
 	@Test
 	@Order(24)
 	void PRUEBA24(){
